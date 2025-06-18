@@ -1,0 +1,138 @@
+'use client';
+
+import { motion } from 'framer-motion';
+import { MessageCircle, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
+import { getAllPersonas } from '@/lib/personas';
+
+export default function HomePage() {
+  const personas = getAllPersonas();
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* ヘッダー */}
+      <header className="bg-white border-b border-gray-100">
+        <div className="max-w-6xl mx-auto px-6 py-8">
+          <div className="text-center">
+            <motion.h1 
+              className="text-5xl font-light text-gray-900 mb-3"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              DTalk
+            </motion.h1>
+            <motion.p 
+              className="text-lg text-gray-600 font-light"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              Conversations with History's Greatest Minds
+            </motion.p>
+          </div>
+        </div>
+      </header>
+
+      {/* メインコンテンツ */}
+      <main className="max-w-6xl mx-auto px-6 py-12">
+        
+        {/* 人物選択グリッド */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {personas.map((persona, index) => (
+            <motion.div
+              key={persona.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 * index }}
+            >
+              <Link href={`/chat/${persona.id}`}>
+                <div className="group bg-white border border-gray-200 rounded-lg hover:border-gray-300 hover:shadow-lg transition-all duration-300 cursor-pointer">
+                  
+                  {/* カードヘッダー */}
+                  <div className="p-6 border-b border-gray-100">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-4">
+                        <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center">
+                          <span className="text-lg font-semibold text-gray-700">
+                            {persona.nameEn.charAt(0)}
+                          </span>
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-semibold text-gray-900">
+                            {persona.name}
+                          </h3>
+                          <p className="text-sm text-gray-500">
+                            {persona.era}
+                          </p>
+                        </div>
+                      </div>
+                      <ArrowRight 
+                        size={20} 
+                        className="text-gray-400 group-hover:text-gray-600 group-hover:translate-x-1 transition-all duration-300" 
+                      />
+                    </div>
+                  </div>
+
+                  {/* カードコンテンツ */}
+                  <div className="p-6">
+                    <p className="text-gray-700 mb-4 leading-relaxed">
+                      {persona.title}
+                    </p>
+
+                    {/* 専門分野 */}
+                    <div className="mb-4">
+                      <div className="flex flex-wrap gap-2">
+                        {persona.specialties.slice(0, 3).map((specialty, idx) => (
+                          <span 
+                            key={idx}
+                            className="px-3 py-1 bg-gray-100 text-gray-700 text-xs rounded-full font-medium"
+                          >
+                            {specialty}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* 特徴的な言葉 */}
+                    <blockquote className="border-l-3 border-gray-200 pl-4 italic text-gray-600 text-sm">
+                      "{persona.traits.famousQuotes[0]}"
+                    </blockquote>
+                  </div>
+
+                  {/* フッター */}
+                  <div className="px-6 py-4 bg-gray-50 rounded-b-lg border-t border-gray-100">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-500">
+                        AI-powered conversation
+                      </span>
+                      <div className="flex items-center text-sm text-blue-600 font-medium group-hover:text-blue-700">
+                        <MessageCircle size={16} className="mr-1" />
+                        Start Chat
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* フッター */}
+        <motion.div 
+          className="text-center mt-16 py-8 border-t border-gray-200"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+        >
+          <p className="text-gray-500 text-sm mb-2">
+            Powered by OpenAI GPT-4 • Historical persona recreation
+          </p>
+          <p className="text-gray-400 text-xs">
+            These conversations are AI simulations for educational purposes
+          </p>
+        </motion.div>
+      </main>
+    </div>
+  );
+}
