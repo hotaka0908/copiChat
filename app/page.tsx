@@ -10,9 +10,9 @@ const getAvatarUrl = (personaId: string): string => {
   const avatarMap: Record<string, string> = {
     'steve-jobs': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/256px-Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg',
     'aristotle': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Aristotle_Altemps_Inv8575.jpg/256px-Aristotle_Altemps_Inv8575.jpg',
-    'leonardo-da-vinci': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Leonardo_da_Vinci%2C_by_Francesco_Melzi.jpg/256px-Leonardo_da_Vinci%2C_by_Francesco_Melzi.jpg',
+    'leonardo-da-vinci': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Francesco_Melzi_-_Portrait_of_Leonardo.png/256px-Francesco_Melzi_-_Portrait_of_Leonardo.png',
     'albert-einstein': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Einstein_1921_by_F_Schmutzer_-_restoration.jpg/256px-Einstein_1921_by_F_Schmutzer_-_restoration.jpg',
-    'hotaka-funabashi': 'https://images.unsplash.com/photo-1507003211169-0a1dd7cfcc8c?w=400&h=400&fit=crop&crop=face',
+    'hotaka-funabashi': '/images/hotaka1996.png',
   };
   return avatarMap[personaId] || '';
 };
