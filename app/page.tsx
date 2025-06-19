@@ -13,6 +13,7 @@ const getAvatarUrl = (personaId: string): string => {
     'leonardo-da-vinci': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Francesco_Melzi_-_Portrait_of_Leonardo.png/256px-Francesco_Melzi_-_Portrait_of_Leonardo.png',
     'albert-einstein': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Einstein_1921_by_F_Schmutzer_-_restoration.jpg/256px-Einstein_1921_by_F_Schmutzer_-_restoration.jpg',
     'hotaka-funabashi': '/images/hotaka1996.png',
+    'avicii': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Avicii_2014_003.jpg/256px-Avicii_2014_003.jpg',
   };
   return avatarMap[personaId] || '';
 };
@@ -48,7 +49,7 @@ export default function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
             >
-              スティーブ・ジョブズ、アリストテレス、ダ・ヴィンチ、アインシュタイン、船橋穂天と対話
+              ジョブズ、アリストテレス、ダ・ヴィンチ、アインシュタイン、船橋穂天、Aviciiと対話
             </motion.p>
           </div>
         </div>
@@ -171,7 +172,7 @@ export default function HomePage() {
               <p>
                 スティーブ・ジョブズのイノベーション哲学、アリストテレスの論理学、
                 レオナルド・ダ・ヴィンチの創造性、アインシュタインの科学的思考、
-                船橋穂天の現代起業家精神を学習できます。
+                船橋穂天の現代起業家精神、Aviciiの音楽革新を学習できます。
               </p>
             </div>
             <div>
@@ -184,6 +185,7 @@ export default function HomePage() {
                 <li>• 科学的思考法の習得</li>
                 <li>• 現代ビジネス・スタートアップ戦略</li>
                 <li>• AI・技術開発の相談</li>
+                <li>• 音楽制作・クリエイティブワーク</li>
                 <li>• 教育機関での授業補助ツール</li>
               </ul>
             </div>
@@ -210,7 +212,7 @@ export default function HomePage() {
             <span>•</span>
             <span>AI チャットボット</span>
             <span>•</span>
-            <span>偉人・起業家との対話</span>
+            <span>偉人・アーティストとの対話</span>
           </div>
         </motion.div>
       </main>

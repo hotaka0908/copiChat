@@ -6,8 +6,8 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://dtalk-5u4qk19dd-hotakas-projects.vercel.app'),
-  title: 'DTalk - 偉人・起業家と会話するAIチャットボット | ジョブズ、アリストテレス、ダ・ヴィンチ、アインシュタイン、船橋穂天',
-  description: 'DTalkは歴史上の偉人や現代の起業家とリアルな対話ができるAI搭載チャットボットです。スティーブ・ジョブズ、アリストテレス、レオナルド・ダ・ヴィンチ、アルベルト・アインシュタイン、船橋穂天と知的な会話を楽しめます。OpenAI GPT-4を使用した教育的体験をお試しください。',
+  title: 'DTalk - 偉人・アーティストと会話するAIチャットボット | ジョブズ、アリストテレス、ダ・ヴィンチ、アインシュタイン、船橋穂天、Avicii',
+  description: 'DTalkは歴史上の偉人や現代のイノベーターとリアルな対話ができるAI搭載チャットボットです。スティーブ・ジョブズ、アリストテレス、レオナルド・ダ・ヴィンチ、アルベルト・アインシュタイン、船橋穂天、Aviciiと知的な会話を楽しめます。OpenAI GPT-4を使用した教育的体験をお試しください。',
   keywords: [
     'DTalk', 'ディートーク', 'd talk', 'dtalk app', 'dtalk ai',
     'AI チャットボット', '歴史的人物', '対話AI', 'OpenAI GPT-4',
@@ -16,9 +16,11 @@ export const metadata: Metadata = {
     'レオナルド・ダ・ヴィンチ', 'Leonardo da Vinci', 'ルネサンス',
     'アルベルト・アインシュタイン', 'Albert Einstein', '相対性理論',
     '船橋穂天', 'Hotaka Funabashi', 'Universal Pine', '起業家',
-    'スタートアップ', 'AI・機械学習', 'ウェアラブルデバイス',
+    'Avicii', 'アヴィーチー', 'Tim Bergling', 'Wake Me Up', 'Levels',
+    'EDM', 'DJ', '音楽プロデューサー', 'Folktronica',
+    'スタートアップ', 'AI・機械学習', 'ウェアラブルデバイス', '音楽制作',
     '教育アプリ', '学習ツール', '歴史学習', '哲学対話', 'ビジネス相談',
-    'AI persona', 'historical figures chat', 'educational AI', 'startup advice'
+    'AI persona', 'historical figures chat', 'educational AI', 'music production'
   ],
   authors: [{ name: 'DTalk Team' }],
   creator: 'DTalk',
@@ -39,8 +41,8 @@ export const metadata: Metadata = {
     locale: 'ja_JP',
     url: 'https://dtalk-5u4qk19dd-hotakas-projects.vercel.app',
     siteName: 'DTalk',
-    title: 'DTalk - 偉人・起業家と対話するAIチャットボット',
-    description: 'ジョブズ、アリストテレス、ダ・ヴィンチ、アインシュタイン、船橋穂天とAIで会話。OpenAI GPT-4搭載の教育的チャットボット体験。',
+    title: 'DTalk - 偉人・アーティストと対話するAIチャットボット',
+    description: 'ジョブズ、アリストテレス、ダ・ヴィンチ、アインシュタイン、船橋穂天、AviciiとAIで会話。OpenAI GPT-4搭載の教育的チャットボット体験。',
     images: [
       {
         url: '/og-image.jpg',
@@ -52,8 +54,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'DTalk - 偉人・起業家と対話するAI',
-    description: 'ジョブズ、アリストテレス、ダ・ヴィンチ、アインシュタイン、船橋穂天とAIで対話。教育的チャットボット体験。',
+    title: 'DTalk - 偉人・アーティストと対話するAI',
+    description: 'ジョブズ、アリストテレス、ダ・ヴィンチ、アインシュタイン、船橋穂天、AviciiとAIで対話。教育的チャットボット体験。',
     images: ['/og-image.jpg'],
     creator: '@dtalk_ai',
   },
@@ -96,7 +98,7 @@ export default function RootLayout({
               "@type": "WebApplication",
               "name": "DTalk",
               "alternateName": ["ディートーク", "D Talk", "dtalk app"],
-              "description": "歴史上の偉人や現代の起業家と対話できるAI搭載チャットボット。スティーブ・ジョブズ、アリストテレス、レオナルド・ダ・ヴィンチ、アルベルト・アインシュタイン、船橋穂天との知的な会話が楽しめます。",
+              "description": "歴史上の偉人や現代のイノベーターと対話できるAI搭載チャットボット。スティーブ・ジョブズ、アリストテレス、レオナルド・ダ・ヴィンチ、アルベルト・アインシュタイン、船橋穂天、Aviciiとの知的な会話が楽しめます。",
               "url": "https://dtalk-5u4qk19dd-hotakas-projects.vercel.app",
               "applicationCategory": "EducationalApplication",
               "operatingSystem": "Any",
@@ -109,7 +111,7 @@ export default function RootLayout({
                 "@type": "Organization",
                 "name": "DTalk Team"
               },
-              "keywords": "DTalk, AI チャットボット, 歴史的人物, スティーブ・ジョブズ, アリストテレス, ダ・ヴィンチ, アインシュタイン, 船橋穂天, 起業家, 教育アプリ, スタートアップ"
+              "keywords": "DTalk, AI チャットボット, 歴史的人物, スティーブ・ジョブズ, アリストテレス, ダ・ヴィンチ, アインシュタイン, 船橋穂天, Avicii, 起業家, DJ, 音楽プロデューサー, 教育アプリ, スタートアップ, EDM"
             })
           }}
         />
