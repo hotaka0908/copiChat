@@ -5,8 +5,12 @@ import { sendMessage, Message, validateMessage } from '@/lib/ai';
 export async function POST(request: NextRequest) {
   try {
     console.log('API Chat endpoint called');
+    console.log('Request headers:', Object.fromEntries(request.headers.entries()));
     
-    const { personaId, messages } = await request.json();
+    const body = await request.text();
+    console.log('Raw request body:', body);
+    
+    const { personaId, messages } = JSON.parse(body);
     console.log('Received data:', { personaId, messageCount: messages?.length });
 
     // 入力検証
@@ -52,7 +56,7 @@ export async function POST(request: NextRequest) {
     const aiResponse = await sendMessage(persona, messages);
     console.log('OpenAI response received');
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       message: aiResponse,
       persona: {
         id: persona.id,
@@ -60,6 +64,13 @@ export async function POST(request: NextRequest) {
         era: persona.era
       }
     });
+
+    // CORSヘッダーを追加
+    response.headers.set('Access-Control-Allow-Origin', '*');
+    response.headers.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
+
+    return response;
 
   } catch (error) {
     console.error('Chat API Error:', error);
@@ -76,10 +87,20 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    return NextResponse.json(
-      { error: errorMessage },
+    const errorResponse = NextResponse.json(
+      { 
+        error: errorMessage,
+        details: error instanceof Error ? error.message : 'Unknown error'
+      },
       { status: 500 }
     );
+
+    // エラーレスポンスにもCORSヘッダーを追加
+    errorResponse.headers.set('Access-Control-Allow-Origin', '*');
+    errorResponse.headers.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    errorResponse.headers.set('Access-Control-Allow-Headers', 'Content-Type');
+
+    return errorResponse;
   }
 }
 

@@ -51,18 +51,30 @@ export default function ChatPage() {
     setLoading(true);
 
     try {
+      console.log('Sending request to /api/chat');
       const response = await fetch('/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
         body: JSON.stringify({
           personaId: persona.id,
           messages: [...messages, userMessage]
         })
       });
 
-      if (!response.ok) throw new Error('Failed to get response');
+      console.log('Response status:', response.status);
+      console.log('Response headers:', Object.fromEntries(response.headers.entries()));
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('API Error Response:', errorText);
+        throw new Error(`API Error: ${response.status} - ${errorText}`);
+      }
       
       const data = await response.json();
+      console.log('API Response:', data);
       
       setMessages(prev => [...prev, {
         role: 'assistant',
@@ -70,10 +82,22 @@ export default function ChatPage() {
         timestamp: new Date()
       }]);
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Detailed Error:', error);
+      let errorMessage = '申し訳ありません。エラーが発生しました。';
+      
+      if (error instanceof Error) {
+        if (error.message.includes('NetworkError') || error.message.includes('fetch')) {
+          errorMessage = 'ネットワークエラーが発生しました。インターネット接続を確認してください。';
+        } else if (error.message.includes('500')) {
+          errorMessage = 'サーバーエラーが発生しました。しばらく待ってからお試しください。';
+        } else if (error.message.includes('401') || error.message.includes('403')) {
+          errorMessage = '認証エラーが発生しました。管理者にお問い合わせください。';
+        }
+      }
+      
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: '申し訳ありません。エラーが発生しました。もう一度お試しください。',
+        content: errorMessage,
         timestamp: new Date()
       }]);
     } finally {
