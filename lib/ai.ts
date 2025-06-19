@@ -51,11 +51,34 @@ export async function sendMessage(
     return completion.choices[0]?.message?.content || '申し訳ありませんが、応答を生成できませんでした。';
   } catch (error) {
     console.error('OpenAI API Error details:', error);
+    
+    let errorMessage = 'AI応答の生成中にエラーが発生しました';
+    
     if (error instanceof Error) {
       console.error('Error message:', error.message);
       console.error('Error stack:', error.stack);
+      
+      // OpenAI特有のエラーを詳細に分析
+      if (error.message.includes('API key')) {
+        errorMessage = 'OpenAI APIキーが無効です';
+      } else if (error.message.includes('rate limit') || error.message.includes('429')) {
+        errorMessage = 'API使用量の上限に達しました。しばらく待ってからお試しください';
+      } else if (error.message.includes('model') || error.message.includes('engine')) {
+        errorMessage = 'AIモデルの設定に問題があります';
+      } else if (error.message.includes('timeout')) {
+        errorMessage = 'AIサービスの応答がタイムアウトしました';
+      } else if (error.message.includes('network') || error.message.includes('fetch')) {
+        errorMessage = 'ネットワーク接続に問題があります';
+      } else if (error.message.includes('400')) {
+        errorMessage = 'リクエストの形式に問題があります';
+      } else if (error.message.includes('401') || error.message.includes('403')) {
+        errorMessage = 'API認証に失敗しました';
+      } else if (error.message.includes('500') || error.message.includes('502') || error.message.includes('503')) {
+        errorMessage = 'AIサービスに一時的な問題が発生しています';
+      }
     }
-    throw new Error(`AI応答の生成中にエラーが発生しました: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    
+    throw new Error(errorMessage);
   }
 }
 
@@ -67,11 +90,17 @@ export function formatMessageHistory(messages: Message[]): string {
 }
 
 export function validateMessage(content: string): boolean {
-  if (!content || content.trim().length === 0) {
+  console.log('Validating message:', { content, length: content?.length });
+  
+  if (!content || typeof content !== 'string' || content.trim().length === 0) {
+    console.log('Message validation failed: empty or invalid content');
     return false;
   }
-  if (content.length > 4000) {
+  if (content.length > 8000) {
+    console.log('Message validation failed: too long');
     return false;
   }
+  
+  console.log('Message validation passed');
   return true;
 }

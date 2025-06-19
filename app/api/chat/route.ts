@@ -45,11 +45,15 @@ export async function POST(request: NextRequest) {
     // OpenAI APIキーの確認
     if (!process.env.OPENAI_API_KEY) {
       console.log('OpenAI API key not configured');
-      return NextResponse.json(
+      const errorResponse = NextResponse.json(
         { error: 'OpenAI API key not configured' },
         { status: 500 }
       );
+      errorResponse.headers.set('Access-Control-Allow-Origin', '*');
+      return errorResponse;
     }
+
+    console.log('OpenAI API key length:', process.env.OPENAI_API_KEY.length);
 
     console.log('Calling OpenAI API...');
     // AI応答の生成
