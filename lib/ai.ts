@@ -61,8 +61,8 @@ export async function sendMessage(
       // OpenAI特有のエラーを詳細に分析
       if (error.message.includes('API key')) {
         errorMessage = 'OpenAI APIキーが無効です';
-      } else if (error.message.includes('rate limit') || error.message.includes('429')) {
-        errorMessage = 'API使用量の上限に達しました。しばらく待ってからお試しください';
+      } else if (error.message.includes('rate limit') || error.message.includes('429') || error.message.includes('quota')) {
+        errorMessage = 'OpenAI APIの使用量制限に達しています。管理者にお問い合わせください。';
       } else if (error.message.includes('model') || error.message.includes('engine')) {
         errorMessage = 'AIモデルの設定に問題があります';
       } else if (error.message.includes('timeout')) {
