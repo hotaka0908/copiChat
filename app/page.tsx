@@ -13,7 +13,7 @@ const getAvatarUrl = (personaId: string): string => {
     'leonardo-da-vinci': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Francesco_Melzi_-_Portrait_of_Leonardo.png/256px-Francesco_Melzi_-_Portrait_of_Leonardo.png',
     'albert-einstein': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Einstein_1921_by_F_Schmutzer_-_restoration.jpg/256px-Einstein_1921_by_F_Schmutzer_-_restoration.jpg',
     'hotaka-funabashi': '/images/hotaka1996.png',
-    'avicii': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Avicii_2014_003.jpg/256px-Avicii_2014_003.jpg',
+    'avicii': 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Avicii_2014_003_cropped.jpg/256px-Avicii_2014_003_cropped.jpg',
   };
   return avatarMap[personaId] || '';
 };
