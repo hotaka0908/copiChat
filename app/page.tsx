@@ -5,6 +5,18 @@ import { MessageCircle, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { getAllPersonas } from '@/lib/personas';
 
+// 各人物に対応する肖像画像URL
+const getAvatarUrl = (personaId: string): string => {
+  const avatarMap: Record<string, string> = {
+    'steve-jobs': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg/256px-Steve_Jobs_Headshot_2010-CROP_%28cropped_2%29.jpg',
+    'aristotle': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Aristotle_Altemps_Inv8575.jpg/256px-Aristotle_Altemps_Inv8575.jpg',
+    'leonardo-da-vinci': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Leonardo_da_Vinci%2C_by_Francesco_Melzi.jpg/256px-Leonardo_da_Vinci%2C_by_Francesco_Melzi.jpg',
+    'albert-einstein': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Einstein_1921_by_F_Schmutzer_-_restoration.jpg/256px-Einstein_1921_by_F_Schmutzer_-_restoration.jpg',
+    'hotaka-funabashi': 'https://images.unsplash.com/photo-1507003211169-0a1dd7cfcc8c?w=400&h=400&fit=crop&crop=face',
+  };
+  return avatarMap[personaId] || '';
+};
+
 export default function HomePage() {
   const personas = getAllPersonas();
 
@@ -23,12 +35,20 @@ export default function HomePage() {
               DTalk
             </motion.h1>
             <motion.p 
-              className="text-lg text-gray-600 font-light"
+              className="text-lg text-gray-600 font-light mb-2"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              Conversations with History's Greatest Minds
+              歴史上の偉人と会話するAIチャットボット
+            </motion.p>
+            <motion.p 
+              className="text-sm text-gray-500"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              スティーブ・ジョブズ、アリストテレス、ダ・ヴィンチ、アインシュタイン、船橋穂天と対話
             </motion.p>
           </div>
         </div>
@@ -53,10 +73,23 @@ export default function HomePage() {
                   <div className="p-6 border-b border-gray-100">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-4">
-                        <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center">
-                          <span className="text-lg font-semibold text-gray-700">
-                            {persona.nameEn.charAt(0)}
-                          </span>
+                        <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-gray-200 shadow-sm">
+                          <img 
+                            src={getAvatarUrl(persona.id)}
+                            alt={persona.name}
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              target.style.display = 'none';
+                              const fallback = target.nextElementSibling as HTMLElement;
+                              if (fallback) fallback.classList.remove('hidden');
+                            }}
+                          />
+                          <div className="hidden w-full h-full bg-gray-100 flex items-center justify-center">
+                            <span className="text-lg font-semibold text-gray-700">
+                              {persona.nameEn.charAt(0)}
+                            </span>
+                          </div>
                         </div>
                         <div>
                           <h3 className="text-xl font-semibold text-gray-900">
@@ -118,6 +151,45 @@ export default function HomePage() {
           ))}
         </div>
 
+        {/* SEO強化コンテンツ */}
+        <motion.div 
+          className="mt-16 bg-white rounded-lg border border-gray-100 p-8"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+        >
+          <h2 className="text-2xl font-semibold text-gray-900 mb-4 text-center">
+            DTalkについて
+          </h2>
+          <div className="grid md:grid-cols-2 gap-8 text-sm text-gray-600 leading-relaxed">
+            <div>
+              <h3 className="font-semibold text-gray-800 mb-2">DTalkとは</h3>
+              <p className="mb-4">
+                DTalk（ディートーク）は、OpenAI GPT-4を使用した革新的なAIチャットボットです。
+                歴史上の偉人たちの思考パターンと人格を忠実に再現し、ユーザーが直接対話できる教育的体験を提供します。
+              </p>
+              <p>
+                スティーブ・ジョブズのイノベーション哲学、アリストテレスの論理学、
+                レオナルド・ダ・ヴィンチの創造性、アインシュタインの科学的思考、
+                船橋穂天の現代起業家精神を学習できます。
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-gray-800 mb-2">活用シーン</h3>
+              <ul className="space-y-2">
+                <li>• 歴史学習と人物理解の深化</li>
+                <li>• 哲学的思考の訓練</li>
+                <li>• クリエイティブな問題解決</li>
+                <li>• リーダーシップと意思決定の学習</li>
+                <li>• 科学的思考法の習得</li>
+                <li>• 現代ビジネス・スタートアップ戦略</li>
+                <li>• AI・技術開発の相談</li>
+                <li>• 教育機関での授業補助ツール</li>
+              </ul>
+            </div>
+          </div>
+        </motion.div>
+
         {/* フッター */}
         <motion.div 
           className="text-center mt-16 py-8 border-t border-gray-200"
@@ -128,9 +200,18 @@ export default function HomePage() {
           <p className="text-gray-500 text-sm mb-2">
             Powered by OpenAI GPT-4 • Historical persona recreation
           </p>
-          <p className="text-gray-400 text-xs">
+          <p className="text-gray-400 text-xs mb-4">
             These conversations are AI simulations for educational purposes
           </p>
+          <div className="flex justify-center space-x-4 text-xs text-gray-400">
+            <span>DTalk</span>
+            <span>•</span>
+            <span>ディートーク</span>
+            <span>•</span>
+            <span>AI チャットボット</span>
+            <span>•</span>
+            <span>偉人・起業家との対話</span>
+          </div>
         </motion.div>
       </main>
     </div>

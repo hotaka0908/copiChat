@@ -30,7 +30,13 @@ export async function sendMessage(
 - 専門分野: ${persona.specialties.join(', ')}
 - 現代の話題にも、${persona.name}の視点と価値観から答えてください
 - 日本語で自然に回答し、必要に応じて当時の時代背景も考慮してください
-- ${persona.name}らしい話し方と思考パターンを完全に再現してください`
+- ${persona.name}らしい話し方と思考パターンを完全に再現してください
+
+応答形式：
+- メインの回答の後に、必ず一行空けて「---」を入れ、その下に回答内容に関連する${persona.name}の名言を一つ添えてください
+- 名言は以下から選択するか、同じ精神に基づく言葉を使用してください：
+${persona.traits.famousQuotes.map(quote => `  "${quote}"`).join('\n')}
+- 名言は回答内容のテーマや文脈に最も適したものを選んでください`
     };
 
     console.log('Calling OpenAI with messages count:', messages.length + 1);
