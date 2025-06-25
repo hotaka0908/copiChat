@@ -23,6 +23,10 @@ export default function ExplorePage() {
   const [nearbyCharacter, setNearbyCharacter] = useState<any>(null);
   const [showDialogue, setShowDialogue] = useState(false);
   const [selectedCharacter, setSelectedCharacter] = useState<any>(null);
+  const [isInChat, setIsInChat] = useState(false);
+  const [messages, setMessages] = useState<Array<{role: string; content: string; timestamp: number}>>([]);
+  const [inputMessage, setInputMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -218,13 +222,13 @@ export default function ExplorePage() {
     const handleKeyDown = (e: KeyboardEvent) => {
       keysRef.current[e.key.toLowerCase()] = true;
       
-      if (e.key.toLowerCase() === 'e' && nearbyCharacter && !showDialogue) {
+      if (e.key.toLowerCase() === 'e' && nearbyCharacter && !showDialogue && !isInChat) {
         e.preventDefault();
         setSelectedCharacter(nearbyCharacter);
         setShowDialogue(true);
       }
       
-      if (e.key === ' ' && !showDialogue) {
+      if (e.key === ' ' && !showDialogue && !isInChat) {
         e.preventDefault();
         playerRef.current.isDancing = true;
       }
@@ -242,8 +246,13 @@ export default function ExplorePage() {
       }
       
       if (e.key === 'Escape') {
-        setShowDialogue(false);
-        setSelectedCharacter(null);
+        if (isInChat) {
+          setIsInChat(false);
+          setMessages([]);
+        } else {
+          setShowDialogue(false);
+          setSelectedCharacter(null);
+        }
         if (document.pointerLockElement === renderer.domElement) {
           document.exitPointerLock();
         }
@@ -251,13 +260,13 @@ export default function ExplorePage() {
     };
 
     const handleMouseMove = (e: MouseEvent) => {
-      if (document.pointerLockElement === renderer.domElement && !showDialogue) {
+      if (document.pointerLockElement === renderer.domElement && !showDialogue && !isInChat) {
         mouseXRef.current += e.movementX * 0.002;
       }
     };
 
     const handleClick = () => {
-      if (!showDialogue) {
+      if (!showDialogue && !isInChat) {
         renderer.domElement.requestPointerLock();
       }
     };
@@ -288,7 +297,7 @@ export default function ExplorePage() {
       // Player movement
       player.velocity.set(0, 0, 0);
       
-      if (!player.isDancing && !showDialogue) {
+      if (!player.isDancing && !showDialogue && !isInChat) {
         if (keys['w']) player.velocity.z = player.speed;
         if (keys['s']) player.velocity.z = -player.speed;
         if (keys['a']) player.velocity.x = -player.speed;
@@ -296,7 +305,7 @@ export default function ExplorePage() {
       }
 
       // Camera rotation
-      if (!showDialogue) {
+      if (!showDialogue && !isInChat) {
         camera.rotation.y = mouseXRef.current;
       }
 
@@ -398,11 +407,103 @@ export default function ExplorePage() {
         mountRef.current.removeChild(renderer.domElement);
       }
     };
-  }, [nearbyCharacter, showDialogue]);
+  }, [nearbyCharacter, showDialogue, isInChat]);
 
-  const handleTalkToCharacter = () => {
+  const handleTalkToCharacter = async () => {
     if (selectedCharacter?.userData?.persona) {
-      router.push(`/chat/${selectedCharacter.userData.persona.id}`);
+      setShowDialogue(false);
+      setIsInChat(true);
+      
+      // Add initial greeting and speak character name
+      const greeting = `こんにちは！私は${selectedCharacter.userData.persona.name}です。`;
+      setMessages([{
+        role: 'assistant',
+        content: greeting,
+        timestamp: Date.now()
+      }]);
+      
+      // Speak the character's name using Web Speech API
+      if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(greeting);
+        utterance.lang = 'ja-JP';
+        utterance.rate = 0.9;
+        utterance.pitch = 1.0;
+        speechSynthesis.speak(utterance);
+      }
+    }
+  };
+
+  const sendMessage = async () => {
+    if (!inputMessage.trim() || !selectedCharacter || isLoading) return;
+    
+    const userMessage = inputMessage.trim();
+    setInputMessage('');
+    setIsLoading(true);
+    
+    // Add user message
+    const newMessages = [...messages, {
+      role: 'user',
+      content: userMessage,
+      timestamp: Date.now()
+    }];
+    setMessages(newMessages);
+    
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          messages: [
+            {
+              role: 'system',
+              content: selectedCharacter.userData.persona.systemPrompt
+            },
+            ...newMessages.map(msg => ({
+              role: msg.role,
+              content: msg.content
+            }))
+          ]
+        })
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        const assistantMessage = {
+          role: 'assistant',
+          content: data.content,
+          timestamp: Date.now()
+        };
+        setMessages(prev => [...prev, assistantMessage]);
+        
+        // Speak the response
+        if ('speechSynthesis' in window) {
+          const utterance = new SpeechSynthesisUtterance(data.content);
+          utterance.lang = 'ja-JP';
+          utterance.rate = 0.9;
+          utterance.pitch = 1.0;
+          speechSynthesis.speak(utterance);
+        }
+      } else {
+        throw new Error('Failed to get response');
+      }
+    } catch (error) {
+      console.error('Chat error:', error);
+      setMessages(prev => [...prev, {
+        role: 'assistant',
+        content: '申し訳ございません。エラーが発生しました。',
+        timestamp: Date.now()
+      }]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
     }
   };
 
@@ -417,11 +518,12 @@ export default function ExplorePage() {
         <p className="text-sm mb-1">マウスで視点移動</p>
         <p className="text-sm mb-1">Eキーで対話</p>
         <p className="text-sm mb-1">スペースでダンス</p>
-        <p className="text-sm">ESCで終了</p>
+        <p className="text-sm mb-1">ESCで終了・戻る</p>
+        <p className="text-sm text-yellow-300">🔊 音声付き対話</p>
       </div>
 
       {/* Interaction Prompt */}
-      {nearbyCharacter && !showDialogue && (
+      {nearbyCharacter && !showDialogue && !isInChat && (
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black/80 text-white px-4 py-2 rounded-full">
           Eキーで{nearbyCharacter.userData.persona.name}と話す
         </div>
@@ -449,6 +551,91 @@ export default function ExplorePage() {
             >
               キャンセル
             </button>
+          </div>
+        </div>
+      )}
+
+      {/* Chat Interface */}
+      {isInChat && selectedCharacter && (
+        <div className="absolute inset-4 bg-white/95 rounded-xl shadow-2xl backdrop-blur-sm flex flex-col">
+          {/* Chat Header */}
+          <div className="p-4 border-b border-gray-200 flex justify-between items-center">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center">
+                <span className="text-orange-600 font-bold">
+                  {selectedCharacter.userData.persona.name.charAt(0)}
+                </span>
+              </div>
+              <div>
+                <h3 className="font-bold text-gray-900">
+                  {selectedCharacter.userData.persona.name}
+                </h3>
+                <p className="text-sm text-gray-600">
+                  {selectedCharacter.userData.persona.title}
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={() => setIsInChat(false)}
+              className="text-gray-500 hover:text-gray-700 text-xl font-bold"
+            >
+              ×
+            </button>
+          </div>
+
+          {/* Chat Messages */}
+          <div className="flex-1 overflow-y-auto p-4 space-y-4">
+            {messages.map((message, index) => (
+              <div
+                key={index}
+                className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+              >
+                <div
+                  className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
+                    message.role === 'user'
+                      ? 'bg-orange-600 text-white'
+                      : 'bg-gray-200 text-gray-800'
+                  }`}
+                >
+                  <p className="text-sm">{message.content}</p>
+                  <p className="text-xs opacity-70 mt-1">
+                    {new Date(message.timestamp).toLocaleTimeString()}
+                  </p>
+                </div>
+              </div>
+            ))}
+            {isLoading && (
+              <div className="flex justify-start">
+                <div className="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg">
+                  <p className="text-sm">考え中...</p>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Chat Input */}
+          <div className="p-4 border-t border-gray-200">
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={inputMessage}
+                onChange={(e) => setInputMessage(e.target.value)}
+                onKeyPress={handleKeyPress}
+                placeholder="メッセージを入力..."
+                className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                disabled={isLoading}
+              />
+              <button
+                onClick={sendMessage}
+                disabled={isLoading || !inputMessage.trim()}
+                className="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                送信
+              </button>
+            </div>
+            <p className="text-xs text-gray-500 mt-2">
+              Enterで送信 • Escapeで終了
+            </p>
           </div>
         </div>
       )}
