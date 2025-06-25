@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { MessageCircle, ArrowRight } from 'lucide-react';
+import { MessageCircle, ArrowRight, Gamepad2 } from 'lucide-react';
 import Link from 'next/link';
 import { getAllPersonas } from '@/lib/personas';
 
@@ -44,13 +44,25 @@ export default function HomePage() {
               歴史上の偉人と会話するAIチャットボット
             </motion.p>
             <motion.p 
-              className="text-sm text-gray-500"
+              className="text-sm text-gray-500 mb-6"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
             >
               ジョブズ、アリストテレス、ダ・ヴィンチ、アインシュタイン、船橋穂天、Aviciiと対話
             </motion.p>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              <Link href="/explore">
+                <button className="bg-orange-600 hover:bg-orange-700 text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 inline-flex items-center gap-2 shadow-lg hover:shadow-xl">
+                  <Gamepad2 size={20} />
+                  3D探索モードで体験
+                </button>
+              </Link>
+            </motion.div>
           </div>
         </div>
       </header>
@@ -58,6 +70,17 @@ export default function HomePage() {
       {/* メインコンテンツ */}
       <main className="max-w-6xl mx-auto px-6 py-12">
         
+        {/* セクションヘッダー */}
+        <motion.div
+          className="text-center mb-8"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+        >
+          <h2 className="text-2xl font-light text-gray-800 mb-2">人物を選んで対話を開始</h2>
+          <p className="text-sm text-gray-600">クリックして各人物と直接チャットするか、3D探索モードで探してみましょう</p>
+        </motion.div>
+
         {/* 人物選択グリッド */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {personas.map((persona, index) => (
