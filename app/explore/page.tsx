@@ -414,8 +414,8 @@ export default function ExplorePage() {
       setShowDialogue(false);
       setIsInChat(true);
       
-      // Add initial greeting and speak character name
-      const greeting = `こんにちは！私は${selectedCharacter.userData.persona.name}です。`;
+      // Add initial greeting similar to existing chat
+      const greeting = `こんにちは！私は${selectedCharacter.userData.persona.name}です。${selectedCharacter.userData.persona.era}を生きた${selectedCharacter.userData.persona.title}として、あなたとお話しできることを嬉しく思います。何についてお聞きになりたいですか？`;
       setMessages([{
         role: 'assistant',
         content: greeting,
@@ -440,59 +440,80 @@ export default function ExplorePage() {
     setInputMessage('');
     setIsLoading(true);
     
-    // Add user message
-    const newMessages = [...messages, {
+    // Add user message using the same format as existing chat
+    const userMsg = {
       role: 'user',
       content: userMessage,
       timestamp: Date.now()
-    }];
+    };
+    const newMessages = [...messages, userMsg];
     setMessages(newMessages);
     
     try {
+      console.log('Sending 3D chat request to /api/chat');
+      console.log('Persona ID:', selectedCharacter.userData.persona.id);
+      
+      // Use the same API format as the existing chat
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
         body: JSON.stringify({
-          messages: [
-            {
-              role: 'system',
-              content: selectedCharacter.userData.persona.systemPrompt
-            },
-            ...newMessages.map(msg => ({
-              role: msg.role,
-              content: msg.content
-            }))
-          ]
+          personaId: selectedCharacter.userData.persona.id,
+          messages: newMessages.map(msg => ({
+            role: msg.role,
+            content: msg.content,
+            timestamp: new Date(msg.timestamp)
+          }))
         })
       });
       
-      if (response.ok) {
-        const data = await response.json();
-        const assistantMessage = {
-          role: 'assistant',
-          content: data.content,
-          timestamp: Date.now()
-        };
-        setMessages(prev => [...prev, assistantMessage]);
-        
-        // Speak the response
-        if ('speechSynthesis' in window) {
-          const utterance = new SpeechSynthesisUtterance(data.content);
-          utterance.lang = 'ja-JP';
-          utterance.rate = 0.9;
-          utterance.pitch = 1.0;
-          speechSynthesis.speak(utterance);
-        }
-      } else {
-        throw new Error('Failed to get response');
+      console.log('3D Chat response status:', response.status);
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('3D Chat API Error Response:', errorText);
+        throw new Error(`API Error: ${response.status} - ${errorText}`);
+      }
+      
+      const data = await response.json();
+      console.log('3D Chat API Response:', data);
+      
+      const assistantMessage = {
+        role: 'assistant',
+        content: data.message, // Use 'message' field like existing chat
+        timestamp: Date.now()
+      };
+      setMessages(prev => [...prev, assistantMessage]);
+      
+      // Speak the response
+      if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(data.message);
+        utterance.lang = 'ja-JP';
+        utterance.rate = 0.9;
+        utterance.pitch = 1.0;
+        speechSynthesis.speak(utterance);
       }
     } catch (error) {
-      console.error('Chat error:', error);
+      console.error('3D Chat detailed error:', error);
+      
+      let errorMessage = '申し訳ございません。エラーが発生しました。';
+      
+      if (error instanceof Error) {
+        if (error.message.includes('NetworkError') || error.message.includes('fetch')) {
+          errorMessage = 'ネットワークエラーが発生しました。インターネット接続を確認してください。';
+        } else if (error.message.includes('500')) {
+          errorMessage = 'サーバーエラーが発生しました。しばらく待ってからお試しください。';
+        } else if (error.message.includes('401') || error.message.includes('403')) {
+          errorMessage = '認証エラーが発生しました。管理者にお問い合わせください。';
+        }
+      }
+      
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: '申し訳ございません。エラーが発生しました。',
+        content: errorMessage,
         timestamp: Date.now()
       }]);
     } finally {
