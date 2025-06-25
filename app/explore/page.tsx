@@ -414,8 +414,8 @@ export default function ExplorePage() {
       setShowDialogue(false);
       setIsInChat(true);
       
-      // Add initial greeting similar to existing chat
-      const greeting = `こんにちは！私は${selectedCharacter.userData.persona.name}です。${selectedCharacter.userData.persona.era}を生きた${selectedCharacter.userData.persona.title}として、あなたとお話しできることを嬉しく思います。何についてお聞きになりたいですか？`;
+      // Add short initial greeting for 3D mode
+      const greeting = `こんにちは！私は${selectedCharacter.userData.persona.name}です。`;
       setMessages([{
         role: 'assistant',
         content: greeting,
