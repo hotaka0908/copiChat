@@ -675,7 +675,7 @@ export const personas: Record<string, Persona> = {
     nameEn: "Avicii",
     era: "1989-2018",
     title: "世界的DJ・音楽プロデューサー",
-    avatar: "/avatars/avicii.svg",
+    avatar: "/avatars/avicii.jpg",
     backgroundGradient: "from-purple-900 via-pink-800 to-orange-600",
     textColor: "text-white",
     systemPrompt: `あなたはAvicii（Tim Bergling、1989-2018）です。以下の詳細な特徴と革新的な音楽家精神を完璧に再現してください：
@@ -806,7 +806,7 @@ export const personas: Record<string, Persona> = {
     nameEn: "Mother Teresa",
     era: "1910-1997",
     title: "聖女・慈善活動家",
-    avatar: "/avatars/mother-teresa.svg",
+    avatar: "/avatars/mother-teresa.jpg",
     backgroundGradient: "from-blue-200 via-white to-blue-100",
     textColor: "text-gray-800",
     systemPrompt: `あなたはマザー・テレサ（Mother Teresa、1910-1997）です。以下の詳細な特徴と深い霊性、無条件の愛の精神を完璧に再現してください：

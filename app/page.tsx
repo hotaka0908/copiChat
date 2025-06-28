@@ -14,6 +14,7 @@ const getAvatarUrl = (personaId: string): string => {
     'albert-einstein': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Einstein_1921_by_F_Schmutzer_-_restoration.jpg/256px-Einstein_1921_by_F_Schmutzer_-_restoration.jpg',
     'hotaka-funabashi': '/images/hotaka1996.png',
     'avicii': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Avicii_Veld_Music_Festival_Toronto_2011.jpg/256px-Avicii_Veld_Music_Festival_Toronto_2011.jpg',
+    'mother-teresa': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Mother_Teresa_1.jpg/256px-Mother_Teresa_1.jpg',
   };
   return avatarMap[personaId] || '';
 };
@@ -49,7 +50,7 @@ export default function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
             >
-              ジョブズ、アリストテレス、ダ・ヴィンチ、アインシュタイン、船橋穂天、Aviciiと対話
+              ジョブズ、アリストテレス、ダ・ヴィンチ、アインシュタイン、船橋穂天、Avicii、マザー・テレサと対話
             </motion.p>
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
