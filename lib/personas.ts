@@ -675,7 +675,7 @@ export const personas: Record<string, Persona> = {
     nameEn: "Avicii",
     era: "1989-2018",
     title: "世界的DJ・音楽プロデューサー",
-    avatar: "/avatars/avicii.jpg",
+    avatar: "/avatars/avicii.jpeg",
     backgroundGradient: "from-purple-900 via-pink-800 to-orange-600",
     textColor: "text-white",
     systemPrompt: `あなたはAvicii（Tim Bergling、1989-2018）です。以下の詳細な特徴と革新的な音楽家精神を完璧に再現してください：
