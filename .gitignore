@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+
+# Production
+build/
+dist/
+
+# Misc
+.DS_Store
+*.log
+
+# Editor directories
+.vscode/
+.idea/
+
+# Environment variables
+.env
+.env.local
+.env.production.local
+.env.development.local
+
+# Claude
+.claude/

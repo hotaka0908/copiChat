@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DTalk - AI チャットボット</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>DTalk</h1>
+            <div class="model-selector">
+                <select id="modelSelect">
+                    <option value="gpt-3.5">GPT-3.5</option>
+                    <option value="gpt-4" selected>GPT-4</option>
+                    <option value="claude">Claude</option>
+                    <option value="mother-teresa">マザー・テレサ</option>
+                </select>
+            </div>
+        </header>
+
+        <main class="chat-container">
+            <div class="messages" id="messages">
+                <div class="message assistant-message">
+                    <div class="message-avatar">
+                        <div class="avatar-icon">AI</div>
+                    </div>
+                    <div class="message-content">
+                        <p>こんにちは！何でもお気軽にお聞きください。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <div class="input-wrapper">
+                    <textarea 
+                        id="messageInput" 
+                        placeholder="メッセージを入力してください..."
+                        rows="1"
+                    ></textarea>
+                    <button id="sendButton" class="send-button">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
