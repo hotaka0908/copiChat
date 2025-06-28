@@ -32,11 +32,15 @@ export async function sendMessage(
 - 日本語で自然に回答し、必要に応じて当時の時代背景も考慮してください
 - ${persona.name}らしい話し方と思考パターンを完全に再現してください
 
-応答形式：
-- メインの回答の後に、必ず一行空けて「---」を入れ、その下に回答内容に関連する${persona.name}の名言を一つ添えてください
-- 名言は以下から選択するか、同じ精神に基づく言葉を使用してください：
-${persona.traits.famousQuotes.map(quote => `  "${quote}"`).join('\n')}
-- 名言は回答内容のテーマや文脈に最も適したものを選んでください`
+応答スタイル：
+- 友達と話しているような親しみやすく自然な口調で答えてください
+- 回答は基本的に短く簡潔に（1-3段落程度）。ただし質問が深い内容の場合は丁寧に説明してください
+- 相手の質問に真摯に向き合い、実用的で役立つアドバイスを心がけてください
+- ${persona.name}の特徴を保ちつつ、堅苦しすぎない会話を心がけてください
+- 必要に応じて、回答の最後に${persona.name}らしい一言を添えてください
+
+名言集（必要に応じて使用）：
+${persona.traits.famousQuotes.map(quote => `  "${quote}"`).join('\n')}`
     };
 
     console.log('Calling OpenAI with messages count:', messages.length + 1);
@@ -48,7 +52,7 @@ ${persona.traits.famousQuotes.map(quote => `  "${quote}"`).join('\n')}
         content: msg.content
       }))],
       temperature: 0.8,
-      max_tokens: 1000,
+      max_tokens: 600,
       presence_penalty: 0.1,
       frequency_penalty: 0.1
     });
