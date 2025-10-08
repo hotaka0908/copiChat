@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server';
 import { getPersonaById } from '@/lib/personas';
-import { sendMessage, Message, validateMessage } from '@/lib/ai';
+import { sendMessage, validateMessage } from '@/lib/ai';
 import { createSecureResponse, createOptionsResponse } from '@/lib/security';
 
 export async function POST(request: NextRequest) {

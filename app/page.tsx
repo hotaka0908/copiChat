@@ -154,7 +154,7 @@ export default function HomePage() {
 
                     {/* 特徴的な言葉 */}
                     <blockquote className="border-l-3 border-gray-200 pl-4 italic text-gray-600 text-sm">
-                      "{persona.traits.famousQuotes[0]}"
+                      &ldquo;{persona.traits.famousQuotes[0]}&rdquo;
                     </blockquote>
                   </div>
 

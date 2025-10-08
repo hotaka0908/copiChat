@@ -108,7 +108,7 @@ export function setSecurityHeaders(response: NextResponse): NextResponse {
  * APIレスポンスを作成（CORS + セキュリティヘッダー付き）
  */
 export function createSecureResponse(
-  data: any,
+  data: Record<string, unknown>,
   status: number = 200,
   requestOrigin: string | null = null
 ): NextResponse {
