@@ -1,9 +1,17 @@
 import OpenAI from 'openai';
 import { Persona } from './personas';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY!,
-});
+// OpenAIクライアントを遅延初期化（ビルド時のエラーを回避）
+let openai: OpenAI | null = null;
+
+function getOpenAIClient(): OpenAI {
+  if (!openai) {
+    openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY || '',
+    });
+  }
+  return openai;
+}
 
 export interface Message {
   role: 'user' | 'assistant' | 'system';
@@ -16,9 +24,6 @@ export async function sendMessage(
   messages: Message[]
 ): Promise<string> {
   try {
-    console.log('Starting OpenAI API call for persona:', persona.name);
-    console.log('API Key present:', !!process.env.OPENAI_API_KEY);
-    
     const systemMessage: Message = {
       role: 'system',
       content: `${persona.systemPrompt}
@@ -43,9 +48,7 @@ export async function sendMessage(
 ${persona.traits.famousQuotes.map(quote => `  "${quote}"`).join('\n')}`
     };
 
-    console.log('Calling OpenAI with messages count:', messages.length + 1);
-
-    const completion = await openai.chat.completions.create({
+    const completion = await getOpenAIClient().chat.completions.create({
       model: "gpt-4o-mini",
       messages: [systemMessage, ...messages.map(msg => ({
         role: msg.role,
@@ -57,7 +60,6 @@ ${persona.traits.famousQuotes.map(quote => `  "${quote}"`).join('\n')}`
       frequency_penalty: 0.1
     });
 
-    console.log('OpenAI API call successful');
     return completion.choices[0]?.message?.content || '申し訳ありませんが、応答を生成できませんでした。';
   } catch (error) {
     console.error('OpenAI API Error details:', error);
@@ -100,17 +102,12 @@ export function formatMessageHistory(messages: Message[]): string {
 }
 
 export function validateMessage(content: string): boolean {
-  console.log('Validating message:', { content, length: content?.length });
-  
   if (!content || typeof content !== 'string' || content.trim().length === 0) {
-    console.log('Message validation failed: empty or invalid content');
     return false;
   }
   if (content.length > 8000) {
-    console.log('Message validation failed: too long');
     return false;
   }
-  
-  console.log('Message validation passed');
+
   return true;
 }

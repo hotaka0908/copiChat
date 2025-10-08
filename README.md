@@ -1,5 +1,10 @@
 # DTalk - 歴史的人物との対話チャットボット
 
+[![Vercel](https://img.shields.io/badge/deployed%20on-Vercel-black)](https://vercel.com)
+[![Next.js](https://img.shields.io/badge/Next.js-15-black)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.6-blue)](https://www.typescriptlang.org/)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
 DTalkは、AI技術を使用して歴史上の偉人たちの思考パターンと人格を再現し、ユーザーが彼らと実際に会話しているような体験を提供するWebアプリケーションです。
 
 ## 🌟 特徴
@@ -7,8 +12,9 @@ DTalkは、AI技術を使用して歴史上の偉人たちの思考パターン�
 - **本格的な人格再現**: 各歴史的人物の思考パターン、価値観、話し方を忠実に再現
 - **直感的なUI**: クリーンで使いやすいモダンなインターフェース
 - **レスポンシブデザイン**: PC、タブレット、スマートフォンに対応
-- **高品質なAI**: OpenAI GPT-4による自然で知的な対話
+- **高品質なAI**: OpenAI GPT-4o-miniによる自然で知的な対話
 - **美しいアニメーション**: Framer Motionによるスムーズなユーザー体験
+- **エンタープライズグレードのセキュリティ**: CORS制限、セキュリティヘッダー、環境変数保護
 
 ## 🎭 対話可能な歴史的人物
 
@@ -68,29 +74,37 @@ npm run dev
 ## 🛠️ 技術スタック
 
 - **フレームワーク**: Next.js 15 (App Router)
-- **言語**: TypeScript
+- **言語**: TypeScript 5.6
 - **スタイリング**: Tailwind CSS
-- **AI**: OpenAI GPT-4 API
+- **AI**: OpenAI GPT-4o-mini API
 - **アニメーション**: Framer Motion
 - **アイコン**: Lucide React
-- **データベース**: Supabase (オプション)
+- **デプロイ**: Vercel
+- **セキュリティ**: カスタムミドルウェア、CORS制限、CSP
 
 ## 📁 プロジェクト構造
 
 ```
 dtalk/
-├── app/                    # Next.js App Router
-│   ├── page.tsx           # ホームページ（人物選択）
-│   ├── chat/[personaId]/  # チャット画面
-│   ├── api/chat/          # OpenAI API エンドポイント
-│   ├── layout.tsx         # レイアウト
-│   └── globals.css        # グローバルスタイル
-├── lib/                   # ライブラリとユーティリティ
-│   ├── personas.ts        # 人物データベース
-│   └── ai.ts              # OpenAI API 連携
-├── components/            # Reactコンポーネント
-├── public/               # 静的ファイル
-└── README.md             # このファイル
+├── app/                      # Next.js App Router
+│   ├── page.tsx             # ホームページ（人物選択）
+│   ├── chat/[personaId]/    # チャット画面
+│   ├── api/
+│   │   ├── chat/            # メインチャットAPI
+│   │   ├── test/            # APIテストエンドポイント
+│   │   └── test-openai/     # OpenAI接続テスト
+│   ├── layout.tsx           # レイアウト
+│   └── globals.css          # グローバルスタイル
+├── lib/                     # ライブラリとユーティリティ
+│   ├── personas.ts          # 人物データベース（30+人物）
+│   ├── ai.ts                # OpenAI API 連携
+│   └── security.ts          # セキュリティユーティリティ
+├── middleware.ts            # Edge Middleware（セキュリティ）
+├── public/                  # 静的ファイル
+├── vercel.json              # Vercel設定
+├── SECURITY.md              # セキュリティドキュメント
+├── VERCEL_DEPLOYMENT.md     # デプロイ手順
+└── README.md                # このファイル
 ```
 
 ## 🎯 使用方法
@@ -140,6 +154,47 @@ npm run type-check
 # Lintチェック
 npm run lint
 ```
+
+## 🚀 Vercelへのデプロイ
+
+### クイックスタート
+
+1. **GitHubリポジトリをVercelにインポート**
+   ```
+   https://vercel.com → New Project → Import from GitHub
+   ```
+
+2. **環境変数を設定**（Vercel Dashboard）
+   ```
+   OPENAI_API_KEY=sk-your-actual-key
+   NEXT_PUBLIC_APP_URL=https://your-app.vercel.app
+   ```
+
+3. **デプロイ** - 自動的にビルド＆デプロイ完了！
+
+📖 **詳細な手順**: [VERCEL_DEPLOYMENT.md](./VERCEL_DEPLOYMENT.md) を参照
+
+## 🔒 セキュリティ
+
+DTalkは本番環境レベルのセキュリティ対策を実装しています：
+
+- ✅ **CORS制限**: 許可されたオリジンのみアクセス可能
+- ✅ **セキュリティヘッダー**: CSP, X-Frame-Options, HSTS等
+- ✅ **環境変数保護**: APIキーの適切な管理
+- ✅ **入力検証**: 全APIエンドポイントで実施
+- ✅ **依存関係監査**: 脆弱性ゼロを維持
+
+📖 **詳細**: [SECURITY.md](./SECURITY.md) を参照
+
+## 🧪 テスト済み
+
+- ✅ TypeScript型チェック完了
+- ✅ プロダクションビルド成功
+- ✅ セキュリティ監査合格（脆弱性: 0件）
+- ✅ APIエンドポイント動作確認済み
+- ✅ Vercel本番環境互換性確認済み
+
+📊 **詳細レポート**: [TEST_REPORT.md](./TEST_REPORT.md)
 
 ## 📈 今後の予定
 

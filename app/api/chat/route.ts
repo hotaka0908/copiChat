@@ -1,84 +1,72 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import { getPersonaById } from '@/lib/personas';
 import { sendMessage, Message, validateMessage } from '@/lib/ai';
+import { createSecureResponse, createOptionsResponse } from '@/lib/security';
 
 export async function POST(request: NextRequest) {
+  const origin = request.headers.get('origin');
+
   try {
-    console.log('API Chat endpoint called');
-    console.log('Request headers:', Object.fromEntries(request.headers.entries()));
-    
     const body = await request.text();
-    console.log('Raw request body:', body);
-    
     const { personaId, messages } = JSON.parse(body);
-    console.log('Received data:', { personaId, messageCount: messages?.length });
 
     // 入力検証
     if (!personaId || !messages || !Array.isArray(messages)) {
-      console.log('Invalid request data');
-      return NextResponse.json(
+      return createSecureResponse(
         { error: 'Invalid request data' },
-        { status: 400 }
+        400,
+        origin
       );
     }
 
     // 人物データの取得
     const persona = getPersonaById(personaId);
     if (!persona) {
-      console.log('Persona not found:', personaId);
-      return NextResponse.json(
+      return createSecureResponse(
         { error: 'Persona not found' },
-        { status: 404 }
+        404,
+        origin
       );
     }
 
     // メッセージの検証
     const lastMessage = messages[messages.length - 1];
     if (!lastMessage || lastMessage.role !== 'user' || !validateMessage(lastMessage.content)) {
-      console.log('Invalid message format');
-      return NextResponse.json(
+      return createSecureResponse(
         { error: 'Invalid message format' },
-        { status: 400 }
+        400,
+        origin
       );
     }
 
     // OpenAI APIキーの確認
     if (!process.env.OPENAI_API_KEY) {
-      console.log('OpenAI API key not configured');
-      const errorResponse = NextResponse.json(
+      return createSecureResponse(
         { error: 'OpenAI API key not configured' },
-        { status: 500 }
+        500,
+        origin
       );
-      errorResponse.headers.set('Access-Control-Allow-Origin', '*');
-      return errorResponse;
     }
 
-    console.log('OpenAI API key length:', process.env.OPENAI_API_KEY.length);
-
-    console.log('Calling OpenAI API...');
     // AI応答の生成
     const aiResponse = await sendMessage(persona, messages);
-    console.log('OpenAI response received');
 
-    const response = NextResponse.json({
-      message: aiResponse,
-      persona: {
-        id: persona.id,
-        name: persona.name,
-        era: persona.era
-      }
-    });
-
-    // CORSヘッダーを追加
-    response.headers.set('Access-Control-Allow-Origin', '*');
-    response.headers.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
-    response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
-
-    return response;
+    return createSecureResponse(
+      {
+        message: aiResponse,
+        persona: {
+          id: persona.id,
+          name: persona.name,
+          era: persona.era
+        }
+      },
+      200,
+      origin
+    );
 
   } catch (error) {
     console.error('Chat API Error:', error);
-    
+
     // エラーメッセージの詳細化
     let errorMessage = 'Internal server error';
     if (error instanceof Error) {
@@ -91,30 +79,19 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const errorResponse = NextResponse.json(
-      { 
+    return createSecureResponse(
+      {
         error: errorMessage,
         details: error instanceof Error ? error.message : 'Unknown error'
       },
-      { status: 500 }
+      500,
+      origin
     );
-
-    // エラーレスポンスにもCORSヘッダーを追加
-    errorResponse.headers.set('Access-Control-Allow-Origin', '*');
-    errorResponse.headers.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
-    errorResponse.headers.set('Access-Control-Allow-Headers', 'Content-Type');
-
-    return errorResponse;
   }
 }
 
 // OPTIONS メソッドのサポート（CORS対応）
-export async function OPTIONS() {
-  return NextResponse.json({}, {
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type',
-    },
-  });
+export async function OPTIONS(request: NextRequest) {
+  const origin = request.headers.get('origin');
+  return createOptionsResponse(origin);
 }

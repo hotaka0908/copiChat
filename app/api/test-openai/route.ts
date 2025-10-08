@@ -1,20 +1,26 @@
-import { NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import OpenAI from 'openai';
+import { createSecureResponse, createOptionsResponse } from '@/lib/security';
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const origin = request.headers.get('origin');
+
   try {
-    console.log('Testing OpenAI API connection...');
-    
     if (!process.env.OPENAI_API_KEY) {
-      throw new Error('OPENAI_API_KEY not found in environment variables');
+      return createSecureResponse(
+        {
+          status: 'error',
+          message: 'OPENAI_API_KEY not configured',
+        },
+        500,
+        origin
+      );
     }
 
     const openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
     });
 
-    console.log('Making test request to OpenAI...');
-    
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [
@@ -32,46 +38,55 @@ export async function GET() {
     });
 
     const response = completion.choices[0]?.message?.content || 'No response';
-    console.log('OpenAI API test successful:', response);
 
-    return NextResponse.json({
-      status: 'success',
-      message: 'OpenAI API connection working',
-      testResponse: response,
-      model: 'gpt-4o-mini',
-      timestamp: new Date().toISOString()
-    });
+    return createSecureResponse(
+      {
+        status: 'success',
+        message: 'OpenAI API connection working',
+        testResponse: response,
+        model: 'gpt-4o-mini',
+        timestamp: new Date().toISOString()
+      },
+      200,
+      origin
+    );
 
   } catch (error) {
     console.error('OpenAI API Test Error:', error);
-    
-    let errorMessage = 'Unknown error';
+
+    let errorMessage = 'API test failed';
     let errorCode = 'UNKNOWN';
-    
+
     if (error instanceof Error) {
-      errorMessage = error.message;
-      
       if (error.message.includes('API key')) {
+        errorMessage = 'Invalid API key';
         errorCode = 'INVALID_API_KEY';
       } else if (error.message.includes('rate limit')) {
+        errorMessage = 'Rate limit exceeded';
         errorCode = 'RATE_LIMIT';
       } else if (error.message.includes('model')) {
+        errorMessage = 'Model error';
         errorCode = 'MODEL_ERROR';
       } else if (error.message.includes('network') || error.message.includes('fetch')) {
+        errorMessage = 'Network error';
         errorCode = 'NETWORK_ERROR';
       }
     }
 
-    return NextResponse.json(
+    return createSecureResponse(
       {
         status: 'error',
         message: errorMessage,
         errorCode,
-        hasApiKey: !!process.env.OPENAI_API_KEY,
-        apiKeyLength: process.env.OPENAI_API_KEY?.length || 0,
         timestamp: new Date().toISOString()
       },
-      { status: 500 }
+      500,
+      origin
     );
   }
+}
+
+export async function OPTIONS(request: NextRequest) {
+  const origin = request.headers.get('origin');
+  return createOptionsResponse(origin);
 }

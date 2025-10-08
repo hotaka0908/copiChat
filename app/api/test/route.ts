@@ -1,51 +1,63 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
+import { createSecureResponse, createOptionsResponse } from '@/lib/security';
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const origin = request.headers.get('origin');
+
   try {
-    console.log('Test API endpoint called');
-    console.log('Environment variables check:');
-    console.log('OPENAI_API_KEY exists:', !!process.env.OPENAI_API_KEY);
-    console.log('OPENAI_API_KEY length:', process.env.OPENAI_API_KEY?.length || 0);
-    
-    return NextResponse.json({
-      status: 'success',
-      message: 'API is working',
-      environment: process.env.NODE_ENV,
-      hasOpenAIKey: !!process.env.OPENAI_API_KEY,
-      keyLength: process.env.OPENAI_API_KEY?.length || 0,
-      timestamp: new Date().toISOString()
-    });
+    return createSecureResponse(
+      {
+        status: 'success',
+        message: 'API is working',
+        environment: process.env.NODE_ENV,
+        timestamp: new Date().toISOString()
+      },
+      200,
+      origin
+    );
   } catch (error) {
     console.error('Test API Error:', error);
-    return NextResponse.json(
-      { 
+    return createSecureResponse(
+      {
         status: 'error',
         message: error instanceof Error ? error.message : 'Unknown error',
         timestamp: new Date().toISOString()
       },
-      { status: 500 }
+      500,
+      origin
     );
   }
 }
 
 export async function POST(request: NextRequest) {
+  const origin = request.headers.get('origin');
+
   try {
     const body = await request.json();
-    console.log('Test POST received:', body);
-    
-    return NextResponse.json({
-      status: 'success',
-      received: body,
-      timestamp: new Date().toISOString()
-    });
+
+    return createSecureResponse(
+      {
+        status: 'success',
+        received: body,
+        timestamp: new Date().toISOString()
+      },
+      200,
+      origin
+    );
   } catch (error) {
     console.error('Test POST Error:', error);
-    return NextResponse.json(
-      { 
+    return createSecureResponse(
+      {
         status: 'error',
         message: error instanceof Error ? error.message : 'Unknown error'
       },
-      { status: 500 }
+      500,
+      origin
     );
   }
+}
+
+export async function OPTIONS(request: NextRequest) {
+  const origin = request.headers.get('origin');
+  return createOptionsResponse(origin);
 }
