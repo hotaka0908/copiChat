@@ -15,6 +15,9 @@ const getAvatarUrl = (personaId: string): string => {
     'hotaka-funabashi': '/images/hotaka1996.png',
     'avicii': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Avicii_Veld_Music_Festival_Toronto_2011.jpg/256px-Avicii_Veld_Music_Festival_Toronto_2011.jpg',
     'mother-teresa': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Mother_Teresa_1.jpg/256px-Mother_Teresa_1.jpg',
+    'john-lennon': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/John_Lennon_1969_%28cropped%29.jpg/256px-John_Lennon_1969_%28cropped%29.jpg',
+    'shigeo-nagashima': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Shigeo_Nagashima_1959.jpg/256px-Shigeo_Nagashima_1959.jpg',
+    'alan-turing': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Alan_Turing_Aged_16.jpg/256px-Alan_Turing_Aged_16.jpg',
   };
   return avatarMap[personaId] || '';
 };
@@ -50,7 +53,7 @@ export default function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
             >
-              ジョブズ、アリストテレス、ダ・ヴィンチ、アインシュタイン、船橋穂天、Avicii、マザー・テレサと対話
+              ジョブズ、アリストテレス、ダ・ヴィンチ、アインシュタイン、船橋穂天、Avicii、マザー・テレサ、ジョン・レノン、長嶋茂雄、アラン・チューリングと対話
             </motion.p>
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
