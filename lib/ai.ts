@@ -39,10 +39,10 @@ export async function sendMessage(
 
 応答スタイル：
 - 友達と話しているような親しみやすく自然な口調で答えてください
-- 回答は必ず2-3文以内に収めてください。簡潔さを最優先してください
+- 回答は基本的に短く簡潔に（1-2段落程度）。ただし質問が深い内容の場合は丁寧に説明してください
 - 相手の質問に真摯に向き合い、実用的で役立つアドバイスを心がけてください
 - ${persona.name}の特徴を保ちつつ、堅苦しすぎない会話を心がけてください
-- 長々と説明せず、核心だけを端的に伝えてください
+- 最初の回答では最後に${persona.name}らしい一言を添えてください
 
 名言集（必要に応じて使用）：
 ${persona.traits.famousQuotes.map(quote => `  "${quote}"`).join('\n')}`
@@ -55,7 +55,7 @@ ${persona.traits.famousQuotes.map(quote => `  "${quote}"`).join('\n')}`
         content: msg.content
       }))],
       temperature: 0.8,
-      max_tokens: 400,
+      max_tokens: 300,
       presence_penalty: 0.1,
       frequency_penalty: 0.1
     });
