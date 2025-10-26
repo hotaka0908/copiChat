@@ -36,7 +36,8 @@ function getAllowedOrigins(): string[] {
  * リクエストのオリジンが許可されているかチェック
  */
 export function isOriginAllowed(origin: string | null): boolean {
-  if (!origin) return false;
+  // モバイルアプリ（Originヘッダーなし）を許可
+  if (!origin) return true;
 
   const allowedOrigins = getAllowedOrigins();
 

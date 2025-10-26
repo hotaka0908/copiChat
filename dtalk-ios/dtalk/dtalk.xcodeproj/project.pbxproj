@@ -1,0 +1,563 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		327CC5862EAC9F7A000BACA3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 327CC5702EAC9F79000BACA3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 327CC5772EAC9F79000BACA3;
+			remoteInfo = dtalk;
+		};
+		327CC5902EAC9F7A000BACA3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 327CC5702EAC9F79000BACA3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 327CC5772EAC9F79000BACA3;
+			remoteInfo = dtalk;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		327CC5782EAC9F79000BACA3 /* dtalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dtalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		327CC5852EAC9F7A000BACA3 /* dtalkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dtalkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		327CC58F2EAC9F7A000BACA3 /* dtalkUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dtalkUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		327CC57A2EAC9F79000BACA3 /* dtalk */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = dtalk;
+			sourceTree = "<group>";
+		};
+		327CC5882EAC9F7A000BACA3 /* dtalkTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = dtalkTests;
+			sourceTree = "<group>";
+		};
+		327CC5922EAC9F7A000BACA3 /* dtalkUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = dtalkUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		327CC5752EAC9F79000BACA3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		327CC5822EAC9F7A000BACA3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		327CC58C2EAC9F7A000BACA3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		327CC56F2EAC9F79000BACA3 = {
+			isa = PBXGroup;
+			children = (
+				327CC57A2EAC9F79000BACA3 /* dtalk */,
+				327CC5882EAC9F7A000BACA3 /* dtalkTests */,
+				327CC5922EAC9F7A000BACA3 /* dtalkUITests */,
+				327CC5792EAC9F79000BACA3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		327CC5792EAC9F79000BACA3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				327CC5782EAC9F79000BACA3 /* dtalk.app */,
+				327CC5852EAC9F7A000BACA3 /* dtalkTests.xctest */,
+				327CC58F2EAC9F7A000BACA3 /* dtalkUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		327CC5772EAC9F79000BACA3 /* dtalk */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 327CC5992EAC9F7A000BACA3 /* Build configuration list for PBXNativeTarget "dtalk" */;
+			buildPhases = (
+				327CC5742EAC9F79000BACA3 /* Sources */,
+				327CC5752EAC9F79000BACA3 /* Frameworks */,
+				327CC5762EAC9F79000BACA3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				327CC57A2EAC9F79000BACA3 /* dtalk */,
+			);
+			name = dtalk;
+			packageProductDependencies = (
+			);
+			productName = dtalk;
+			productReference = 327CC5782EAC9F79000BACA3 /* dtalk.app */;
+			productType = "com.apple.product-type.application";
+		};
+		327CC5842EAC9F7A000BACA3 /* dtalkTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 327CC59C2EAC9F7A000BACA3 /* Build configuration list for PBXNativeTarget "dtalkTests" */;
+			buildPhases = (
+				327CC5812EAC9F7A000BACA3 /* Sources */,
+				327CC5822EAC9F7A000BACA3 /* Frameworks */,
+				327CC5832EAC9F7A000BACA3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				327CC5872EAC9F7A000BACA3 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				327CC5882EAC9F7A000BACA3 /* dtalkTests */,
+			);
+			name = dtalkTests;
+			packageProductDependencies = (
+			);
+			productName = dtalkTests;
+			productReference = 327CC5852EAC9F7A000BACA3 /* dtalkTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		327CC58E2EAC9F7A000BACA3 /* dtalkUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 327CC59F2EAC9F7A000BACA3 /* Build configuration list for PBXNativeTarget "dtalkUITests" */;
+			buildPhases = (
+				327CC58B2EAC9F7A000BACA3 /* Sources */,
+				327CC58C2EAC9F7A000BACA3 /* Frameworks */,
+				327CC58D2EAC9F7A000BACA3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				327CC5912EAC9F7A000BACA3 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				327CC5922EAC9F7A000BACA3 /* dtalkUITests */,
+			);
+			name = dtalkUITests;
+			packageProductDependencies = (
+			);
+			productName = dtalkUITests;
+			productReference = 327CC58F2EAC9F7A000BACA3 /* dtalkUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		327CC5702EAC9F79000BACA3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1640;
+				LastUpgradeCheck = 1640;
+				TargetAttributes = {
+					327CC5772EAC9F79000BACA3 = {
+						CreatedOnToolsVersion = 16.4;
+					};
+					327CC5842EAC9F7A000BACA3 = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = 327CC5772EAC9F79000BACA3;
+					};
+					327CC58E2EAC9F7A000BACA3 = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = 327CC5772EAC9F79000BACA3;
+					};
+				};
+			};
+			buildConfigurationList = 327CC5732EAC9F79000BACA3 /* Build configuration list for PBXProject "dtalk" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 327CC56F2EAC9F79000BACA3;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 327CC5792EAC9F79000BACA3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				327CC5772EAC9F79000BACA3 /* dtalk */,
+				327CC5842EAC9F7A000BACA3 /* dtalkTests */,
+				327CC58E2EAC9F7A000BACA3 /* dtalkUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		327CC5762EAC9F79000BACA3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		327CC5832EAC9F7A000BACA3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		327CC58D2EAC9F7A000BACA3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		327CC5742EAC9F79000BACA3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		327CC5812EAC9F7A000BACA3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		327CC58B2EAC9F7A000BACA3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		327CC5872EAC9F7A000BACA3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 327CC5772EAC9F79000BACA3 /* dtalk */;
+			targetProxy = 327CC5862EAC9F7A000BACA3 /* PBXContainerItemProxy */;
+		};
+		327CC5912EAC9F7A000BACA3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 327CC5772EAC9F79000BACA3 /* dtalk */;
+			targetProxy = 327CC5902EAC9F7A000BACA3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		327CC5972EAC9F7A000BACA3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = J99PJ8SUF2;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		327CC5982EAC9F7A000BACA3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = J99PJ8SUF2;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		327CC59A2EAC9F7A000BACA3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = J99PJ8SUF2;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.universalpine.dtalk;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		327CC59B2EAC9F7A000BACA3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = J99PJ8SUF2;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.universalpine.dtalk;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		327CC59D2EAC9F7A000BACA3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = J99PJ8SUF2;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.universalpine.dtalkTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/dtalk.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/dtalk";
+			};
+			name = Debug;
+		};
+		327CC59E2EAC9F7A000BACA3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = J99PJ8SUF2;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.universalpine.dtalkTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/dtalk.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/dtalk";
+			};
+			name = Release;
+		};
+		327CC5A02EAC9F7A000BACA3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = J99PJ8SUF2;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.universalpine.dtalkUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = dtalk;
+			};
+			name = Debug;
+		};
+		327CC5A12EAC9F7A000BACA3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = J99PJ8SUF2;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.universalpine.dtalkUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = dtalk;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		327CC5732EAC9F79000BACA3 /* Build configuration list for PBXProject "dtalk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				327CC5972EAC9F7A000BACA3 /* Debug */,
+				327CC5982EAC9F7A000BACA3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		327CC5992EAC9F7A000BACA3 /* Build configuration list for PBXNativeTarget "dtalk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				327CC59A2EAC9F7A000BACA3 /* Debug */,
+				327CC59B2EAC9F7A000BACA3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		327CC59C2EAC9F7A000BACA3 /* Build configuration list for PBXNativeTarget "dtalkTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				327CC59D2EAC9F7A000BACA3 /* Debug */,
+				327CC59E2EAC9F7A000BACA3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		327CC59F2EAC9F7A000BACA3 /* Build configuration list for PBXNativeTarget "dtalkUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				327CC5A02EAC9F7A000BACA3 /* Debug */,
+				327CC5A12EAC9F7A000BACA3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 327CC5702EAC9F79000BACA3 /* Project object */;
+}
