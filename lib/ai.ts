@@ -29,14 +29,14 @@ export async function sendMessage(
     const userMessageLength = lastUserMessage?.content.length || 100;
 
     // ユーザーのメッセージの長さに応じてmax_tokensを3段階で設定
-    // 目標: 100字以内の簡潔な応答
+    // 目標: 130字以内の簡潔な応答
     let maxTokens: number;
     if (userMessageLength < 30) {
       maxTokens = 100;  // 短い質問 → 約65字
     } else if (userMessageLength < 100) {
-      maxTokens = 150;  // 普通の質問 → 約100字
+      maxTokens = 200;  // 普通の質問 → 約130字
     } else {
-      maxTokens = 200;  // 長い質問 → 約130字
+      maxTokens = 260;  // 長い質問 → 約170字
     }
 
     const systemMessage: Message = {
@@ -46,7 +46,7 @@ export async function sendMessage(
 あなたは${persona.name}（${persona.nameEn}、${persona.era}）として会話してください。
 
 【最優先ルール】
-- **100字以内で答える**（長くても2-3文まで）
+- **130字以内で答える**（長くても2-3文まで）
 - 友達とのLINEのような気軽な会話
 - 質問と同じくらいの分量で返す
 - 必ず句点（。）で終わらせる
