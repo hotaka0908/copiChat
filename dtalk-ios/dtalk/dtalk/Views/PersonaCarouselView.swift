@@ -135,12 +135,18 @@ struct PersonaCarouselView: View {
 
             // NavigationLink（非表示）
             NavigationLink(
-                destination: selectedPersona.map { ChatView(persona: $0) },
+                destination: selectedPersona.map { ChatView(persona: $0).id($0.id) },
                 isActive: $navigateToChat
             ) {
                 EmptyView()
             }
             .hidden()
+            .onChange(of: navigateToChat) { oldValue, newValue in
+                if !newValue {
+                    // ナビゲーションから戻った時に選択状態をクリア
+                    selectedPersona = nil
+                }
+            }
 
             // PersonaListViewへのNavigationLink（非表示）
             NavigationLink(

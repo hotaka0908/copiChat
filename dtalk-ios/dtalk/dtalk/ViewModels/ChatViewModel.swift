@@ -15,13 +15,8 @@ class ChatViewModel: ObservableObject {
         self.persona = persona
         self.apiClient = apiClient
 
-        // 初期メッセージを追加
-        let initialMessage = Message(
-            role: .assistant,
-            content: "こんにちは！私は\(persona.name)です。\(persona.era)を生きた\(persona.title)として、あなたとお話しできることを嬉しく思います。何についてお聞きになりたいですか？",
-            timestamp: Date()
-        )
-        messages.append(initialMessage)
+        // 保存された会話履歴を読み込む
+        messages = ChatHistoryManager.shared.loadMessages(for: persona.id)
     }
 
     func sendMessage() async {
@@ -54,6 +49,9 @@ class ChatViewModel: ObservableObject {
             )
             messages.append(assistantMessage)
 
+            // 会話履歴を保存（最新20件のみ）
+            ChatHistoryManager.shared.saveMessages(for: persona.id, messages: messages)
+
         } catch let error as APIError {
             errorMessage = handleAPIError(error)
             let errorMsg = Message(
@@ -62,6 +60,9 @@ class ChatViewModel: ObservableObject {
                 timestamp: Date()
             )
             messages.append(errorMsg)
+
+            // エラーメッセージも履歴に保存
+            ChatHistoryManager.shared.saveMessages(for: persona.id, messages: messages)
         } catch {
             errorMessage = "予期しないエラーが発生しました"
             let errorMsg = Message(
@@ -70,6 +71,9 @@ class ChatViewModel: ObservableObject {
                 timestamp: Date()
             )
             messages.append(errorMsg)
+
+            // エラーメッセージも履歴に保存
+            ChatHistoryManager.shared.saveMessages(for: persona.id, messages: messages)
         }
 
         isLoading = false
@@ -92,12 +96,7 @@ class ChatViewModel: ObservableObject {
 
     func clearMessages() {
         messages.removeAll()
-        // 初期メッセージを再追加
-        let initialMessage = Message(
-            role: .assistant,
-            content: "こんにちは！私は\(persona.name)です。\(persona.era)を生きた\(persona.title)として、あなたとお話しできることを嬉しく思います。何についてお聞きになりたいですか？",
-            timestamp: Date()
-        )
-        messages.append(initialMessage)
+        // 保存された履歴もクリア
+        ChatHistoryManager.shared.clearMessages(for: persona.id)
     }
 }
