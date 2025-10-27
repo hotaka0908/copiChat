@@ -75,12 +75,6 @@ struct AddPersonaView: View {
                 .disabled(personaName.isEmpty || viewModel.isLoading)
 
                 Spacer()
-
-                // 説明
-                Text("AI が人物の情報を自動生成します")
-                    .font(.system(size: 14))
-                    .foregroundColor(.white.opacity(0.6))
-                    .padding(.bottom, 30)
             }
         }
         .navigationBarTitleDisplayMode(.inline)

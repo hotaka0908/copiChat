@@ -81,12 +81,6 @@ struct BookshelfView: View {
 
                     Spacer()
 
-                    Text("偉人を選ぶ")
-                        .font(.system(size: 22, weight: .bold))
-                        .foregroundColor(.white)
-
-                    Spacer()
-
                     // ＋アイコン
                     Button(action: {
                         navigateToAddPersona = true
@@ -281,19 +275,21 @@ struct NetflixPersonaCard: View {
             .scaleEffect(isPressed ? 0.95 : 1.0)
             .animation(.easeInOut(duration: 0.2), value: isPressed)
 
-            // 名前
-            Text(persona.name)
-                .font(.system(size: 13, weight: .semibold))
-                .foregroundColor(.white)
-                .lineLimit(2)
-                .frame(width: 140, alignment: .leading)
-                .minimumScaleFactor(0.9)
+            // 名前と時代（固定高さ）
+            VStack(alignment: .leading, spacing: 4) {
+                Text(persona.name)
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundColor(.white)
+                    .lineLimit(2)
+                    .frame(width: 140, alignment: .leading)
+                    .minimumScaleFactor(0.9)
 
-            // 時代
-            Text(persona.era)
-                .font(.system(size: 11, weight: .regular))
-                .foregroundColor(.gray)
-                .frame(width: 140, alignment: .leading)
+                Text(persona.era)
+                    .font(.system(size: 11, weight: .regular))
+                    .foregroundColor(.gray)
+                    .frame(width: 140, alignment: .leading)
+            }
+            .frame(width: 140, height: 50, alignment: .topLeading)
         }
         .frame(width: 140)
         .onLongPressGesture(minimumDuration: 0.1, pressing: { pressing in
