@@ -10,11 +10,11 @@ struct PersonaCarouselView: View {
     @State private var showingPersonaDetail = false
     @State private var navigateToPersonaList = false
     @State private var navigateToBookshelf = false
-    @State private var navigateToAddPersona = false
 
     private let radius: CGFloat = 180
     private var personas: [Persona] {
-        personaData.allPersonas
+        // マイリストの人物を表示
+        personaData.getMyListPersonas()
     }
     private var angleStep: Double {
         360.0 / Double(personas.count)
@@ -30,16 +30,6 @@ struct PersonaCarouselView: View {
                 VStack(spacing: 0) {
                     // トークアイコンと本アイコン
                     HStack {
-                        // ＋ボタン（人物追加）
-                        Button(action: {
-                            navigateToAddPersona = true
-                        }) {
-                            Image(systemName: "plus.circle.fill")
-                                .font(.system(size: 24))
-                                .foregroundColor(.white)
-                                .padding()
-                        }
-
                         Spacer()
 
                         // 本アイコン
@@ -169,15 +159,6 @@ struct PersonaCarouselView: View {
                 EmptyView()
             }
             .hidden()
-
-            // AddPersonaViewへのNavigationLink（非表示）
-            NavigationLink(
-                destination: AddPersonaView(),
-                isActive: $navigateToAddPersona
-            ) {
-                EmptyView()
-            }
-            .hidden()
         }
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showingPersonaDetail) {
@@ -186,6 +167,12 @@ struct PersonaCarouselView: View {
                     showingPersonaDetail = false
                     navigateToChat = true
                 })
+            }
+        }
+        .onChange(of: personaData.myListPersonaIds) { oldValue, newValue in
+            // マイリストが変更されたらカルーセルの位置をリセット
+            withAnimation(.spring(response: 0.4, dampingFraction: 0.75)) {
+                currentRotation = 0
             }
         }
     }
@@ -239,16 +226,32 @@ struct PersonaCard3D: View {
             // 人物画像
             ZStack {
                 if let url = persona.avatarURL {
-                    AsyncImage(url: url) { image in
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                    } placeholder: {
-                        ZStack {
-                            Color.white
-                            Text(String(persona.nameEn.prefix(1)))
-                                .font(.system(size: 55, weight: .semibold))
-                                .foregroundColor(.gray)
+                    AsyncImage(url: url) { phase in
+                        switch phase {
+                        case .empty:
+                            ZStack {
+                                Color.white
+                                ProgressView()
+                                    .tint(.gray)
+                            }
+                        case .success(let image):
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                        case .failure:
+                            ZStack {
+                                Color.white
+                                Text(String(persona.nameEn.prefix(1)))
+                                    .font(.system(size: 55, weight: .semibold))
+                                    .foregroundColor(.gray)
+                            }
+                        @unknown default:
+                            ZStack {
+                                Color.white
+                                Text(String(persona.nameEn.prefix(1)))
+                                    .font(.system(size: 55, weight: .semibold))
+                                    .foregroundColor(.gray)
+                            }
                         }
                     }
                 } else {
@@ -312,6 +315,11 @@ struct PersonaDetailView: View {
     let persona: Persona
     let onStartChat: () -> Void
     @Environment(\.dismiss) private var dismiss
+    @ObservedObject private var personaData = PersonaData.shared
+
+    var isInMyList: Bool {
+        personaData.isInMyList(persona.id)
+    }
 
     var body: some View {
         ScrollView {
@@ -319,6 +327,23 @@ struct PersonaDetailView: View {
                 // ヘッダー
                 HStack {
                     Spacer()
+
+                    // マイリスト追加/削除ボタン
+                    Button(action: {
+                        withAnimation {
+                            if isInMyList {
+                                personaData.removeFromMyList(persona.id)
+                            } else {
+                                personaData.addToMyList(persona.id)
+                            }
+                        }
+                    }) {
+                        Image(systemName: isInMyList ? "checkmark.circle.fill" : "plus.circle.fill")
+                            .font(.system(size: 28))
+                            .foregroundColor(isInMyList ? .green : .gray)
+                    }
+                    .padding(.trailing, 8)
+
                     Button(action: {
                         dismiss()
                     }) {

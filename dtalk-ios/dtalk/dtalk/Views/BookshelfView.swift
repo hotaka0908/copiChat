@@ -1,32 +1,52 @@
 import SwiftUI
 
-struct PersonaCategory {
+struct PersonaCategoryGroup {
     let title: String
     let personas: [Persona]
 }
 
 struct BookshelfView: View {
-    private let personas = PersonaData.shared.getAllPersonas()
+    @ObservedObject private var personaData = PersonaData.shared
     @State private var selectedPersona: Persona?
     @State private var navigateToChat = false
+    @State private var showingPersonaDetail = false
     @State private var searchText = ""
     @State private var showSearchBar = false
+    @State private var navigateToAddPersona = false
     @Environment(\.dismiss) private var dismiss
 
-    private var categories: [PersonaCategory] {
-        [
-            PersonaCategory(title: "テクノロジー & イノベーション", personas: personas.filter { ["steve-jobs", "alan-turing"].contains($0.id) }),
-            PersonaCategory(title: "哲学者たち", personas: personas.filter { ["aristotle"].contains($0.id) }),
-            PersonaCategory(title: "芸術家 & 万能人", personas: personas.filter { ["leonardo-da-vinci"].contains($0.id) }),
-            PersonaCategory(title: "科学者", personas: personas.filter { ["albert-einstein"].contains($0.id) }),
-            PersonaCategory(title: "ミュージシャン", personas: personas.filter { ["avicii", "john-lennon"].contains($0.id) }),
-            PersonaCategory(title: "スピリチュアルリーダー", personas: personas.filter { ["mother-teresa", "jesus-christ", "buddha"].contains($0.id) }),
-            PersonaCategory(title: "スポーツ", personas: personas.filter { ["shigeo-nagashima"].contains($0.id) }),
-            PersonaCategory(title: "すべての偉人", personas: personas)
-        ].filter { !$0.personas.isEmpty }
+    private var personas: [Persona] {
+        personaData.getAllPersonas()
     }
 
-    private var filteredCategories: [PersonaCategory] {
+    private var categories: [PersonaCategoryGroup] {
+        // PersonaCategoryを使って自動的にグループ化
+        var categoryGroups: [PersonaCategoryGroup] = []
+
+        // 1番上に「マイリスト」カテゴリーを追加（ユーザーがカスタマイズ可能）
+        let myListPersonas = personaData.getMyListPersonas()
+        if !myListPersonas.isEmpty {
+            categoryGroups.append(PersonaCategoryGroup(title: "マイリスト", personas: myListPersonas))
+        }
+
+        // 各カテゴリーごとに人物をグループ化
+        for category in PersonaCategory.allCases {
+            let filteredPersonas = personas.filter { $0.category == category }
+            if !filteredPersonas.isEmpty {
+                categoryGroups.append(PersonaCategoryGroup(
+                    title: category.rawValue,
+                    personas: filteredPersonas
+                ))
+            }
+        }
+
+        // 最後に「すべての偉人」カテゴリーを追加
+        categoryGroups.append(PersonaCategoryGroup(title: "すべての偉人", personas: personas))
+
+        return categoryGroups
+    }
+
+    private var filteredCategories: [PersonaCategoryGroup] {
         if searchText.isEmpty {
             return categories
         } else {
@@ -36,7 +56,7 @@ struct BookshelfView: View {
                     persona.nameEn.localizedCaseInsensitiveContains(searchText) ||
                     persona.title.localizedCaseInsensitiveContains(searchText)
                 }
-                return filtered.isEmpty ? nil : PersonaCategory(title: category.title, personas: filtered)
+                return filtered.isEmpty ? nil : PersonaCategoryGroup(title: category.title, personas: filtered)
             }
         }
     }
@@ -69,6 +89,16 @@ struct BookshelfView: View {
                         .foregroundColor(.white)
 
                     Spacer()
+
+                    // ＋アイコン
+                    Button(action: {
+                        navigateToAddPersona = true
+                    }) {
+                        Image(systemName: "plus.circle.fill")
+                            .font(.system(size: 20, weight: .medium))
+                            .foregroundColor(.white)
+                            .frame(width: 44, height: 44)
+                    }
 
                     // 検索アイコン
                     Button(action: {
@@ -129,7 +159,7 @@ struct BookshelfView: View {
                                 category: category,
                                 onPersonaTapped: { persona in
                                     selectedPersona = persona
-                                    navigateToChat = true
+                                    showingPersonaDetail = true
                                 }
                             )
                         }
@@ -146,14 +176,31 @@ struct BookshelfView: View {
                 EmptyView()
             }
             .hidden()
+
+            // AddPersonaViewへのNavigationLink（非表示）
+            NavigationLink(
+                destination: AddPersonaView(),
+                isActive: $navigateToAddPersona
+            ) {
+                EmptyView()
+            }
+            .hidden()
         }
         .navigationBarHidden(true)
+        .sheet(isPresented: $showingPersonaDetail) {
+            if let persona = selectedPersona {
+                PersonaDetailView(persona: persona, onStartChat: {
+                    showingPersonaDetail = false
+                    navigateToChat = true
+                })
+            }
+        }
     }
 }
 
 // Netflix風のカテゴリー行ビュー
 struct CategoryRowView: View {
-    let category: PersonaCategory
+    let category: PersonaCategoryGroup
     let onPersonaTapped: (Persona) -> Void
 
     var body: some View {

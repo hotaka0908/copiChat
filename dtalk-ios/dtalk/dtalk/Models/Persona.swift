@@ -13,6 +13,7 @@ struct Persona: Identifiable, Codable, Hashable {
     let traits: PersonaTraits
     let specialties: [String]
     let historicalContext: String
+    let category: PersonaCategory
 
     var avatarURL: URL? {
         if avatar.hasPrefix("http") {
@@ -23,6 +24,28 @@ struct Persona: Identifiable, Codable, Hashable {
 
     var gradientColors: [String] {
         return backgroundGradient
+    }
+}
+
+enum PersonaCategory: String, Codable, CaseIterable {
+    case business = "ビジネス・起業家"
+    case philosophy = "哲学・宗教"
+    case science = "科学・技術"
+    case art = "芸術・文化"
+    case music = "音楽・芸能"
+    case sports = "スポーツ"
+    case social = "社会活動・政治"
+
+    var icon: String {
+        switch self {
+        case .business: return "briefcase.fill"
+        case .philosophy: return "book.fill"
+        case .science: return "atom"
+        case .art: return "paintpalette.fill"
+        case .music: return "music.note"
+        case .sports: return "sportscourt.fill"
+        case .social: return "heart.fill"
+        }
     }
 }
 
@@ -53,6 +76,7 @@ extension Persona {
             famousQuotes: ["Stay hungry, stay foolish"]
         ),
         specialties: ["Product Design", "Innovation"],
-        historicalContext: "Apple co-founder"
+        historicalContext: "Apple co-founder",
+        category: .business
     )
 }
