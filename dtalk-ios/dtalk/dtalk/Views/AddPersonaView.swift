@@ -6,6 +6,9 @@ struct AddPersonaView: View {
     @State private var personaName: String = ""
     @FocusState private var isInputFocused: Bool
 
+    // 人物生成完了時のコールバック
+    var onPersonaGenerated: ((Persona) -> Void)?
+
     var body: some View {
         ZStack {
             // 黒色背景
@@ -50,8 +53,12 @@ struct AddPersonaView: View {
                 Button(action: {
                     Task {
                         await viewModel.generatePersona(name: personaName)
-                        if viewModel.generatedPersona != nil {
+                        if let generatedPersona = viewModel.generatedPersona {
                             dismiss()
+                            // dismiss完了後に少し遅延してからコールバックを呼び出し
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                onPersonaGenerated?(generatedPersona)
+                            }
                         }
                     }
                 }) {
