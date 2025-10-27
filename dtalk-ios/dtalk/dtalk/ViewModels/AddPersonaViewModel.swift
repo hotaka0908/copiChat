@@ -28,11 +28,11 @@ class AddPersonaViewModel: ObservableObject {
     }
 
     private let progressSteps: [ProgressStep] = [
-        ProgressStep(emoji: "🔍", message: "Wikipediaで人物情報を検索中", targetProgress: 0.20, duration: 2.0),
+        ProgressStep(emoji: "🔍", message: "人物情報を検索中", targetProgress: 0.20, duration: 2.0),
         ProgressStep(emoji: "📚", message: "プロフィール情報を収集中", targetProgress: 0.35, duration: 2.0),
         ProgressStep(emoji: "🧠", message: "性格と話し方を分析中", targetProgress: 0.60, duration: 4.0),
-        ProgressStep(emoji: "✍️", message: "システムプロンプトを生成中", targetProgress: 0.80, duration: 4.0),
-        ProgressStep(emoji: "🎨", message: "特徴と名言を作成中", targetProgress: 0.95, duration: 2.0),
+        ProgressStep(emoji: "✍️", message: "人格を形成中", targetProgress: 0.80, duration: 4.0),
+        ProgressStep(emoji: "🎨", message: "振る舞いを作成中", targetProgress: 0.95, duration: 2.0),
         ProgressStep(emoji: "✨", message: "最終調整中", targetProgress: 0.98, duration: 1.0)
     ]
 
