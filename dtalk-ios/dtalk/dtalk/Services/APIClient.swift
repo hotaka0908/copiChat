@@ -70,7 +70,62 @@ class APIClient {
     }
 
     func generatePersona(name: String) async throws -> Persona {
-        // OpenAIServiceを使用してiOS側で直接人物を生成
-        return try await OpenAIService.shared.generatePersona(name: name)
+        // サーバー経由でOpenAI APIを呼び出す（セキュリティ向上）
+        guard let url = URL(string: "\(baseURL)/api/generate-persona") else {
+            throw APIError.invalidURL
+        }
+
+        print("🔵 Requesting persona generation from server for: \(name)")
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.timeoutInterval = 90 // 人物生成は時間がかかるため90秒
+
+        let requestBody: [String: Any] = ["name": name]
+
+        do {
+            let encoder = JSONEncoder()
+            request.httpBody = try JSONSerialization.data(withJSONObject: requestBody)
+        } catch {
+            throw APIError.decodingError(error)
+        }
+
+        do {
+            let (data, response) = try await session.data(for: request)
+
+            guard let httpResponse = response as? HTTPURLResponse else {
+                throw APIError.invalidResponse
+            }
+
+            print("🔵 Server response status: \(httpResponse.statusCode)")
+
+            guard httpResponse.statusCode == 200 else {
+                if let errorMessage = String(data: data, encoding: .utf8) {
+                    print("❌ Server error response: \(errorMessage)")
+                    throw APIError.serverError(errorMessage)
+                }
+                throw APIError.serverError("HTTP \(httpResponse.statusCode)")
+            }
+
+            // レスポンスのJSONをデコード
+            let decoder = JSONDecoder()
+            let serverResponse = try decoder.decode(GeneratePersonaResponse.self, from: data)
+
+            print("✅ Successfully generated persona: \(serverResponse.persona.name)")
+            return serverResponse.persona
+
+        } catch let error as APIError {
+            throw error
+        } catch {
+            print("❌ Network error: \(error)")
+            throw APIError.networkError(error)
+        }
     }
+}
+
+// サーバーレスポンス用の構造体
+private struct GeneratePersonaResponse: Codable {
+    let persona: Persona
 }

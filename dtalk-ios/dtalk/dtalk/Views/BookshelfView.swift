@@ -34,7 +34,7 @@ struct BookshelfView: View {
             let filteredPersonas = personas.filter { $0.category == category }
             if !filteredPersonas.isEmpty {
                 categoryGroups.append(PersonaCategoryGroup(
-                    title: category.rawValue,
+                    title: category.displayName,
                     personas: filteredPersonas
                 ))
             }

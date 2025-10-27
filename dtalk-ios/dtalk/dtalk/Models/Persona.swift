@@ -28,13 +28,25 @@ struct Persona: Identifiable, Codable, Hashable {
 }
 
 enum PersonaCategory: String, Codable, CaseIterable {
-    case business = "ビジネス・起業家"
-    case philosophy = "哲学・宗教"
-    case science = "科学・技術"
-    case art = "芸術・文化"
-    case music = "音楽・芸能"
-    case sports = "スポーツ"
-    case social = "社会活動・政治"
+    case business = "business"
+    case philosophy = "philosophy"
+    case science = "science"
+    case art = "art"
+    case music = "music"
+    case sports = "sports"
+    case social = "social"
+
+    var displayName: String {
+        switch self {
+        case .business: return "ビジネス・起業家"
+        case .philosophy: return "哲学・宗教"
+        case .science: return "科学・技術"
+        case .art: return "芸術・文化"
+        case .music: return "音楽・芸能"
+        case .sports: return "スポーツ"
+        case .social: return "社会活動・政治"
+        }
+    }
 
     var icon: String {
         switch self {
