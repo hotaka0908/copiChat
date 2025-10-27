@@ -5,6 +5,7 @@ struct AddPersonaView: View {
     @StateObject private var viewModel = AddPersonaViewModel()
     @State private var personaName: String = ""
     @FocusState private var isInputFocused: Bool
+    @State private var showCompletionSheet = false
 
     // 人物生成完了時のコールバック
     var onPersonaGenerated: ((Persona) -> Void)?
@@ -127,12 +128,9 @@ struct AddPersonaView: View {
                     Button(action: {
                         Task {
                             await viewModel.generatePersona(name: personaName)
-                            if let generatedPersona = viewModel.generatedPersona {
-                                dismiss()
-                                // dismiss完了後に少し遅延してからコールバックを呼び出し
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                                    onPersonaGenerated?(generatedPersona)
-                                }
+                            if viewModel.generatedPersona != nil {
+                                // 生成完了画面を表示
+                                showCompletionSheet = true
                             }
                         }
                     }) {
@@ -181,6 +179,26 @@ struct AddPersonaView: View {
             }
         }
         .animation(.easeInOut(duration: 0.3), value: viewModel.isGenerating)
+        .sheet(isPresented: $showCompletionSheet) {
+            if let generatedPersona = viewModel.generatedPersona {
+                PersonaCompletionView(
+                    persona: generatedPersona,
+                    onStartChat: {
+                        // 完了画面を閉じてから会話画面へ
+                        showCompletionSheet = false
+                        dismiss()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            onPersonaGenerated?(generatedPersona)
+                        }
+                    },
+                    onClose: {
+                        // 完了画面を閉じてBookshelfに戻る
+                        showCompletionSheet = false
+                        dismiss()
+                    }
+                )
+            }
+        }
     }
 }
 
