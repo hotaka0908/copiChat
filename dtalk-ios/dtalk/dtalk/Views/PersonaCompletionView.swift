@@ -28,7 +28,7 @@ struct PersonaCompletionView: View {
                 .animation(.spring(response: 0.5, dampingFraction: 0.6), value: persona.id)
 
                 // 完了メッセージ
-                Text("生成完了！")
+                Text("人物誕生！")
                     .font(.system(size: 28, weight: .bold))
                     .foregroundColor(.white)
 
@@ -125,9 +125,9 @@ struct PersonaCompletionView: View {
                         .shadow(color: .white.opacity(0.3), radius: 8, x: 0, y: 4)
                     }
 
-                    // Bookshelfに戻るボタン
+                    // 戻るボタン
                     Button(action: onClose) {
-                        Text("Bookshelfに戻る")
+                        Text("戻る")
                             .font(.system(size: 16, weight: .medium))
                             .foregroundColor(.white.opacity(0.7))
                     }

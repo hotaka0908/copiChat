@@ -19,35 +19,36 @@ struct AddPersonaView: View {
 
             if viewModel.isGenerating {
                 // 進捗表示エリア
-                VStack(spacing: 30) {
+                VStack(spacing: 0) {
                     Spacer()
 
-                    // 大きな絵文字アニメーション
-                    Text(viewModel.currentStepEmoji)
-                        .font(.system(size: 80))
-                        .scaleEffect(viewModel.currentProgress > 0 ? 1.0 : 0.8)
-                        .animation(.spring(response: 0.5, dampingFraction: 0.6), value: viewModel.currentStepEmoji)
-
-                    // 現在のステップメッセージ
-                    Text(viewModel.currentStepMessage)
-                        .font(.system(size: 20, weight: .medium))
-                        .foregroundColor(.white)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, 40)
-                        .opacity(viewModel.currentStepMessage == "最終調整中" ? blinkOpacity : 1.0)
-                        .onChange(of: viewModel.currentStepMessage) { oldValue, newValue in
-                            if newValue == "最終調整中" {
-                                // 点滅アニメーション開始
-                                withAnimation(.easeInOut(duration: 1.0).repeatForever(autoreverses: true)) {
-                                    blinkOpacity = 0.3
+                    // 上部セクション: メッセージ
+                    VStack(spacing: 20) {
+                        // 現在のステップメッセージ
+                        Text(viewModel.currentStepMessage)
+                            .font(.system(size: 20, weight: .medium))
+                            .foregroundColor(.white)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal, 40)
+                            .opacity(viewModel.currentStepMessage == "最終調整中" ? blinkOpacity : 1.0)
+                            .onChange(of: viewModel.currentStepMessage) { oldValue, newValue in
+                                if newValue == "最終調整中" {
+                                    // 点滅アニメーション開始
+                                    withAnimation(.easeInOut(duration: 1.0).repeatForever(autoreverses: true)) {
+                                        blinkOpacity = 0.3
+                                    }
+                                } else {
+                                    // 点滅停止
+                                    blinkOpacity = 1.0
                                 }
-                            } else {
-                                // 点滅停止
-                                blinkOpacity = 1.0
                             }
-                        }
+                    }
+                    .frame(height: 180)
 
-                    // プログレスバー
+                    Spacer()
+                        .frame(height: 40)
+
+                    // 中央セクション: プログレスバー（固定位置）
                     VStack(spacing: 8) {
                         GeometryReader { geometry in
                             ZStack(alignment: .leading) {
@@ -58,13 +59,7 @@ struct AddPersonaView: View {
 
                                 // 進捗
                                 RoundedRectangle(cornerRadius: 10)
-                                    .fill(
-                                        LinearGradient(
-                                            gradient: Gradient(colors: [Color.blue, Color.purple]),
-                                            startPoint: .leading,
-                                            endPoint: .trailing
-                                        )
-                                    )
+                                    .fill(Color.white)
                                     .frame(width: geometry.size.width * viewModel.currentProgress, height: 20)
                                     .animation(.linear(duration: 0.1), value: viewModel.currentProgress)
                             }
@@ -78,25 +73,26 @@ struct AddPersonaView: View {
                     }
                     .padding(.horizontal, 40)
 
-                    // 完了したステップのリスト
-                    if !viewModel.completedSteps.isEmpty {
-                        VStack(alignment: .leading, spacing: 8) {
-                            ForEach(viewModel.completedSteps, id: \.self) { step in
-                                HStack(spacing: 8) {
-                                    Image(systemName: "checkmark.circle.fill")
-                                        .foregroundColor(.green)
-                                        .font(.system(size: 14))
+                    Spacer()
+                        .frame(height: 40)
 
-                                    Text(step)
-                                        .font(.system(size: 14))
-                                        .foregroundColor(.white.opacity(0.7))
-                                }
-                                .transition(.opacity.combined(with: .scale))
+                    // 下部セクション: 完了したステップのリスト（固定高さ）
+                    VStack(alignment: .leading, spacing: 8) {
+                        ForEach(viewModel.completedSteps, id: \.self) { step in
+                            HStack(spacing: 8) {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .foregroundColor(.green)
+                                    .font(.system(size: 14))
+
+                                Text(step)
+                                    .font(.system(size: 14))
+                                    .foregroundColor(.white.opacity(0.7))
                             }
+                            .transition(.opacity.combined(with: .scale))
                         }
-                        .padding(.horizontal, 40)
-                        .padding(.top, 10)
                     }
+                    .frame(height: 160, alignment: .top)
+                    .padding(.horizontal, 40)
 
                     Spacer()
                 }
