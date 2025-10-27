@@ -24,10 +24,22 @@ export async function sendMessage(
   messages: Message[]
 ): Promise<string> {
   try {
+    // ユーザーの最後のメッセージの長さを取得
+    const lastUserMessage = messages.filter(m => m.role === 'user').pop();
+    const userMessageLength = lastUserMessage?.content.length || 100;
+
+    // ユーザーのメッセージの長さに応じてmax_tokensを動的に設定
+    // 日本語: 1文字 ≈ 1.5トークン
+    // 応答は質問とほぼ同じ長さにする（1.2倍程度の余裕）
+    let maxTokens = Math.floor(userMessageLength * 1.8);
+
+    // 最小値と最大値を設定
+    maxTokens = Math.max(100, Math.min(maxTokens, 500));
+
     const systemMessage: Message = {
       role: 'system',
       content: `${persona.systemPrompt}
-      
+
 重要な指示：
 - あなたは${persona.name}（${persona.nameEn}、${persona.era}）として完全に役割を演じてください
 - 特徴的なフレーズ: ${persona.traits.keyPhrases.join(', ')}
@@ -39,7 +51,8 @@ export async function sendMessage(
 
 応答スタイル：
 - 友達と話しているような親しみやすく自然な口調で答えてください
-- 回答は基本的に短く簡潔に（1-2段落程度）。ただし質問が深い内容の場合は丁寧に説明してください
+- **重要**: 相手の質問の長さに合わせて回答してください。短い質問には短く、長い質問には丁寧に答えてください
+- 相手の質問と同じくらいの分量で回答することを心がけてください
 - 相手の質問に真摯に向き合い、実用的で役立つアドバイスを心がけてください
 - ${persona.name}の特徴を保ちつつ、堅苦しすぎない会話を心がけてください
 - 最初の回答では最後に${persona.name}らしい一言を添えてください
@@ -55,7 +68,7 @@ ${persona.traits.famousQuotes.map(quote => `  "${quote}"`).join('\n')}`
         content: msg.content
       }))],
       temperature: 0.8,
-      max_tokens: 300,
+      max_tokens: maxTokens,
       presence_penalty: 0.1,
       frequency_penalty: 0.1
     });
