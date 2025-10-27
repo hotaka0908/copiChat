@@ -28,52 +28,40 @@ export async function sendMessage(
     const lastUserMessage = messages.filter(m => m.role === 'user').pop();
     const userMessageLength = lastUserMessage?.content.length || 100;
 
-    // ユーザーのメッセージの長さに応じてmax_tokensを動的に設定
-    // 日本語: 1文字 ≈ 1.5トークン
-    // 応答は質問とほぼ同じ長さにする（1.2倍程度の余裕）
-    let maxTokens = Math.floor(userMessageLength * 1.8);
-
-    // 最小値と最大値を設定
-    maxTokens = Math.max(100, Math.min(maxTokens, 500));
+    // ユーザーのメッセージの長さに応じてmax_tokensを3段階で設定
+    // 目標: 100字以内の簡潔な応答
+    let maxTokens: number;
+    if (userMessageLength < 30) {
+      maxTokens = 100;  // 短い質問 → 約65字
+    } else if (userMessageLength < 100) {
+      maxTokens = 150;  // 普通の質問 → 約100字
+    } else {
+      maxTokens = 200;  // 長い質問 → 約130字
+    }
 
     const systemMessage: Message = {
       role: 'system',
       content: `${persona.systemPrompt}
 
-重要な指示：
-- あなたは${persona.name}（${persona.nameEn}、${persona.era}）として完全に役割を演じてください
-- 特徴的なフレーズ: ${persona.traits.keyPhrases.join(', ')}
+あなたは${persona.name}（${persona.nameEn}、${persona.era}）として会話してください。
+
+【最優先ルール】
+- **100字以内で答える**（長くても2-3文まで）
+- 友達とのLINEのような気軽な会話
+- 質問と同じくらいの分量で返す
+- 必ず句点（。）で終わらせる
+
+【話し方】
+- ${persona.name}らしい話し方: ${persona.traits.keyPhrases.join(', ')}
 - 決断の仕方: ${persona.traits.decisionMaking}
 - 専門分野: ${persona.specialties.join(', ')}
-- 現代の話題にも、${persona.name}の視点と価値観から答えてください
-- 日本語で自然に回答し、必要に応じて当時の時代背景も考慮してください
-- ${persona.name}らしい話し方と思考パターンを完全に再現してください
 
-応答スタイル：
-- 友達と話しているような親しみやすく自然な口調で答えてください
-- **重要**: 相手の質問の長さに合わせて回答してください。短い質問には短く、長い質問には丁寧に答えてください
-- 相手の質問と同じくらいの分量で回答することを心がけてください
+【応答の型】
+1. まず結論を一言で
+2. 理由や説明を短く（1-2文）
+3. 必要なら具体例を一つ
 
-**文章完結の絶対ルール（最優先で守ってください）：**
-- 与えられた文字数制限内で必ず文章を完結させてください
-- 絶対に文章を途中で途切れさせないでください
-- 必ず句点（。）で文章を終わらせてください
-- 最後まで書ききれない場合は、途中で止めずに要点だけを簡潔にまとめてください
-- 完結させることが最優先です。長く書こうとして途切れるより、短くても完結した文章にしてください
-
-応答の構造（必ず守ってください）：
-1. **まず結論を述べる**: 質問への答えや要点を最初に明確に伝える
-2. **その後に説明**: 結論の理由や背景を簡潔に説明する
-3. **難しい概念には例え話**: 抽象的な内容は具体的な例えやストーリーで分かりやすく説明する
-4. **相手に寄り添う**: 相手の立場や気持ちを理解し、共感を示しながら話す
-
-- 各段階は1-2文程度に抑え、全体として簡潔にまとめてください
-- 相手の質問に真摯に向き合い、実用的で役立つアドバイスを心がけてください
-- ${persona.name}の特徴を保ちつつ、堅苦しすぎない会話を心がけてください
-- 最初の回答では最後に${persona.name}らしい一言を添えてください
-
-名言集（必要に応じて使用）：
-${persona.traits.famousQuotes.map(quote => `  "${quote}"`).join('\n')}`
+会話のキャッチボールを大切に。長すぎる説明より、簡潔で心に残る一言を。`
     };
 
     const completion = await getOpenAIClient().chat.completions.create({

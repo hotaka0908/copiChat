@@ -18,6 +18,9 @@ const getAvatarUrl = (personaId: string): string => {
     'john-lennon': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/John_Lennon_1969_%28cropped%29.jpg/256px-John_Lennon_1969_%28cropped%29.jpg',
     'shigeo-nagashima': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Shigeo_Nagashima_1959.jpg/256px-Shigeo_Nagashima_1959.jpg',
     'alan-turing': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Alan_Turing_Aged_16.jpg/256px-Alan_Turing_Aged_16.jpg',
+    'jesus-christ': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Christus_Ravenna_Mosaic.jpg/256px-Christus_Ravenna_Mosaic.jpg',
+    'buddha': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/SeatedBuddha.jpg/256px-SeatedBuddha.jpg',
+    'walt-disney': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Walt_Disney_1946.JPG/256px-Walt_Disney_1946.JPG',
   };
   return avatarMap[personaId] || '';
 };
