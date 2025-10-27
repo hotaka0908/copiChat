@@ -1,0 +1,12 @@
+import Foundation
+
+// セットアップ手順:
+// 1. このファイルをコピーして "Config.swift" という名前で保存してください
+// 2. Config.swift の openAIAPIKey に実際のOpenAI APIキーを設定してください
+// 3. Config.swift は.gitignoreに追加されており、Gitにはコミットされません
+
+struct Config {
+    // OpenAI APIキーをここに設定してください
+    // OpenAI Platform (https://platform.openai.com/api-keys) でAPIキーを取得できます
+    static let openAIAPIKey = "YOUR_OPENAI_API_KEY_HERE"
+}

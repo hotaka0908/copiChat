@@ -27,6 +27,7 @@
 		327CC5782EAC9F79000BACA3 /* dtalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dtalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		327CC5852EAC9F7A000BACA3 /* dtalkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dtalkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		327CC58F2EAC9F7A000BACA3 /* dtalkUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dtalkUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		329ED04E2EADBBC10013D296 /* dtalk.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = dtalk.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -75,6 +76,7 @@
 		327CC56F2EAC9F79000BACA3 = {
 			isa = PBXGroup;
 			children = (
+				329ED04E2EADBBC10013D296 /* dtalk.xctestplan */,
 				327CC57A2EAC9F79000BACA3 /* dtalk */,
 				327CC5882EAC9F7A000BACA3 /* dtalkTests */,
 				327CC5922EAC9F7A000BACA3 /* dtalkUITests */,

@@ -1,12 +1,12 @@
 import Foundation
 
-class PersonaData {
+class PersonaData: ObservableObject {
     static let shared = PersonaData()
 
     private init() {}
 
     // すべてのPersonaデータ
-    let allPersonas: [Persona] = [
+    @Published var allPersonas: [Persona] = [
         // スティーブ・ジョブズ
         Persona(
             id: "steve-jobs",
@@ -256,5 +256,16 @@ class PersonaData {
 
     func getAllPersonas() -> [Persona] {
         return allPersonas
+    }
+
+    func addPersona(_ persona: Persona) {
+        // 既存のIDと重複しないかチェック
+        if !allPersonas.contains(where: { $0.id == persona.id }) {
+            allPersonas.append(persona)
+        }
+    }
+
+    func removePersona(by id: String) {
+        allPersonas.removeAll { $0.id == id }
     }
 }

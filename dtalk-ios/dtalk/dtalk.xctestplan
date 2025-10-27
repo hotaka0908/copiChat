@@ -1,0 +1,37 @@
+{
+  "configurations" : [
+    {
+      "id" : "AFFE097B-05D6-451C-9D0A-17EF72245D2B",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:dtalk.xcodeproj",
+      "identifier" : "327CC5772EAC9F79000BACA3",
+      "name" : "dtalk"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:dtalk.xcodeproj",
+        "identifier" : "327CC5842EAC9F7A000BACA3",
+        "name" : "dtalkTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:dtalk.xcodeproj",
+        "identifier" : "327CC58E2EAC9F7A000BACA3",
+        "name" : "dtalkUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

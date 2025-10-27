@@ -53,3 +53,42 @@ next-env.d.ts
 
 # Claude
 .claude/
+
+# iOS / Xcode
+dtalk-ios/dtalk/build/
+dtalk-ios/dtalk/*.xcodeproj/xcuserdata/
+dtalk-ios/dtalk/*.xcodeproj/project.xcworkspace/xcuserdata/
+dtalk-ios/dtalk/DerivedData/
+dtalk-ios/dtalk/*.xcworkspace/xcuserdata/
+
+# iOS Config (contains API keys)
+dtalk-ios/dtalk/dtalk/Config.swift
+
+# Xcode user settings
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+
+# Xcode build files
+*.moved-aside
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# CocoaPods
+dtalk-ios/dtalk/Pods/
+*.xcworkspace
+!default.xcworkspace
+
+# Carthage
+dtalk-ios/dtalk/Carthage/Build/
+
+# Swift Package Manager
+.swiftpm/
+.build/

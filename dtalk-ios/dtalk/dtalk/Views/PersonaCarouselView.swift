@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct PersonaCarouselView: View {
-    private let personas = PersonaData.shared.getAllPersonas()
+    @ObservedObject private var personaData = PersonaData.shared
     @State private var currentRotation: Double = 0
     @State private var dragStartRotation: Double = 0
     @State private var isDragging = false
@@ -9,71 +9,117 @@ struct PersonaCarouselView: View {
     @State private var selectedPersona: Persona?
     @State private var showingPersonaDetail = false
     @State private var navigateToPersonaList = false
+    @State private var navigateToBookshelf = false
+    @State private var navigateToAddPersona = false
 
     private let radius: CGFloat = 180
+    private var personas: [Persona] {
+        personaData.allPersonas
+    }
     private var angleStep: Double {
         360.0 / Double(personas.count)
     }
 
     var body: some View {
-        ZStack {
-            // 黒色背景
-            Color.black
-                .ignoresSafeArea()
+        GeometryReader { fullGeometry in
+            ZStack {
+                // 黒色背景
+                Color.black
+                    .ignoresSafeArea()
 
-            VStack(spacing: 0) {
-                // トークアイコン
-                HStack {
-                    Spacer()
-                    Button(action: {
-                        navigateToPersonaList = true
-                    }) {
-                        Image(systemName: "message.fill")
-                            .font(.system(size: 24))
-                            .foregroundColor(.white)
-                            .padding()
-                    }
-                }
-                .padding(.top, 10)
-                .padding(.trailing, 10)
+                VStack(spacing: 0) {
+                    // トークアイコンと本アイコン
+                    HStack {
+                        // ＋ボタン（人物追加）
+                        Button(action: {
+                            navigateToAddPersona = true
+                        }) {
+                            Image(systemName: "plus.circle.fill")
+                                .font(.system(size: 24))
+                                .foregroundColor(.white)
+                                .padding()
+                        }
 
-                // ヘッダー
-                VStack(spacing: 6) {
-                    Text("話したい人を選んでください")
-                        .font(.system(size: 24, weight: .semibold))
-                        .foregroundColor(.white)
+                        Spacer()
 
-                    Text("左右にスワイプして選択")
-                        .font(.system(size: 14))
-                        .foregroundColor(.white.opacity(0.9))
-                }
-                .padding(.top, 10)
+                        // 本アイコン
+                        Button(action: {
+                            navigateToBookshelf = true
+                        }) {
+                            Image(systemName: "book.fill")
+                                .font(.system(size: 24))
+                                .foregroundColor(.white)
+                                .padding()
+                        }
 
-                // カルーセルコンテナ
-                GeometryReader { geometry in
-                    ZStack {
-                        ForEach(Array(personas.enumerated()), id: \.element.id) { index, persona in
-                            PersonaCard3D(
-                                persona: persona,
-                                index: index,
-                                currentRotation: currentRotation,
-                                angleStep: angleStep,
-                                radius: radius,
-                                containerSize: geometry.size,
-                                onTap: {
-                                    // 中央の人物のみタップ可能
-                                    let angle = (angleStep * Double(index) - currentRotation) * .pi / 180
-                                    let z = cos(angle) * radius - radius
-                                    if abs(z) < 30 {
-                                        selectedPersona = persona
-                                        showingPersonaDetail = true
-                                    }
-                                }
-                            )
+                        // トークアイコン
+                        Button(action: {
+                            navigateToPersonaList = true
+                        }) {
+                            Image(systemName: "message.fill")
+                                .font(.system(size: 24))
+                                .foregroundColor(.white)
+                                .padding()
                         }
                     }
-                    .frame(width: geometry.size.width, height: geometry.size.height)
+                    .padding(.top, 10)
+                    .padding(.horizontal, 10)
+
+                    // ヘッダー
+                    VStack(spacing: 6) {
+                        Text("話したい人を選んでください")
+                            .font(.system(size: 24, weight: .semibold))
+                            .foregroundColor(.white)
+
+                        Text("左右にスワイプして選択")
+                            .font(.system(size: 14))
+                            .foregroundColor(.white.opacity(0.9))
+                    }
+                    .padding(.top, 10)
+
+                    Spacer()
+
+                    // 選択ボタン
+                    VStack(spacing: 15) {
+                        Button(action: selectCurrentPerson) {
+                            Text("この人と話す")
+                                .font(.system(size: 16, weight: .semibold))
+                                .foregroundColor(.black)
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 14)
+                                .background(Color.white)
+                                .cornerRadius(25)
+                                .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
+                        }
+                        .padding(.horizontal, 30)
+                    }
+                    .padding(.bottom, 30)
                 }
+
+                // カルーセルコンテナ（画面中央に配置）
+                ZStack {
+                    ForEach(Array(personas.enumerated()), id: \.element.id) { index, persona in
+                        PersonaCard3D(
+                            persona: persona,
+                            index: index,
+                            currentRotation: currentRotation,
+                            angleStep: angleStep,
+                            radius: radius,
+                            containerSize: CGSize(width: fullGeometry.size.width, height: 350),
+                            onTap: {
+                                // 中央の人物のみタップ可能
+                                let angle = (angleStep * Double(index) - currentRotation) * .pi / 180
+                                let z = cos(angle) * radius - radius
+                                if abs(z) < 30 {
+                                    selectedPersona = persona
+                                    showingPersonaDetail = true
+                                }
+                            }
+                        )
+                    }
+                }
+                .frame(width: fullGeometry.size.width, height: 350)
+                .position(x: fullGeometry.size.width / 2, y: fullGeometry.size.height / 2)
                 .gesture(
                     DragGesture(minimumDistance: 0)
                         .onChanged { value in
@@ -95,22 +141,6 @@ struct PersonaCarouselView: View {
                             snapToNearest()
                         }
                 )
-
-                // 選択ボタン
-                VStack(spacing: 15) {
-                    Button(action: selectCurrentPerson) {
-                        Text("この人と話す")
-                            .font(.system(size: 16, weight: .semibold))
-                            .foregroundColor(.black)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 14)
-                            .background(Color.white)
-                            .cornerRadius(25)
-                            .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
-                    }
-                    .padding(.horizontal, 30)
-                }
-                .padding(.bottom, 30)
             }
 
             // NavigationLink（非表示）
@@ -126,6 +156,24 @@ struct PersonaCarouselView: View {
             NavigationLink(
                 destination: PersonaListView(),
                 isActive: $navigateToPersonaList
+            ) {
+                EmptyView()
+            }
+            .hidden()
+
+            // BookshelfViewへのNavigationLink（非表示）
+            NavigationLink(
+                destination: BookshelfView(),
+                isActive: $navigateToBookshelf
+            ) {
+                EmptyView()
+            }
+            .hidden()
+
+            // AddPersonaViewへのNavigationLink（非表示）
+            NavigationLink(
+                destination: AddPersonaView(),
+                isActive: $navigateToAddPersona
             ) {
                 EmptyView()
             }
@@ -232,11 +280,11 @@ struct PersonaCard3D: View {
             // すべての人物の名前を画像の下に表示
             Text(persona.name)
                 .font(.system(
-                    size: isCenter ? 20 : 15,
-                    weight: isCenter ? .bold : .semibold
+                    size: isCenter ? 20 : 12,
+                    weight: isCenter ? .bold : .medium
                 ))
                 .foregroundColor(.white)
-                .opacity(isCenter ? 1.0 : 0.3)
+                .opacity(isCenter ? 1.0 : 0.2)
                 .shadow(color: .black.opacity(0.3), radius: 2, x: 0, y: 1)
                 .frame(maxWidth: 150)
                 .multilineTextAlignment(.center)
@@ -465,6 +513,57 @@ struct PersonaDetailView: View {
                 .padding(.top, 10)
                 .padding(.bottom, 30)
             }
+        }
+    }
+}
+
+// カスタムFlowLayout
+struct FlowLayout: Layout {
+    var spacing: CGFloat
+
+    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
+        let result = FlowResult(
+            in: proposal.replacingUnspecifiedDimensions().width,
+            subviews: subviews,
+            spacing: spacing
+        )
+        return result.size
+    }
+
+    func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
+        let result = FlowResult(
+            in: bounds.width,
+            subviews: subviews,
+            spacing: spacing
+        )
+        for (index, subview) in subviews.enumerated() {
+            subview.place(at: CGPoint(x: bounds.minX + result.positions[index].x, y: bounds.minY + result.positions[index].y), proposal: .unspecified)
+        }
+    }
+
+    struct FlowResult {
+        var size: CGSize = .zero
+        var positions: [CGPoint] = []
+
+        init(in maxWidth: CGFloat, subviews: Subviews, spacing: CGFloat) {
+            var currentX: CGFloat = 0
+            var currentY: CGFloat = 0
+            var lineHeight: CGFloat = 0
+
+            for subview in subviews {
+                let size = subview.sizeThatFits(.unspecified)
+                if currentX + size.width > maxWidth && currentX > 0 {
+                    currentX = 0
+                    currentY += lineHeight + spacing
+                    lineHeight = 0
+                }
+
+                positions.append(CGPoint(x: currentX, y: currentY))
+                currentX += size.width + spacing
+                lineHeight = max(lineHeight, size.height)
+            }
+
+            self.size = CGSize(width: maxWidth, height: currentY + lineHeight)
         }
     }
 }
