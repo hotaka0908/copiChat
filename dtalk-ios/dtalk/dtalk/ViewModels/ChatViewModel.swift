@@ -39,7 +39,8 @@ class ChatViewModel: ObservableObject {
         do {
             let response = try await apiClient.sendMessage(
                 personaId: persona.id,
-                messages: messages
+                messages: messages,
+                persona: persona  // Personaオブジェクトをサーバーに送信
             )
 
             let assistantMessage = Message(

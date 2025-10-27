@@ -24,7 +24,7 @@ class APIClient {
         self.session = URLSession(configuration: configuration)
     }
 
-    func sendMessage(personaId: String, messages: [Message]) async throws -> String {
+    func sendMessage(personaId: String, messages: [Message], persona: Persona? = nil) async throws -> String {
         guard let url = URL(string: "\(baseURL)/api/chat") else {
             throw APIError.invalidURL
         }
@@ -35,7 +35,7 @@ class APIClient {
         request.setValue("application/json", forHTTPHeaderField: "Accept")
 
         let apiMessages = messages.map { APIMessage(from: $0) }
-        let chatRequest = ChatRequest(personaId: personaId, messages: apiMessages)
+        let chatRequest = ChatRequest(personaId: personaId, messages: apiMessages, persona: persona)
 
         do {
             let encoder = JSONEncoder()

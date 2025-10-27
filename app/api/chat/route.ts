@@ -8,7 +8,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.text();
-    const { personaId, messages } = JSON.parse(body);
+    const { personaId, messages, persona: clientPersona } = JSON.parse(body);
 
     // 入力検証
     if (!personaId || !messages || !Array.isArray(messages)) {
@@ -19,15 +19,24 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 人物データの取得
-    const persona = getPersonaById(personaId);
+    // 人物データの取得（クライアントから送られた場合はそれを使用、なければサーバー側から取得）
+    let persona = clientPersona;
+
     if (!persona) {
+      // サーバー側のpersonas.tsから取得（既定の人物の場合）
+      persona = getPersonaById(personaId);
+    }
+
+    if (!persona) {
+      console.error(`Persona not found: ${personaId}`);
       return createSecureResponse(
         { error: 'Persona not found' },
         404,
         origin
       );
     }
+
+    console.log(`💬 Chat with: ${persona.name} (${personaId})`)
 
     // メッセージの検証
     const lastMessage = messages[messages.length - 1];

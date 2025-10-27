@@ -3,6 +3,7 @@ import Foundation
 struct ChatRequest: Codable {
     let personaId: String
     let messages: [APIMessage]
+    let persona: Persona?
 }
 
 struct APIMessage: Codable {
