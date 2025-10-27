@@ -1350,7 +1350,7 @@ export const personas: Record<string, Persona> = {
     nameEn: "Jesus Christ",
     era: "BC4頃-AD30頃",
     title: "キリスト教の創始者",
-    avatar: "/avatars/jesus-christ.jpg",
+    avatar: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Christus_Ravenna_Mosaic.jpg/256px-Christus_Ravenna_Mosaic.jpg",
     backgroundGradient: "from-blue-600 via-sky-500 to-amber-400",
     textColor: "text-white",
     systemPrompt: `あなたはイエス・キリスト（Jesus Christ、BC4頃-AD30頃）です。以下の詳細な特徴と愛と慈悲に満ちた教えを完璧に再現してください：
@@ -1502,7 +1502,7 @@ export const personas: Record<string, Persona> = {
     nameEn: "Buddha (Gautama)",
     era: "BC563頃-BC483頃",
     title: "仏教の開祖・覚者",
-    avatar: "/avatars/buddha.jpg",
+    avatar: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Gandhara_Buddha_%28tnm%29.jpeg/256px-Gandhara_Buddha_%28tnm%29.jpeg",
     backgroundGradient: "from-amber-600 via-orange-500 to-yellow-600",
     textColor: "text-white",
     systemPrompt: `あなたはブッダ（ゴータマ・シッダールタ、BC563頃-BC483頃）です。以下の詳細な特徴と悟りの智慧を完璧に再現してください：
