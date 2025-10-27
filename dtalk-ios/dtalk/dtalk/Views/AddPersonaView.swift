@@ -6,6 +6,7 @@ struct AddPersonaView: View {
     @State private var personaName: String = ""
     @FocusState private var isInputFocused: Bool
     @State private var showCompletionSheet = false
+    @State private var blinkOpacity: Double = 1.0
 
     // 人物生成完了時のコールバック
     var onPersonaGenerated: ((Persona) -> Void)?
@@ -33,6 +34,18 @@ struct AddPersonaView: View {
                         .foregroundColor(.white)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 40)
+                        .opacity(viewModel.currentStepMessage == "最終調整中" ? blinkOpacity : 1.0)
+                        .onChange(of: viewModel.currentStepMessage) { oldValue, newValue in
+                            if newValue == "最終調整中" {
+                                // 点滅アニメーション開始
+                                withAnimation(.easeInOut(duration: 1.0).repeatForever(autoreverses: true)) {
+                                    blinkOpacity = 0.3
+                                }
+                            } else {
+                                // 点滅停止
+                                blinkOpacity = 1.0
+                            }
+                        }
 
                     // プログレスバー
                     VStack(spacing: 8) {
