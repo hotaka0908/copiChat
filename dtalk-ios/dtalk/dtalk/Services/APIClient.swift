@@ -83,7 +83,13 @@ class APIClient {
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.timeoutInterval = 90 // 人物生成は時間がかかるため90秒
 
-        let requestBody: [String: Any] = ["name": name]
+        // 既存人物名のリストを取得
+        let existingNames = PersonaData.shared.getAllPersonas().map { $0.name }
+
+        let requestBody: [String: Any] = [
+            "name": name,
+            "existingPersonaNames": existingNames
+        ]
 
         do {
             let encoder = JSONEncoder()

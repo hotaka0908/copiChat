@@ -27,8 +27,11 @@ class AddPersonaViewModel: ObservableObject {
 
         } catch let error as APIError {
             errorMessage = handleAPIError(error)
+            print("❌ APIError: \(error)")
         } catch {
-            errorMessage = "予期しないエラーが発生しました"
+            errorMessage = "予期しないエラーが発生しました: \(error.localizedDescription)"
+            print("❌ Unexpected Error: \(error)")
+            print("❌ Error Details: \(String(describing: error))")
         }
 
         isLoading = false

@@ -18,6 +18,9 @@ class OpenAIService {
     }
 
     func generatePersona(name: String) async throws -> Persona {
+        print("🔵 OpenAIService: Starting persona generation for '\(name)'")
+        print("🔵 API Key prefix: \(String(apiKey.prefix(10)))...")
+
         let url = URL(string: "https://api.openai.com/v1/chat/completions")!
 
         var request = URLRequest(url: url)
@@ -123,30 +126,44 @@ class OpenAIService {
 
         request.httpBody = try JSONSerialization.data(withJSONObject: requestBody)
 
+        print("🔵 Sending request to OpenAI API...")
         let (data, response) = try await session.data(for: request)
+        print("🔵 Received response from OpenAI API")
 
         guard let httpResponse = response as? HTTPURLResponse else {
+            print("❌ Invalid response type")
             throw APIError.invalidResponse
         }
 
+        print("🔵 HTTP Status Code: \(httpResponse.statusCode)")
+
         guard httpResponse.statusCode == 200 else {
             let errorMessage = String(data: data, encoding: .utf8) ?? "Unknown error"
+            print("❌ OpenAI API Error (\(httpResponse.statusCode)): \(errorMessage)")
             throw APIError.serverError("OpenAI API Error (\(httpResponse.statusCode)): \(errorMessage)")
         }
 
         // OpenAIのレスポンスをパース
+        print("🔵 Decoding OpenAI response...")
         let openAIResponse = try JSONDecoder().decode(OpenAIResponse.self, from: data)
 
         guard let content = openAIResponse.choices.first?.message.content else {
+            print("❌ No content in OpenAI response")
             throw APIError.serverError("No content in response")
         }
 
+        print("🔵 OpenAI response content length: \(content.count) characters")
+        print("🔵 Content preview: \(String(content.prefix(200)))...")
+
         // JSON文字列をPersonaにデコード
         guard let contentData = content.data(using: .utf8) else {
+            print("❌ Failed to convert content to data")
             throw APIError.decodingError(NSError(domain: "OpenAIService", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to convert content to data"]))
         }
 
+        print("🔵 Decoding Persona from JSON...")
         let persona = try JSONDecoder().decode(Persona.self, from: contentData)
+        print("✅ Successfully generated persona: \(persona.name)")
         return persona
     }
 }

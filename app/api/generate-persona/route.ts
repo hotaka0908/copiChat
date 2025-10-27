@@ -14,6 +14,63 @@ function getOpenAIClient(): OpenAI {
   return openai;
 }
 
+// Wikipedia APIから人物情報を取得
+async function fetchWikipediaInfo(name: string): Promise<{
+  exists: boolean;
+  summary?: string;
+  imageUrl?: string;
+  categories?: string[];
+}> {
+  try {
+    console.log(`🔍 Searching Wikipedia for: ${name}`);
+
+    // Wikipedia検索API（日本語版と英語版を両方試す）
+    const searchUrl = `https://ja.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(name)}&format=json&origin=*`;
+    const searchResponse = await fetch(searchUrl);
+    const searchData = await searchResponse.json();
+
+    if (!searchData.query || searchData.query.search.length === 0) {
+      console.log(`❌ No Wikipedia page found for: ${name}`);
+      return { exists: false };
+    }
+
+    const pageTitle = searchData.query.search[0].title;
+    console.log(`✅ Found Wikipedia page: ${pageTitle}`);
+
+    // ページの詳細情報を取得
+    const pageUrl = `https://ja.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(pageTitle)}&prop=extracts|pageimages|categories&exintro=true&explaintext=true&piprop=thumbnail&pithumbsize=256&format=json&origin=*`;
+    const pageResponse = await fetch(pageUrl);
+    const pageData = await pageResponse.json();
+
+    const pages = pageData.query.pages;
+    const pageId = Object.keys(pages)[0];
+    const page = pages[pageId];
+
+    // 画像URLの取得（Wikimedia Commons形式に変換）
+    let imageUrl = '';
+    if (page.thumbnail && page.thumbnail.source) {
+      imageUrl = page.thumbnail.source;
+      console.log(`📷 Found image: ${imageUrl}`);
+    }
+
+    // カテゴリ情報から人物の分野を推測
+    const categories: string[] = [];
+    if (page.categories) {
+      categories.push(...page.categories.map((cat: any) => cat.title));
+    }
+
+    return {
+      exists: true,
+      summary: page.extract || '',
+      imageUrl,
+      categories
+    };
+  } catch (error) {
+    console.error('Wikipedia API Error:', error);
+    return { exists: false };
+  }
+}
+
 // 参考例のPersona（ウォルト・ディズニー）
 const EXAMPLE_PERSONA = {
   id: "walt-disney",
@@ -42,7 +99,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.text();
-    const { name } = JSON.parse(body);
+    const { name, existingPersonaNames } = JSON.parse(body);
 
     // 入力検証
     if (!name || typeof name !== 'string' || name.trim().length === 0) {
@@ -53,14 +110,56 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const trimmedName = name.trim();
+
     // 名前の長さチェック
-    if (name.length > 100) {
+    if (trimmedName.length < 2) {
+      return createSecureResponse(
+        { error: 'Name too short (minimum 2 characters)' },
+        400,
+        origin
+      );
+    }
+
+    if (trimmedName.length > 100) {
       return createSecureResponse(
         { error: 'Name too long' },
         400,
         origin
       );
     }
+
+    // 既存人物との重複チェック
+    if (existingPersonaNames && Array.isArray(existingPersonaNames)) {
+      const nameExists = existingPersonaNames.some(
+        (existingName: string) => existingName.toLowerCase() === trimmedName.toLowerCase()
+      );
+
+      if (nameExists) {
+        return createSecureResponse(
+          { error: `「${trimmedName}」は既にBookshelfに追加されています` },
+          400,
+          origin
+        );
+      }
+    }
+
+    // Wikipedia APIで実在性と情報を確認
+    console.log(`🔍 Step 1: Checking Wikipedia for ${trimmedName}...`);
+    const wikiInfo = await fetchWikipediaInfo(trimmedName);
+
+    if (!wikiInfo.exists) {
+      return createSecureResponse(
+        {
+          error: `「${trimmedName}」に関する情報が見つかりませんでした。\n実在する有名人の名前を入力してください。`,
+          suggestion: 'Wikipedia に記事がある人物名を入力してください'
+        },
+        404,
+        origin
+      );
+    }
+
+    console.log(`✅ Step 2: Wikipedia info found. Summary length: ${wikiInfo.summary?.length || 0}`);
 
     // OpenAI APIキーの確認
     if (!process.env.OPENAI_API_KEY) {
@@ -74,9 +173,20 @@ export async function POST(request: NextRequest) {
     // 参考例をJSON文字列化
     const exampleJSON = JSON.stringify(EXAMPLE_PERSONA, null, 2);
 
-    // プロンプトの生成
+    // Wikipedia情報を整形
+    const wikipediaContext = wikiInfo.summary ? `
+【Wikipediaからの情報】
+${wikiInfo.summary.substring(0, 1000)}
+${wikiInfo.imageUrl ? `\n画像URL: ${wikiInfo.imageUrl}` : ''}
+` : '';
+
+    console.log(`📝 Step 3: Generating persona with OpenAI (gpt-4o)...`);
+
+    // プロンプトの生成（Wikipedia情報を含む）
     const prompt = `あなたは歴史上の人物や著名人の詳細なプロフィールを生成する専門家です。
-以下のJSON形式の完璧な例を参考に、「${name}」という人物の詳細情報を同じ品質レベルでJSON形式で生成してください。
+以下のJSON形式の完璧な例を参考に、「${trimmedName}」という人物の詳細情報を同じ品質レベルでJSON形式で生成してください。
+
+${wikipediaContext}
 
 【完璧な参考例】
 ${exampleJSON}
@@ -87,17 +197,16 @@ ${exampleJSON}
 
 2. **基本情報**:
    - id: UUID形式で一意のIDを生成（例: "a1b2c3d4-e5f6-7890-abcd-ef1234567890"）
-   - name: 「${name}」を使用
+   - name: 「${trimmedName}」を使用
    - nameEn: 英語名またはローマ字表記
    - era: 生没年や活動時期（例: "1901-1966", "BC384-BC322"）
    - title: 職業や肩書き（簡潔かつ具体的に）
 
 3. **avatar画像URL**:
-   - Wikipediaの256px版画像URLを使用
+   ${wikiInfo.imageUrl ? `- **以下のWikipediaの画像URLを使用してください**: "${wikiInfo.imageUrl}"` : `- Wikipediaの256px版画像URLを使用
    - 形式: "https://upload.wikimedia.org/wikipedia/commons/thumb/[2文字]/[2文字]/[filename]/256px-[filename]"
-   - 例: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Walt_Disney_1946.JPG/256px-Walt_Disney_1946.JPG"
    - 実在する人物の場合は必ず本物の画像URLを生成（Wikipedia Commonsから実在する画像を検索して正確なパスを使用）
-   - 架空の人物の場合は空文字 "" を使用
+   - 画像が見つからない場合は空文字 "" を使用`}
 
 4. **systemPrompt** (最重要):
    - 300-500文字以上の詳細なプロンプトを作成
