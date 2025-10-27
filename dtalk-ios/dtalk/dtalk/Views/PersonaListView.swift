@@ -3,6 +3,7 @@ import SwiftUI
 struct PersonaListView: View {
     private let personas = PersonaData.shared.getAllPersonas()
     @State private var selectedPersona: Persona?
+    @Environment(\.dismiss) private var dismiss
 
     // カテゴリごとにグループ化
     private var groupedPersonas: [(PersonaCategory, [Persona])] {
@@ -44,6 +45,18 @@ struct PersonaListView: View {
         }
         .navigationTitle("トーク")
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    dismiss()
+                }) {
+                    Image(systemName: "chevron.left")
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundColor(.black)
+                }
+            }
+        }
     }
 }
 
