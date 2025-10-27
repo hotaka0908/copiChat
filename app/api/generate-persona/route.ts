@@ -156,7 +156,7 @@ ${exampleJSON}
 
     // OpenAI APIリクエスト
     const completion = await getOpenAIClient().chat.completions.create({
-      model: "gpt-4o-mini", // gpt-4oより安価で高速
+      model: "gpt-4o", // 高品質な人物生成のためgpt-4oを使用
       messages: [
         {
           role: "system",
