@@ -1,47 +1,61 @@
 import SwiftUI
 
 struct PersonaListView: View {
-    private let personas = PersonaData.shared.getAllPersonas()
     @State private var selectedPersona: Persona?
     @Environment(\.dismiss) private var dismiss
 
-    // カテゴリごとにグループ化
-    private var groupedPersonas: [(PersonaCategory, [Persona])] {
-        let grouped = Dictionary(grouping: personas) { $0.category }
-        return PersonaCategory.allCases.compactMap { category in
-            guard let personas = grouped[category], !personas.isEmpty else { return nil }
-            return (category, personas)
+    // 会話履歴がある人物のみを取得（最新の会話順）
+    private var personasWithHistory: [Persona] {
+        let personas = PersonaData.shared.getAllPersonas().filter { persona in
+            ChatHistoryManager.shared.hasHistory(for: persona.id)
+        }
+
+        // 最後のメッセージのタイムスタンプでソート（新しい順）
+        return personas.sorted { persona1, persona2 in
+            let lastMessage1 = ChatHistoryManager.shared.getLastMessage(for: persona1.id)
+            let lastMessage2 = ChatHistoryManager.shared.getLastMessage(for: persona2.id)
+
+            guard let timestamp1 = lastMessage1?.timestamp else { return false }
+            guard let timestamp2 = lastMessage2?.timestamp else { return true }
+
+            return timestamp1 > timestamp2
         }
     }
 
     var body: some View {
         VStack(spacing: 0) {
-            // 人物リスト（カテゴリ別）
-            List {
-                ForEach(groupedPersonas, id: \.0) { category, personas in
-                    Section {
-                        ForEach(personas) { persona in
+            // 人物リスト
+            if personasWithHistory.isEmpty {
+                // 会話履歴がない場合の表示
+                VStack(spacing: 16) {
+                    Image(systemName: "message.slash")
+                        .font(.system(size: 64))
+                        .foregroundColor(.gray.opacity(0.5))
+                    Text("会話履歴がありません")
+                        .font(.system(size: 18, weight: .medium))
+                        .foregroundColor(.secondary)
+                    Text("偉人を選んで会話を始めましょう")
+                        .font(.system(size: 14))
+                        .foregroundColor(.secondary)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else {
+                List {
+                    ForEach(personasWithHistory) { persona in
+                        ZStack {
                             NavigationLink(destination: ChatView(persona: persona)) {
-                                PersonaCard(persona: persona)
+                                EmptyView()
                             }
-                            .listRowInsets(EdgeInsets())
-                            .listRowSeparator(.visible)
+                            .opacity(0)
+
+                            PersonaCard(persona: persona)
                         }
-                    } header: {
-                        HStack(spacing: 8) {
-                            Image(systemName: category.icon)
-                                .font(.system(size: 14, weight: .semibold))
-                                .foregroundColor(.secondary)
-                            Text(category.rawValue)
-                                .font(.system(size: 13, weight: .semibold))
-                                .foregroundColor(.secondary)
-                                .textCase(nil)
-                        }
-                        .padding(.vertical, 4)
+                        .listRowInsets(EdgeInsets())
+                        .listRowSeparator(.visible)
                     }
                 }
+                .listStyle(.plain)
             }
-            .listStyle(.plain)
         }
         .navigationTitle("トーク")
         .navigationBarTitleDisplayMode(.inline)
@@ -63,6 +77,10 @@ struct PersonaListView: View {
 struct PersonaCard: View {
     let persona: Persona
 
+    private var lastMessage: Message? {
+        ChatHistoryManager.shared.getLastMessage(for: persona.id)
+    }
+
     var body: some View {
         HStack(spacing: 16) {
             // アバター
@@ -83,21 +101,65 @@ struct PersonaCard: View {
             .frame(width: 52, height: 52)
             .clipShape(Circle())
 
-            // 名前
-            Text(persona.name)
-                .font(.system(size: 17))
-                .foregroundColor(.primary)
+            // 名前と最後のメッセージ
+            VStack(alignment: .leading, spacing: 4) {
+                Text(persona.name)
+                    .font(.system(size: 17, weight: .semibold))
+                    .foregroundColor(.primary)
+
+                if let lastMessage = lastMessage {
+                    Text(lastMessage.content)
+                        .font(.system(size: 14))
+                        .foregroundColor(.secondary)
+                        .lineLimit(1)
+                } else {
+                    Text("メッセージはまだありません")
+                        .font(.system(size: 14))
+                        .foregroundColor(.secondary)
+                        .italic()
+                }
+            }
 
             Spacer()
 
-            // 矢印アイコン
-            Image(systemName: "chevron.right")
-                .foregroundColor(.secondary)
-                .font(.system(size: 14, weight: .semibold))
+            // 時間
+            if let lastMessage = lastMessage {
+                VStack(alignment: .trailing, spacing: 2) {
+                    Text(formatTimestamp(lastMessage.timestamp))
+                        .font(.system(size: 12))
+                        .foregroundColor(.secondary)
+                }
+            }
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
         .background(Color(.systemBackground))
+    }
+
+    private func formatTimestamp(_ date: Date) -> String {
+        let calendar = Calendar.current
+        let now = Date()
+
+        if calendar.isDateInToday(date) {
+            // 今日なら時間のみ
+            let formatter = DateFormatter()
+            formatter.dateFormat = "HH:mm"
+            return formatter.string(from: date)
+        } else if calendar.isDateInYesterday(date) {
+            // 昨日なら「昨日」
+            return "昨日"
+        } else if calendar.isDate(date, equalTo: now, toGranularity: .weekOfYear) {
+            // 今週なら曜日
+            let formatter = DateFormatter()
+            formatter.dateFormat = "EEEE"
+            formatter.locale = Locale(identifier: "ja_JP")
+            return formatter.string(from: date)
+        } else {
+            // それ以外は日付
+            let formatter = DateFormatter()
+            formatter.dateFormat = "M/d"
+            return formatter.string(from: date)
+        }
     }
 }
 

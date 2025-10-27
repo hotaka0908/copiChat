@@ -64,4 +64,15 @@ class ChatHistoryManager {
         }
         return Array(messages.suffix(maxCount))
     }
+
+    /// 最後のメッセージを取得
+    func getLastMessage(for personaId: String) -> Message? {
+        let messages = loadMessages(for: personaId)
+        return messages.last
+    }
+
+    /// 会話履歴があるかどうか
+    func hasHistory(for personaId: String) -> Bool {
+        return !loadMessages(for: personaId).isEmpty
+    }
 }
