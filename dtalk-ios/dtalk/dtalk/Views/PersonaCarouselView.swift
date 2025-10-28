@@ -2,6 +2,7 @@ import SwiftUI
 
 struct PersonaCarouselView: View {
     @ObservedObject private var personaData = PersonaData.shared
+    @ObservedObject private var appSettings = AppSettings.shared
     @State private var currentRotation: Double = 0
     @State private var dragStartRotation: Double = 0
     @State private var isDragging = false
@@ -10,6 +11,7 @@ struct PersonaCarouselView: View {
     @State private var showingPersonaDetail = false
     @State private var navigateToPersonaList = false
     @State private var navigateToBookshelf = false
+    @State private var navigateToSettings = false
 
     private let radius: CGFloat = 180
     private var personas: [Persona] {
@@ -50,6 +52,31 @@ struct PersonaCarouselView: View {
                                 .font(.system(size: 24))
                                 .foregroundColor(.white)
                                 .padding()
+                        }
+
+                        // プロフィール画像（設定へのリンク）
+                        Button(action: {
+                            navigateToSettings = true
+                        }) {
+                            if let profileImage = appSettings.userProfileImage {
+                                Image(uiImage: profileImage)
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 36, height: 36)
+                                    .clipShape(Circle())
+                                    .padding(.horizontal, 8)
+                            } else {
+                                ZStack {
+                                    Circle()
+                                        .fill(Color.white.opacity(0.3))
+                                        .frame(width: 36, height: 36)
+
+                                    Image(systemName: "person.fill")
+                                        .font(.system(size: 18))
+                                        .foregroundColor(.white)
+                                }
+                                .padding(.horizontal, 8)
+                            }
                         }
                     }
                     .padding(.top, 10)
@@ -161,6 +188,15 @@ struct PersonaCarouselView: View {
             NavigationLink(
                 destination: BookshelfView(),
                 isActive: $navigateToBookshelf
+            ) {
+                EmptyView()
+            }
+            .hidden()
+
+            // SettingsViewへのNavigationLink（非表示）
+            NavigationLink(
+                destination: SettingsView(),
+                isActive: $navigateToSettings
             ) {
                 EmptyView()
             }
@@ -322,6 +358,7 @@ struct PersonaDetailView: View {
     let onStartChat: () -> Void
     @Environment(\.dismiss) private var dismiss
     @ObservedObject private var personaData = PersonaData.shared
+    @State private var showMyListFullAlert = false
 
     var isInMyList: Bool {
         personaData.isInMyList(persona.id)
@@ -340,7 +377,12 @@ struct PersonaDetailView: View {
                             if isInMyList {
                                 personaData.removeFromMyList(persona.id)
                             } else {
-                                personaData.addToMyList(persona.id)
+                                // 上限チェック
+                                if personaData.isMyListFull() {
+                                    showMyListFullAlert = true
+                                } else {
+                                    personaData.addToMyList(persona.id)
+                                }
                             }
                         }
                     }) {
@@ -544,6 +586,11 @@ struct PersonaDetailView: View {
                 .padding(.top, 10)
                 .padding(.bottom, 30)
             }
+        }
+        .alert("マイリストがいっぱいです", isPresented: $showMyListFullAlert) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text("マイリストは11人までです。他の人物を削除してから追加してください。")
         }
     }
 }
