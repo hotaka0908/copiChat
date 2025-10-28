@@ -103,7 +103,7 @@ export default function PrivacyPage() {
               <li>プロフィール情報の編集（アプリ内設定画面より可能）</li>
             </ul>
             <p className="text-gray-700 mt-4">
-              これらの権利を行使する場合は、当サービス内のお問い合わせフォームよりご連絡ください。
+              これらの権利を行使する場合は、<a href="mailto:ho@universalpine.com" className="text-blue-600 hover:underline">ho@universalpine.com</a> までご連絡ください。
             </p>
           </section>
 
@@ -120,7 +120,7 @@ export default function PrivacyPage() {
           <section className="mb-8">
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">9. 子どもの個人情報</h2>
             <p className="text-gray-700">
-              当サービスは、13歳未満の子どもから意図的に個人情報を収集することはありません。保護者の方が、お子様が個人情報を提供したことに気づかれた場合は、速やかにご連絡ください。
+              当サービスは、13歳未満の子どもから意図的に個人情報を収集することはありません。保護者の方が、お子様が個人情報を提供したことに気づかれた場合は、<a href="mailto:ho@universalpine.com" className="text-blue-600 hover:underline">ho@universalpine.com</a> まで速やかにご連絡ください。
             </p>
           </section>
 
@@ -136,8 +136,11 @@ export default function PrivacyPage() {
 
           <section className="mb-8">
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">11. お問い合わせ</h2>
+            <p className="text-gray-700 mb-4">
+              本プライバシーポリシーに関するご質問やご意見がある場合は、以下のメールアドレスまでご連絡ください。
+            </p>
             <p className="text-gray-700">
-              本プライバシーポリシーに関するご質問やご意見がある場合は、当サービス内のお問い合わせフォームよりご連絡ください。
+              メールアドレス: <a href="mailto:ho@universalpine.com" className="text-blue-600 hover:underline">ho@universalpine.com</a>
             </p>
           </section>
 

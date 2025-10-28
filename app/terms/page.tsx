@@ -104,8 +104,11 @@ export default function TermsPage() {
 
           <section className="mb-8">
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">第9条（お問い合わせ）</h2>
+            <p className="text-gray-700 mb-4">
+              本規約に関するお問い合わせは、以下のメールアドレスまでご連絡ください。
+            </p>
             <p className="text-gray-700">
-              本規約に関するお問い合わせは、当サービス内のお問い合わせフォームよりご連絡ください。
+              メールアドレス: <a href="mailto:ho@universalpine.com" className="text-blue-600 hover:underline">ho@universalpine.com</a>
             </p>
           </section>
         </div>
