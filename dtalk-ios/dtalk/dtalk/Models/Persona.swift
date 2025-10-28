@@ -35,6 +35,7 @@ enum PersonaCategory: String, Codable, CaseIterable {
     case music = "music"
     case sports = "sports"
     case social = "social"
+    case other = "other"
 
     var displayName: String {
         switch self {
@@ -45,6 +46,7 @@ enum PersonaCategory: String, Codable, CaseIterable {
         case .music: return "音楽・芸能"
         case .sports: return "スポーツ"
         case .social: return "社会活動・政治"
+        case .other: return "その他"
         }
     }
 
@@ -57,6 +59,7 @@ enum PersonaCategory: String, Codable, CaseIterable {
         case .music: return "music.note"
         case .sports: return "sportscourt.fill"
         case .social: return "heart.fill"
+        case .other: return "ellipsis.circle.fill"
         }
     }
 }
