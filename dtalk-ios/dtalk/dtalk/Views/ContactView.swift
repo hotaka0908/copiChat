@@ -28,7 +28,7 @@ struct ContactView: View {
                     ContactMethodCard(
                         icon: "envelope.fill",
                         title: "メールでのお問い合わせ",
-                        description: "support@dtalk.app",
+                        description: "ho@universalpine.com",
                         action: {
                             openMail()
                         }
@@ -60,7 +60,7 @@ struct ContactView: View {
     }
 
     private func openMail() {
-        let email = "support@dtalk.app"
+        let email = "ho@universalpine.com"
         let subject = "DTalkアプリについてのお問い合わせ"
         let urlString = "mailto:\(email)?subject=\(subject.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
 
