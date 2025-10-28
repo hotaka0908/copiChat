@@ -1,6 +1,6 @@
 # Avatar Images
 
-This directory contains avatar images for the personas in DTalk.
+This directory contains avatar images for the personas in CopiChat.
 
 ## Current Avatars:
 - `avicii.svg` - Placeholder for Avicii (Tim Bergling)

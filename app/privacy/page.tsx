@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'プライバシーポリシー | DTalk',
-  description: 'DTalkにおける個人情報の取り扱いについてご説明します。',
+  title: 'プライバシーポリシー | CopiChat',
+  description: 'CopiChatにおける個人情報の取り扱いについてご説明します。',
 }
 
 export default function PrivacyPage() {
@@ -18,7 +18,7 @@ export default function PrivacyPage() {
           <section className="mb-8">
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">1. はじめに</h2>
             <p className="text-gray-700 mb-4">
-              DTalk（以下「当サービス」といいます）は、ユーザーの皆様のプライバシーを尊重し、個人情報の保護に努めています。本プライバシーポリシーは、当サービスにおける個人情報の取り扱いについて説明するものです。
+              CopiChat（以下「当サービス」といいます）は、ユーザーの皆様のプライバシーを尊重し、個人情報の保護に努めています。本プライバシーポリシーは、当サービスにおける個人情報の取り扱いについて説明するものです。
             </p>
           </section>
 

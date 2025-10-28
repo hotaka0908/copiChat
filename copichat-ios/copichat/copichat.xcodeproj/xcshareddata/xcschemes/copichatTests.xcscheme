@@ -20,9 +20,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "327CC5842EAC9F7A000BACA3"
-               BuildableName = "dtalkTests.xctest"
-               BlueprintName = "dtalkTests"
-               ReferencedContainer = "container:dtalk.xcodeproj">
+               BuildableName = "copichatTests.xctest"
+               BlueprintName = "copichatTests"
+               ReferencedContainer = "container:copichat.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -42,9 +42,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "327CC5772EAC9F79000BACA3"
-            BuildableName = "dtalk.app"
-            BlueprintName = "dtalk"
-            ReferencedContainer = "container:dtalk.xcodeproj">
+            BuildableName = "copichat.app"
+            BlueprintName = "copichat"
+            ReferencedContainer = "container:copichat.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -58,9 +58,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "327CC5772EAC9F79000BACA3"
-            BuildableName = "dtalk.app"
-            BlueprintName = "dtalk"
-            ReferencedContainer = "container:dtalk.xcodeproj">
+            BuildableName = "copichat.app"
+            BlueprintName = "copichat"
+            ReferencedContainer = "container:copichat.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

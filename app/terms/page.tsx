@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: '利用規約 | DTalk',
-  description: 'DTalkサービスの利用規約をご確認ください。',
+  title: '利用規約 | CopiChat',
+  description: 'CopiChatサービスの利用規約をご確認ください。',
 }
 
 export default function TermsPage() {
@@ -18,7 +18,7 @@ export default function TermsPage() {
           <section className="mb-8">
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">第1条（適用）</h2>
             <p className="text-gray-700 mb-4">
-              本規約は、DTalk（以下「当サービス」といいます）の利用に関する条件を、当サービスを利用するすべてのユーザー（以下「ユーザー」といいます）と当サービス提供者（以下「当社」といいます）との間で定めるものです。
+              本規約は、CopiChat（以下「当サービス」といいます）の利用に関する条件を、当サービスを利用するすべてのユーザー（以下「ユーザー」といいます）と当サービス提供者（以下「当社」といいます）との間で定めるものです。
             </p>
             <p className="text-gray-700">
               ユーザーは、当サービスを利用することにより、本規約に同意したものとみなされます。

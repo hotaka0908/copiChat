@@ -133,7 +133,7 @@ export default function ExplorePage() {
     rightWall.receiveShadow = true;
     scene.add(rightWall);
 
-    // Create DTalk characters
+    // Create CopiChat characters
     const personas = getAllPersonas();
     const characterColors = {
       'steve-jobs': 0x4169e1,
@@ -534,7 +534,7 @@ export default function ExplorePage() {
       
       {/* UI Overlay */}
       <div className="absolute top-4 left-4 bg-black/70 text-white p-4 rounded-lg backdrop-blur-sm max-w-xs">
-        <h2 className="text-xl font-bold mb-2">DTalk 3D探索モード</h2>
+        <h2 className="text-xl font-bold mb-2">CopiChat 3D探索モード</h2>
         <p className="text-sm mb-1">WASDで移動</p>
         <p className="text-sm mb-1">マウスで視点移動</p>
         <p className="text-sm mb-1">Eキーで対話</p>

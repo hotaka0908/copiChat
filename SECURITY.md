@@ -1,6 +1,6 @@
 # セキュリティガイド
 
-このドキュメントでは、DTalkアプリケーションに実装されているセキュリティ機能について説明します。
+このドキュメントでは、CopiChatアプリケーションに実装されているセキュリティ機能について説明します。
 
 ## 🔒 実装済みセキュリティ機能
 
@@ -114,7 +114,7 @@ HTTPS通信を強制
    ```
    以下を設定:
    - `OPENAI_API_KEY`: OpenAI APIキー
-   - `NEXT_PUBLIC_APP_URL`: 本番ドメイン（例: https://dtalk.vercel.app）
+   - `NEXT_PUBLIC_APP_URL`: 本番ドメイン（例: https://copichat.vercel.app）
 
 2. **HTTPS の確認**
    - Vercelは自動的にHTTPS化されます

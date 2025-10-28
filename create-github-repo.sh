@@ -23,7 +23,7 @@ curl -X POST -H "Authorization: token $TOKEN" \
      -H "Accept: application/vnd.github.v3+json" \
      https://api.github.com/user/repos \
      -d '{
-       "name": "dtalk",
+       "name": "copiChat",
        "description": "AI-powered chat application for conversations with historical figures using Next.js and OpenAI GPT-4",
        "private": false,
        "has_issues": true,
@@ -35,5 +35,5 @@ echo ""
 echo "リポジトリ作成完了！"
 echo ""
 echo "次に以下のコマンドを実行してください:"
-echo "git remote add origin https://github.com/$USERNAME/dtalk.git"
+echo "git remote add origin https://github.com/$USERNAME/copiChat.git"
 echo "git push -u origin main"

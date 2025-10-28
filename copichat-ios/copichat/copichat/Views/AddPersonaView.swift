@@ -248,7 +248,7 @@ struct AddPersonaView: View {
         }
         .sheet(isPresented: $showingActivityView) {
             ActivityViewController(
-                activityItems: ["dtalkアプリで歴史上の偉人と会話しよう！\n様々な偉人とAIチャットが楽しめます。"],
+                activityItems: ["CopiChatアプリで歴史上の偉人と会話しよう！\n様々な偉人とAIチャットが楽しめます。"],
                 onComplete: { completed in
                     print("📤 共有シート結果: completed = \(completed)")
                     // 共有が実際に完了した場合のみ報酬を付与（キャンセル時は付与しない）

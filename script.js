@@ -1,4 +1,4 @@
-class DTalkBot {
+class CopiChatBot {
     constructor() {
         this.messages = document.getElementById('messages');
         this.messageInput = document.getElementById('messageInput');
@@ -180,5 +180,5 @@ class DTalkBot {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    new DTalkBot();
+    new CopiChatBot();
 });

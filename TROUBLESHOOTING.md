@@ -1,15 +1,15 @@
-# DTalk トラブルシューティング
+# CopiChat トラブルシューティング
 
 ## 🚨 現在の問題: 401 認証エラー
 
-**症状**: VercelでデプロイされたDTalkにアクセスすると401エラーが表示される
+**症状**: VercelでデプロイされたCopiChatにアクセスすると401エラーが表示される
 
 ## 🔧 解決方法
 
 ### 1. Vercel Dashboard設定の確認
 
 **手順**:
-1. https://vercel.com/hotakas-projects/dtalk/settings にアクセス
+1. https://vercel.com/hotakas-projects/copichat/settings にアクセス
 2. 「Security」または「General」タブを確認
 3. 「Authentication」または「Protection」設定を確認
 4. パブリックアクセスを有効にする
@@ -21,7 +21,7 @@
 
 **オプション2: CLI経由**
 ```bash
-vercel inspect https://dtalk-jvc3vy53e-hotakas-projects.vercel.app
+vercel inspect https://copichat.vercel.app
 vercel project set protection=public
 ```
 
@@ -46,7 +46,7 @@ vercel project set protection=public
 
 ```bash
 # ローカルで動作確認
-cd /Users/funahashihotaka/Downloads/dtalk
+cd /Users/funahashihotaka/Downloads/copichat
 npm run dev
 
 # ブラウザで http://localhost:3001 にアクセス
@@ -65,11 +65,11 @@ npm run dev
 
 ## 🔍 デバッグ情報
 
-**最新デプロイURL**: https://dtalk-jvc3vy53e-hotakas-projects.vercel.app
+**最新デプロイURL**: https://copichat.vercel.app
 
 **ログ確認コマンド**:
 ```bash
-vercel logs https://dtalk-jvc3vy53e-hotakas-projects.vercel.app
+vercel logs https://copichat.vercel.app
 ```
 
 **環境変数確認**:

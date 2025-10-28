@@ -1,13 +1,13 @@
 # GitHub リポジトリ設定ガイド
 
-DTalkプロジェクトをGitHubで管理するための手順です。
+CopiChatプロジェクトをGitHubで管理するための手順です。
 
 ## 1. GitHubでリポジトリを作成
 
 1. GitHubにログイン: https://github.com
 2. 右上の「+」アイコンをクリック → 「New repository」を選択
 3. 以下の情報を入力:
-   - **Repository name**: `dtalk`
+   - **Repository name**: `copiChat`
    - **Description**: `AI-powered chat application for conversations with historical figures using Next.js and OpenAI GPT-4`
    - **Public/Private**: お好みで選択（推奨: Public）
    - **Initialize this repository with**: 何も選択しない
@@ -20,14 +20,14 @@ GitHubでリポジトリを作成すると、以下のようなコマンドが�
 
 ```bash
 # あなたのGitHubユーザー名を使用してください
-git remote add origin https://github.com/YOUR_USERNAME/dtalk.git
+git remote add origin https://github.com/YOUR_USERNAME/copiChat.git
 git branch -M main
 git push -u origin main
 ```
 
 例: もしGitHubユーザー名が `funahashihotaka` の場合:
 ```bash
-git remote add origin https://github.com/funahashihotaka/dtalk.git
+git remote add origin https://github.com/funahashihotaka/copiChat.git
 git branch -M main
 git push -u origin main
 ```
@@ -75,5 +75,5 @@ mainブランチへの直接プッシュを制限
 
 ## 完了！
 
-これでDTalkプロジェクトがGitHubで管理できるようになりました。
+これでCopiChatプロジェクトがGitHubで管理できるようになりました。
 コラボレーションや版管理が簡単になります。

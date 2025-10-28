@@ -12,38 +12,38 @@
 			containerPortal = 327CC5702EAC9F79000BACA3 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 327CC5772EAC9F79000BACA3;
-			remoteInfo = dtalk;
+			remoteInfo = copichat;
 		};
 		327CC5902EAC9F7A000BACA3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 327CC5702EAC9F79000BACA3 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 327CC5772EAC9F79000BACA3;
-			remoteInfo = dtalk;
+			remoteInfo = copichat;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		327CC5782EAC9F79000BACA3 /* dtalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dtalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		327CC5852EAC9F7A000BACA3 /* dtalkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dtalkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		327CC58F2EAC9F7A000BACA3 /* dtalkUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dtalkUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		329ED04E2EADBBC10013D296 /* dtalk.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = dtalk.xctestplan; sourceTree = "<group>"; };
+		327CC5782EAC9F79000BACA3 /* copichat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = copichat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		327CC5852EAC9F7A000BACA3 /* copichatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = copichatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		327CC58F2EAC9F7A000BACA3 /* copichatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = copichatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		329ED04E2EADBBC10013D296 /* copichat.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = copichat.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		327CC57A2EAC9F79000BACA3 /* dtalk */ = {
+		327CC57A2EAC9F79000BACA3 /* copichat */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = dtalk;
+			path = copichat;
 			sourceTree = "<group>";
 		};
-		327CC5882EAC9F7A000BACA3 /* dtalkTests */ = {
+		327CC5882EAC9F7A000BACA3 /* copichatTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = dtalkTests;
+			path = copichatTests;
 			sourceTree = "<group>";
 		};
-		327CC5922EAC9F7A000BACA3 /* dtalkUITests */ = {
+		327CC5922EAC9F7A000BACA3 /* copichatUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = dtalkUITests;
+			path = copichatUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -76,10 +76,10 @@
 		327CC56F2EAC9F79000BACA3 = {
 			isa = PBXGroup;
 			children = (
-				329ED04E2EADBBC10013D296 /* dtalk.xctestplan */,
-				327CC57A2EAC9F79000BACA3 /* dtalk */,
-				327CC5882EAC9F7A000BACA3 /* dtalkTests */,
-				327CC5922EAC9F7A000BACA3 /* dtalkUITests */,
+				329ED04E2EADBBC10013D296 /* copichat.xctestplan */,
+				327CC57A2EAC9F79000BACA3 /* copichat */,
+				327CC5882EAC9F7A000BACA3 /* copichatTests */,
+				327CC5922EAC9F7A000BACA3 /* copichatUITests */,
 				327CC5792EAC9F79000BACA3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -87,9 +87,9 @@
 		327CC5792EAC9F79000BACA3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				327CC5782EAC9F79000BACA3 /* dtalk.app */,
-				327CC5852EAC9F7A000BACA3 /* dtalkTests.xctest */,
-				327CC58F2EAC9F7A000BACA3 /* dtalkUITests.xctest */,
+				327CC5782EAC9F79000BACA3 /* copichat.app */,
+				327CC5852EAC9F7A000BACA3 /* copichatTests.xctest */,
+				327CC58F2EAC9F7A000BACA3 /* copichatUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -97,9 +97,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		327CC5772EAC9F79000BACA3 /* dtalk */ = {
+		327CC5772EAC9F79000BACA3 /* copichat */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 327CC5992EAC9F7A000BACA3 /* Build configuration list for PBXNativeTarget "dtalk" */;
+			buildConfigurationList = 327CC5992EAC9F7A000BACA3 /* Build configuration list for PBXNativeTarget "copichat" */;
 			buildPhases = (
 				327CC5742EAC9F79000BACA3 /* Sources */,
 				327CC5752EAC9F79000BACA3 /* Frameworks */,
@@ -110,18 +110,18 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				327CC57A2EAC9F79000BACA3 /* dtalk */,
+				327CC57A2EAC9F79000BACA3 /* copichat */,
 			);
-			name = dtalk;
+			name = copichat;
 			packageProductDependencies = (
 			);
-			productName = dtalk;
-			productReference = 327CC5782EAC9F79000BACA3 /* dtalk.app */;
+			productName = copichat;
+			productReference = 327CC5782EAC9F79000BACA3 /* copichat.app */;
 			productType = "com.apple.product-type.application";
 		};
-		327CC5842EAC9F7A000BACA3 /* dtalkTests */ = {
+		327CC5842EAC9F7A000BACA3 /* copichatTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 327CC59C2EAC9F7A000BACA3 /* Build configuration list for PBXNativeTarget "dtalkTests" */;
+			buildConfigurationList = 327CC59C2EAC9F7A000BACA3 /* Build configuration list for PBXNativeTarget "copichatTests" */;
 			buildPhases = (
 				327CC5812EAC9F7A000BACA3 /* Sources */,
 				327CC5822EAC9F7A000BACA3 /* Frameworks */,
@@ -133,18 +133,18 @@
 				327CC5872EAC9F7A000BACA3 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				327CC5882EAC9F7A000BACA3 /* dtalkTests */,
+				327CC5882EAC9F7A000BACA3 /* copichatTests */,
 			);
-			name = dtalkTests;
+			name = copichatTests;
 			packageProductDependencies = (
 			);
-			productName = dtalkTests;
-			productReference = 327CC5852EAC9F7A000BACA3 /* dtalkTests.xctest */;
+			productName = copichatTests;
+			productReference = 327CC5852EAC9F7A000BACA3 /* copichatTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		327CC58E2EAC9F7A000BACA3 /* dtalkUITests */ = {
+		327CC58E2EAC9F7A000BACA3 /* copichatUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 327CC59F2EAC9F7A000BACA3 /* Build configuration list for PBXNativeTarget "dtalkUITests" */;
+			buildConfigurationList = 327CC59F2EAC9F7A000BACA3 /* Build configuration list for PBXNativeTarget "copichatUITests" */;
 			buildPhases = (
 				327CC58B2EAC9F7A000BACA3 /* Sources */,
 				327CC58C2EAC9F7A000BACA3 /* Frameworks */,
@@ -156,13 +156,13 @@
 				327CC5912EAC9F7A000BACA3 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				327CC5922EAC9F7A000BACA3 /* dtalkUITests */,
+				327CC5922EAC9F7A000BACA3 /* copichatUITests */,
 			);
-			name = dtalkUITests;
+			name = copichatUITests;
 			packageProductDependencies = (
 			);
-			productName = dtalkUITests;
-			productReference = 327CC58F2EAC9F7A000BACA3 /* dtalkUITests.xctest */;
+			productName = copichatUITests;
+			productReference = 327CC58F2EAC9F7A000BACA3 /* copichatUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -188,7 +188,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 327CC5732EAC9F79000BACA3 /* Build configuration list for PBXProject "dtalk" */;
+			buildConfigurationList = 327CC5732EAC9F79000BACA3 /* Build configuration list for PBXProject "copichat" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -202,9 +202,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				327CC5772EAC9F79000BACA3 /* dtalk */,
-				327CC5842EAC9F7A000BACA3 /* dtalkTests */,
-				327CC58E2EAC9F7A000BACA3 /* dtalkUITests */,
+				327CC5772EAC9F79000BACA3 /* copichat */,
+				327CC5842EAC9F7A000BACA3 /* copichatTests */,
+				327CC58E2EAC9F7A000BACA3 /* copichatUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -260,12 +260,12 @@
 /* Begin PBXTargetDependency section */
 		327CC5872EAC9F7A000BACA3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 327CC5772EAC9F79000BACA3 /* dtalk */;
+			target = 327CC5772EAC9F79000BACA3 /* copichat */;
 			targetProxy = 327CC5862EAC9F7A000BACA3 /* PBXContainerItemProxy */;
 		};
 		327CC5912EAC9F7A000BACA3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 327CC5772EAC9F79000BACA3 /* dtalk */;
+			target = 327CC5772EAC9F79000BACA3 /* copichat */;
 			targetProxy = 327CC5902EAC9F7A000BACA3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -412,7 +412,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.universalpine.dtalk;
+				PRODUCT_BUNDLE_IDENTIFIER = com.universalpine.copichat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -440,7 +440,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.universalpine.dtalk;
+				PRODUCT_BUNDLE_IDENTIFIER = com.universalpine.copichat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -458,12 +458,12 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.universalpine.dtalkTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.universalpine.copichatTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/dtalk.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/dtalk";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/copichat.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/copichat";
 			};
 			name = Debug;
 		};
@@ -477,12 +477,12 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.universalpine.dtalkTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.universalpine.copichatTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/dtalk.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/dtalk";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/copichat.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/copichat";
 			};
 			name = Release;
 		};
@@ -494,12 +494,12 @@
 				DEVELOPMENT_TEAM = J99PJ8SUF2;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.universalpine.dtalkUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.universalpine.copichatUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = dtalk;
+				TEST_TARGET_NAME = copichat;
 			};
 			name = Debug;
 		};
@@ -511,19 +511,19 @@
 				DEVELOPMENT_TEAM = J99PJ8SUF2;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.universalpine.dtalkUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.universalpine.copichatUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = dtalk;
+				TEST_TARGET_NAME = copichat;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		327CC5732EAC9F79000BACA3 /* Build configuration list for PBXProject "dtalk" */ = {
+		327CC5732EAC9F79000BACA3 /* Build configuration list for PBXProject "copichat" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				327CC5972EAC9F7A000BACA3 /* Debug */,
@@ -532,7 +532,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		327CC5992EAC9F7A000BACA3 /* Build configuration list for PBXNativeTarget "dtalk" */ = {
+		327CC5992EAC9F7A000BACA3 /* Build configuration list for PBXNativeTarget "copichat" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				327CC59A2EAC9F7A000BACA3 /* Debug */,
@@ -541,7 +541,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		327CC59C2EAC9F7A000BACA3 /* Build configuration list for PBXNativeTarget "dtalkTests" */ = {
+		327CC59C2EAC9F7A000BACA3 /* Build configuration list for PBXNativeTarget "copichatTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				327CC59D2EAC9F7A000BACA3 /* Debug */,
@@ -550,7 +550,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		327CC59F2EAC9F7A000BACA3 /* Build configuration list for PBXNativeTarget "dtalkUITests" */ = {
+		327CC59F2EAC9F7A000BACA3 /* Build configuration list for PBXNativeTarget "copichatUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				327CC5A02EAC9F7A000BACA3 /* Debug */,

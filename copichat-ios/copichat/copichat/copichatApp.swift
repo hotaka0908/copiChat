@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct DTalkApp: App {
+struct CopiChatApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()

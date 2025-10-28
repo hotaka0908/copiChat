@@ -6,17 +6,17 @@
 
 2. **新しいリポジトリを作成**:
    - 右上の「+」→「New repository」
-   - Repository name: `dtalk`
+   - Repository name: `copiChat`
    - Description: `AI-powered chat application for conversations with historical figures`
    - Public を選択
    - 「Create repository」をクリック
 
 3. **ターミナルで実行**:
 ```bash
-cd /Users/funahashihotaka/Desktop/dtalk
+cd /Users/funahashihotaka/Desktop/copichat
 
 # あなたのGitHubユーザー名に置き換えて実行
-git remote add origin https://github.com/YOUR_USERNAME/dtalk.git
+git remote add origin https://github.com/YOUR_USERNAME/copiChat.git
 git push -u origin main
 ```
 
@@ -25,7 +25,7 @@ git push -u origin main
 1. **GitHubトークンを作成**:
    - https://github.com/settings/tokens
    - 「Generate new token (classic)」
-   - Note: `dtalk`
+   - Note: `copiChat`
    - Expiration: 30 days
    - Scopes: `repo` にチェック
    - 「Generate token」をクリック
@@ -33,7 +33,7 @@ git push -u origin main
 
 2. **スクリプトを実行**:
 ```bash
-cd /Users/funahashihotaka/Desktop/dtalk
+cd /Users/funahashihotaka/Desktop/copichat
 ./create-github-repo.sh YOUR_USERNAME YOUR_TOKEN
 ```
 
@@ -43,13 +43,13 @@ cd /Users/funahashihotaka/Desktop/dtalk
 
 2. **リポジトリを追加**:
    - File → Add Local Repository
-   - `/Users/funahashihotaka/Desktop/dtalk` を選択
+   - `/Users/funahashihotaka/Desktop/copichat` を選択
    - Publish repository をクリック
 
 ## ✅ 完了後の確認
 
-リポジトリURL: `https://github.com/YOUR_USERNAME/dtalk`
+リポジトリURL: `https://github.com/YOUR_USERNAME/copiChat`
 
 ## 🎉 成功！
 
-これでDTalkがGitHubで管理できるようになります。
+これでCopiChatがGitHubで管理できるようになります。

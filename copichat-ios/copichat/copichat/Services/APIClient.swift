@@ -16,7 +16,7 @@ class APIClient {
 
     private init() {
         // Vercelにデプロイされたサーバーを使用
-        self.baseURL = "https://dtalk-dusky.vercel.app"
+        self.baseURL = "https://copichat.vercel.app"
 
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = 30

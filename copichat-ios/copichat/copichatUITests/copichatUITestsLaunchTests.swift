@@ -1,13 +1,13 @@
 //
-//  dtalkUITestsLaunchTests.swift
-//  dtalkUITests
+//  copichatUITestsLaunchTests.swift
+//  copichatUITests
 //
 //  Created by 船橋穂天 on 2025/10/25.
 //
 
 import XCTest
 
-final class dtalkUITestsLaunchTests: XCTestCase {
+final class copichatUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

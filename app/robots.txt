@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://dtalk-5u4qk19dd-hotakas-projects.vercel.app/sitemap.xml
+Sitemap: https://copichat.vercel.app/sitemap.xml
 
-# DTalk - 歴史的人物と対話するAIチャットボット
-# Keywords: DTalk, ディートーク, AI チャットボット, 歴史的人物, スティーブ・ジョブズ, アリストテレス, ダ・ヴィンチ, アインシュタイン
+# CopiChat - 歴史的人物と対話するAIチャットボット
+# Keywords: CopiChat, コピチャット, AI チャットボット, 歴史的人物, スティーブ・ジョブズ, アリストテレス, ダ・ヴィンチ, アインシュタイン

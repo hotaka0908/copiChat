@@ -3,7 +3,7 @@ import { getAllPersonas } from '@/lib/personas'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const personas = getAllPersonas()
-  const baseUrl = 'https://dtalk-5u4qk19dd-hotakas-projects.vercel.app'
+  const baseUrl = 'https://copichat.vercel.app'
   
   // 基本ページ
   const routes = [

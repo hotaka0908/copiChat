@@ -61,7 +61,7 @@ struct ContactView: View {
 
     private func openMail() {
         let email = "ho@universalpine.com"
-        let subject = "DTalkアプリについてのお問い合わせ"
+        let subject = "CopiChatアプリについてのお問い合わせ"
         let urlString = "mailto:\(email)?subject=\(subject.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
 
         if let url = URL(string: urlString) {

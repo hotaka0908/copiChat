@@ -1,13 +1,13 @@
 //
-//  dtalkUITests.swift
-//  dtalkUITests
+//  copichatUITests.swift
+//  copichatUITests
 //
 //  Created by 船橋穂天 on 2025/10/25.
 //
 
 import XCTest
 
-final class dtalkUITests: XCTestCase {
+final class copichatUITests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

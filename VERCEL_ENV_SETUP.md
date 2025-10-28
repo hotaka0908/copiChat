@@ -9,7 +9,7 @@
 ### ステップ1: Vercel Dashboardにアクセス
 
 1. https://vercel.com にアクセス
-2. プロジェクト `dtalk` を選択
+2. プロジェクト `copichat` を選択
 3. 上部メニューから **Settings** をクリック
 
 ### ステップ2: 環境変数を追加

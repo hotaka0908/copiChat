@@ -1,11 +1,11 @@
-# DTalk - 歴史的人物との対話チャットボット
+# CopiChat - 歴史的人物との対話チャットボット
 
 [![Vercel](https://img.shields.io/badge/deployed%20on-Vercel-black)](https://vercel.com)
 [![Next.js](https://img.shields.io/badge/Next.js-15-black)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.6-blue)](https://www.typescriptlang.org/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
-DTalkは、AI技術を使用して歴史上の偉人たちの思考パターンと人格を再現し、ユーザーが彼らと実際に会話しているような体験を提供するWebアプリケーションです。
+CopiChatは、AI技術を使用して歴史上の偉人たちの思考パターンと人格を再現し、ユーザーが彼らと実際に会話しているような体験を提供するWebアプリケーションです。
 
 ## 🌟 特徴
 
@@ -74,7 +74,7 @@ DTalkは、AI技術を使用して歴史上の偉人たちの思考パターン�
 
 ```bash
 # プロジェクトディレクトリに移動
-cd dtalk
+cd copichat
 
 # 依存関係をインストール
 npm install
@@ -99,7 +99,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key_here
 npm run dev
 ```
 
-ブラウザで `http://localhost:3000` を開いてDTalkをお楽しみください。
+ブラウザで `http://localhost:3000` を開いてCopiChatをお楽しみください。
 
 ## 🛠️ 技術スタック
 
@@ -115,7 +115,7 @@ npm run dev
 ## 📁 プロジェクト構造
 
 ```
-dtalk/
+copichat/
 ├── app/                      # Next.js App Router
 │   ├── page.tsx             # ホームページ（人物選択）
 │   ├── chat/[personaId]/    # チャット画面
@@ -206,7 +206,7 @@ npm run lint
 
 ## 🔒 セキュリティ
 
-DTalkは本番環境レベルのセキュリティ対策を実装しています：
+CopiChatは本番環境レベルのセキュリティ対策を実装しています：
 
 - ✅ **CORS制限**: 許可されたオリジンのみアクセス可能
 - ✅ **セキュリティヘッダー**: CSP, X-Frame-Options, HSTS等

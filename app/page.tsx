@@ -40,7 +40,7 @@ export default function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              DTalk
+              CopiChat
             </motion.h1>
             <motion.p 
               className="text-lg text-gray-600 font-light mb-2"
@@ -190,13 +190,13 @@ export default function HomePage() {
           transition={{ duration: 0.8, delay: 0.6 }}
         >
           <h2 className="text-2xl font-semibold text-gray-900 mb-4 text-center">
-            DTalkについて
+            CopiChatについて
           </h2>
           <div className="grid md:grid-cols-2 gap-8 text-sm text-gray-600 leading-relaxed">
             <div>
-              <h3 className="font-semibold text-gray-800 mb-2">DTalkとは</h3>
+              <h3 className="font-semibold text-gray-800 mb-2">CopiChatとは</h3>
               <p className="mb-4">
-                DTalk（ディートーク）は、OpenAI GPT-4を使用した革新的なAIチャットボットです。
+                CopiChat（コピチャット）は、OpenAI GPT-4を使用した革新的なAIチャットボットです。
                 歴史上の偉人たちの思考パターンと人格を忠実に再現し、ユーザーが直接対話できる教育的体験を提供します。
               </p>
               <p>
@@ -236,9 +236,9 @@ export default function HomePage() {
             These conversations are AI simulations for educational purposes
           </p>
           <div className="flex justify-center space-x-4 text-xs text-gray-400">
-            <span>DTalk</span>
+            <span>CopiChat</span>
             <span>•</span>
-            <span>ディートーク</span>
+            <span>コピチャット</span>
             <span>•</span>
             <span>AI チャットボット</span>
             <span>•</span>

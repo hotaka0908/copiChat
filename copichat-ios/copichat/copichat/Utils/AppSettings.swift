@@ -31,7 +31,7 @@ class AppSettings: ObservableObject {
         #if DEBUG
         self.apiBaseURL = UserDefaults.standard.string(forKey: "apiBaseURL") ?? "http://localhost:3000"
         #else
-        self.apiBaseURL = UserDefaults.standard.string(forKey: "apiBaseURL") ?? "https://your-dtalk-app.vercel.app"
+        self.apiBaseURL = UserDefaults.standard.string(forKey: "apiBaseURL") ?? "https://copichat.vercel.app"
         #endif
 
         self.userName = UserDefaults.standard.string(forKey: "userName") ?? ""
@@ -48,7 +48,7 @@ class AppSettings: ObservableObject {
         #if DEBUG
         apiBaseURL = "http://localhost:3000"
         #else
-        apiBaseURL = "https://your-dtalk-app.vercel.app"
+        apiBaseURL = "https://copichat.vercel.app"
         #endif
     }
 }

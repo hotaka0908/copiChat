@@ -43,7 +43,7 @@ yarn-error.log*
 next-env.d.ts
 
 # backup
-/dtalk-backup/
+/copichat-backup/
 
 # IDE
 .idea/
@@ -55,14 +55,14 @@ next-env.d.ts
 .claude/
 
 # iOS / Xcode
-dtalk-ios/dtalk/build/
-dtalk-ios/dtalk/*.xcodeproj/xcuserdata/
-dtalk-ios/dtalk/*.xcodeproj/project.xcworkspace/xcuserdata/
-dtalk-ios/dtalk/DerivedData/
-dtalk-ios/dtalk/*.xcworkspace/xcuserdata/
+copichat-ios/copichat/build/
+copichat-ios/copichat/*.xcodeproj/xcuserdata/
+copichat-ios/copichat/*.xcodeproj/project.xcworkspace/xcuserdata/
+copichat-ios/copichat/DerivedData/
+copichat-ios/copichat/*.xcworkspace/xcuserdata/
 
 # iOS Config (contains API keys)
-dtalk-ios/dtalk/dtalk/Config.swift
+copichat-ios/copichat/copichat/Config.swift
 
 # Xcode user settings
 *.pbxuser
@@ -82,12 +82,12 @@ dtalk-ios/dtalk/dtalk/Config.swift
 *.dSYM
 
 # CocoaPods
-dtalk-ios/dtalk/Pods/
+copichat-ios/copichat/Pods/
 *.xcworkspace
 !default.xcworkspace
 
 # Carthage
-dtalk-ios/dtalk/Carthage/Build/
+copichat-ios/copichat/Carthage/Build/
 
 # Swift Package Manager
 .swiftpm/

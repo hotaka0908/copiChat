@@ -1,14 +1,14 @@
 //
-//  dtalkTests.swift
-//  dtalkTests
+//  copichatTests.swift
+//  copichatTests
 //
 //  Created by 船橋穂天 on 2025/10/25.
 //
 
 import Testing
-@testable import dtalk
+@testable import copichat
 
-struct dtalkTests {
+struct copichatTests {
 
     @Test func example() async throws {
         // Write your test here and use APIs like `#expect(...)` to check expected conditions.

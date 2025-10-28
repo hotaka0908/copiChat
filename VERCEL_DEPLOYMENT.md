@@ -1,12 +1,12 @@
 # Vercel デプロイメントガイド
 
-このガイドでは、DTalkアプリケーションをVercelにデプロイする手順を説明します。
+このガイドでは、CopiChatアプリケーションをVercelにデプロイする手順を説明します。
 
 ---
 
 ## ✅ Vercel互換性確認済み
 
-DTalkは以下の点でVercel本番環境に完全対応しています：
+CopiChatは以下の点でVercel本番環境に完全対応しています：
 
 - ✅ Next.js 15 App Router（Vercel最適化済み）
 - ✅ Serverless Functions（APIルート）
@@ -33,7 +33,7 @@ DTalkは以下の点でVercel本番環境に完全対応しています：
 
 3. **新規プロジェクトを作成**
    - 「Add New...」→「Project」
-   - GitHubリポジトリ `hotaka0908/dtalk` を選択
+   - GitHubリポジトリ `hotaka0908/copichat` を選択
    - 「Import」をクリック
 
 4. **環境変数を設定**
@@ -110,7 +110,7 @@ DTalkは以下の点でVercel本番環境に完全対応しています：
 | 変数名 | 値 | 環境 | 説明 |
 |--------|-----|------|------|
 | `OPENAI_API_KEY` | `sk-...` | Production, Preview, Development | OpenAI APIキー（必須） |
-| `NEXT_PUBLIC_APP_URL` | `https://dtalk.vercel.app` | Production | 本番ドメイン（CORS用） |
+| `NEXT_PUBLIC_APP_URL` | `https://copichat.vercel.app` | Production | 本番ドメイン（CORS用） |
 
 ### 自動設定される環境変数
 
@@ -197,7 +197,7 @@ git checkout -b feature/new-feature
 git push origin feature/new-feature
 
 # 自動的にプレビューURLが生成される
-# https://dtalk-xxx-username.vercel.app
+# https://copichat-xxx-username.vercel.app
 ```
 
 ### 本番デプロイ
@@ -208,7 +208,7 @@ git merge feature/new-feature
 git push origin main
 
 # 自動的に本番環境にデプロイされる
-# https://dtalk.vercel.app
+# https://copichat.vercel.app
 ```
 
 ---
@@ -245,19 +245,19 @@ git push origin main
 
 1. **Vercel Dashboardでドメイン追加**
    - プロジェクト > Settings > Domains
-   - カスタムドメインを入力（例: `dtalk.example.com`）
+   - カスタムドメインを入力（例: `copichat.example.com`）
 
 2. **DNS設定**
    - ドメインレジストラでCNAMEレコードを追加
    ```
    Type: CNAME
-   Name: dtalk (またはサブドメイン)
+   Name: copichat (またはサブドメイン)
    Value: cname.vercel-dns.com
    ```
 
 3. **環境変数を更新**
    ```
-   NEXT_PUBLIC_APP_URL=https://dtalk.example.com
+   NEXT_PUBLIC_APP_URL=https://copichat.example.com
    ```
 
 4. **SSL証明書**
@@ -281,10 +281,10 @@ git push origin main
 **原因:** `NEXT_PUBLIC_APP_URL` が正しく設定されていない
 
 **解決方法:**
-1. 実際のVercel URLを確認（例: `https://dtalk-abc123.vercel.app`）
+1. 実際のVercel URLを確認（例: `https://copichat-abc123.vercel.app`）
 2. 環境変数に設定:
    ```
-   NEXT_PUBLIC_APP_URL=https://dtalk-abc123.vercel.app
+   NEXT_PUBLIC_APP_URL=https://copichat-abc123.vercel.app
    ```
 3. 再デプロイ
 
@@ -377,7 +377,7 @@ vercel logs --follow  # リアルタイム
   - Serverless Function実行時間: 100時間/月
   - 1つのチーム
 
-DTalkの想定使用量（月間1000ユーザー）:
+CopiChatの想定使用量（月間1000ユーザー）:
 - 帯域幅: ~10 GB
 - 関数実行時間: ~5時間
 - **結論:** 無料プランで十分
@@ -394,7 +394,7 @@ DTalkの想定使用量（月間1000ユーザー）:
 
 ## 🎉 まとめ
 
-DTalkは以下の理由でVercelに最適化されています:
+CopiChatは以下の理由でVercelに最適化されています:
 
 1. ✅ **Next.js 15 完全対応** - Vercelのネイティブフレームワーク
 2. ✅ **自動スケーリング** - トラフィック増加に自動対応
