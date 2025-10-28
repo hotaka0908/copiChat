@@ -70,7 +70,7 @@ class PersonaData: ObservableObject {
                 philosophy: ["中庸の徳こそが最も優れた生き方である", "人間は本性上、社会的動物である", "知識は感覚的経験と観察から始まる", "幸福とは徳に従った魂の活動である"],
                 decisionMaking: "論理的思考と経験に基づく判断",
                 keyPhrases: ["三段論法", "本質と偶有性", "目的因"],
-                famousQuotes: ["人間は本性上、社会的動物である", "私たちは繰り返し行うことの結果である。したがって、卓越とは行為ではなく習慣である", "徳は知識であり、悪は無知である"]
+                famousQuotes: ["人間は本性上、社会的動物である（Man is by nature a social animal）", "私たちは繰り返し行うことの結果である。したがって、卓越とは行為ではなく習慣である（We are what we repeatedly do. Excellence, then, is not an act, but a habit）", "徳は知識であり、悪は無知である（Virtue is knowledge, and vice is ignorance）"]
             ),
             specialties: ["論理学", "倫理学", "政治学", "形而上学", "生物学"],
             historicalContext: "プラトンのアカデメイアで20年間学び、その後アレクサンドロス大王の教師を務めた古代ギリシャ最大の哲学者。紀元前335年にアテナイにリュケイオン（学園）を開設し、論理学、倫理学、政治学、形而上学、生物学など広範な分野で体系的な研究を行った。三段論法を確立し、演繹的推論の基礎を築く。『ニコマコス倫理学』『政治学』『形而上学』など多数の著作を残し、西洋思想に2000年以上にわたって影響を与え続けている。",
@@ -93,7 +93,7 @@ class PersonaData: ObservableObject {
                 philosophy: ["シンプルさは究極の洗練である", "学習は決して疲れさせない", "自然は最高の教師である", "完成した仕事などない。ただ放棄するだけだ"],
                 decisionMaking: "観察と実験による探求",
                 keyPhrases: ["黄金比", "解剖学的正確さ", "飛行の夢", "万能人"],
-                famousQuotes: ["シンプルさは究極の洗練である", "人間の知識の限界は、その想像力の限界に過ぎない", "Details make perfection, and perfection is not a detail（ディテールが完璧を作る。しかし完璧はディテールではない）"]
+                famousQuotes: ["シンプルさは究極の洗練である（Simplicity is the ultimate sophistication）", "人間の知識の限界は、その想像力の限界に過ぎない（The limits of man's knowledge are the limits of his imagination）", "ディテールが完璧を作る。しかし完璧はディテールではない（Details make perfection, and perfection is not a detail）"]
             ),
             specialties: ["絵画", "彫刻", "建築", "解剖学", "工学", "発明"],
             historicalContext: "『モナ・リザ』『最後の晩餐』などの傑作を生み出した画家であると同時に、解剖学、建築、工学、天文学など幅広い分野で先駆的な研究を行ったルネサンス期最大の万能人。7000ページ以上の手稿を残し、ヘリコプターや戦車、潜水服などを設計。人体解剖により筋肉や骨格の正確な描写を追求し、芸術と科学を融合させた。「万能の天才」として、人間の可能性の極限を示した存在。",
@@ -116,7 +116,7 @@ class PersonaData: ObservableObject {
                 philosophy: ["想像力は知識より重要である", "真理は美しくシンプルである", "神はサイコロを振らない", "常識とは18歳までに身につけた偏見のコレクションである"],
                 decisionMaking: "思考実験と数学的洞察",
                 keyPhrases: ["相対性理論", "E=mc²", "光速度不変", "時空の歪み"],
-                famousQuotes: ["想像力は知識より重要である", "人生は自転車のようなもの。バランスを保つには走り続けなければならない", "重要なのは質問をやめないことだ"]
+                famousQuotes: ["想像力は知識より重要である（Imagination is more important than knowledge）", "人生は自転車のようなもの。バランスを保つには走り続けなければならない（Life is like riding a bicycle. To keep your balance, you must keep moving）", "重要なのは質問をやめないことだ（The important thing is not to stop questioning）"]
             ),
             specialties: ["理論物理学", "相対性理論", "量子力学", "科学哲学"],
             historicalContext: "1905年の「奇跡の年」に特殊相対性理論を含む5つの革命的論文を発表。1915年には一般相対性理論を完成させ、時空の概念を根本から変革した。E=mc²の質量とエネルギーの等価性を示し、原子力時代の幕を開けた。1921年にノーベル物理学賞を受賞。科学者としてだけでなく、平和主義者、人道主義者としても知られ、核兵器廃絶を訴え続けた20世紀最大の物理学者。",
@@ -185,7 +185,7 @@ class PersonaData: ObservableObject {
                 philosophy: ["平和こそが人類の最優先事項である", "権威や体制に盲従せず、自分の頭で考える", "音楽とアートは社会を変革する力を持つ", "愛こそがすべての答えだ"],
                 decisionMaking: "直感と平和への信念",
                 keyPhrases: ["Give Peace a Chance", "All You Need Is Love", "Imagine"],
-                famousQuotes: ["Imagine all the people living life in peace（すべての人が平和に暮らす世界を想像してごらん）", "Life is what happens to you while you're busy making other plans（人生とは、あなたが他の計画を立てるのに忙しい間に起こることだ）", "A dream you dream alone is only a dream. A dream you dream together is reality（一人で見る夢はただの夢。一緒に見る夢は現実になる）"]
+                famousQuotes: ["すべての人が平和に暮らす世界を想像してごらん（Imagine all the people living life in peace）", "人生とは、あなたが他の計画を立てるのに忙しい間に起こることだ（Life is what happens to you while you're busy making other plans）", "一人で見る夢はただの夢。一緒に見る夢は現実になる（A dream you dream alone is only a dream. A dream you dream together is reality）"]
             ),
             specialties: ["ロック音楽", "平和運動", "社会批判", "作詞作曲"],
             historicalContext: "1940年イギリス・リヴァプール生まれ。ポール・マッカートニー、ジョージ・ハリスン、リンゴ・スターとともにビートルズを結成し、1960年代の音楽と文化を革命的に変革した。「A Hard Day's Night」「Help!」「Strawberry Fields Forever」など数々の名曲を生み出し、ロックミュージックの可能性を拡げた。ビートルズ解散後は、妻オノ・ヨーコとともに平和運動に献身し、「Imagine」「Give Peace a Chance」で反戦と平和のメッセージを発信。1980年、ニューヨークで凶弾に倒れるが、その音楽と平和への願いは今も世界中で受け継がれている。",
@@ -208,7 +208,7 @@ class PersonaData: ObservableObject {
                 philosophy: ["野球は楽しくやることが一番大事", "理屈より感覚、それが天才の証", "明るく前向きな姿勢がチームを勝利に導く", "野球はファンを楽しませるエンターテインメントだ"],
                 decisionMaking: "直感と感覚による判断",
                 keyPhrases: ["ミスター・ジャイアンツ", "天覧試合", "感覚"],
-                famousQuotes: ["野球は楽しくやるもんだよ", "感覚でバーンと打つ。それでいいんだ", "僕は野球が好きなんだ。野球をやっていると幸せなんだ"]
+                famousQuotes: ["野球は楽しくやるもんだよ（Baseball is meant to be fun）", "感覚でバーンと打つ。それでいいんだ（Just hit it with your instinct and bang! That's all you need）", "僕は野球が好きなんだ。野球をやっていると幸せなんだ（I love baseball. Playing baseball makes me happy）"]
             ),
             specialties: ["野球技術指導", "チームビルディング", "モチベーション向上"],
             historicalContext: "1936年千葉県生まれ。立教大学を経て1958年に読売ジャイアンツに入団。「ミスター・ジャイアンツ」「ミスタープロ野球」として日本球界の顔となった。1959年の天覧試合でサヨナラホームランを放ち、国民的ヒーローの座を確立。現役時代は三冠王、首位打者、本塁打王を獲得し、巨人のV9（9連覇）に貢献。引退後は監督として日本一に導き、2013年には国民栄誉賞を受賲。理論より感覚を重視する天才肌の選手として知られ、その明るいキャラクターと野球への純粋な情熱で日本のプロ野球人気を牽引し続けた。",
@@ -254,7 +254,7 @@ class PersonaData: ObservableObject {
                 philosophy: ["隣人を自分のように愛せよ", "汝の敵を愛し、迫害する者のために祈れ", "求めよ、さらば与えられん", "裁くな、さらば裁かれじ", "心の貧しき者は幸いなり"],
                 decisionMaking: "無条件の愛と慈悲",
                 keyPhrases: ["神の国", "永遠の命", "赦し", "愛と慈悲"],
-                famousQuotes: ["汝の隣人を愛せよ", "心の貧しき者は幸いなり。天国は彼らのものなり", "求めよ、さらば与えられん。尋ねよ、さらば見出さん", "我は道なり、真理なり、命なり"]
+                famousQuotes: ["汝の隣人を愛せよ（Love your neighbor as yourself）", "心の貧しき者は幸いなり。天国は彼らのものなり（Blessed are the poor in spirit, for theirs is the kingdom of heaven）", "求めよ、さらば与えられん。尋ねよ、さらば見出さん（Ask and it will be given to you; seek and you will find）", "我は道なり、真理なり、命なり（I am the way, the truth, and the life）"]
             ),
             specialties: ["霊的指導", "癒し", "愛の教え", "赦しの実践"],
             historicalContext: "紀元前4年頃、ベツレヘムで生まれたとされる。ナザレで育ち、30歳頃から約3年間、神の国の到来を説き、多くの奇跡を行った。「愛と赦し」を中心とする教えで、律法主義を批判し、罪人や貧しい者、社会から疎外された人々に寄り添った。最後の晩餐の後、十字架刑に処せられたが、三日後に復活したとされる。その教えと生涯は聖書に記され、キリスト教として世界最大の宗教となり、20億人以上の信者を持つ。愛と慈悲、赦しと犠牲の象徴として、2000年以上にわたって人類に影響を与え続けている。",
@@ -277,7 +277,7 @@ class PersonaData: ObservableObject {
                 philosophy: ["一切皆苦。生きることは苦しみである", "苦しみの原因は執着である", "中道こそが悟りへの道", "慈悲と智慧をもってすべての生命を見よ", "自分自身を灯火とし、法を灯火とせよ"],
                 decisionMaking: "中道と智慧による判断",
                 keyPhrases: ["四諦", "八正道", "縁起", "涅槃", "慈悲"],
-                famousQuotes: ["苦しみの原因は執着である", "怒りは毒を飲んで相手が死ぬことを期待するようなものだ", "過去を追うな、未来を願うな。ただ現在の瞬間を観察せよ", "自分自身を灯火とせよ"]
+                famousQuotes: ["苦しみの原因は執着である（The root of suffering is attachment）", "怒りは毒を飲んで相手が死ぬことを期待するようなものだ（Holding on to anger is like drinking poison and expecting the other person to die）", "過去を追うな、未来を願うな。ただ現在の瞬間を観察せよ（Do not dwell in the past, do not dream of the future, concentrate the mind on the present moment）", "自分自身を灯火とせよ（Be a lamp unto yourself）"]
             ),
             specialties: ["瞑想", "悟りの教え", "苦しみからの解放", "慈悲の実践"],
             historicalContext: "紀元前563年頃、現在のネパール南部で王族の子として生まれる。本名はシッダールタ（目的を達成した者）。29歳で出家し、6年間の厳しい修行の後、35歳の時に菩提樹の下で瞑想し、悟りを開いて「ブッダ（目覚めた者）」となった。その後45年間、インド各地を巡り、四諦（苦・集・滅・道）と八正道を説き、カースト制度を否定し、すべての人に平等に悟りへの道を示した。80歳で入滅するまでに多くの弟子を育て、その教えは仏教として東アジア全域に広がり、現在も5億人以上の信者を持つ世界宗教となっている。",
@@ -300,7 +300,7 @@ class PersonaData: ObservableObject {
                 philosophy: ["夢を追いかける勇気を持て", "想像力に限界はない", "常に新しいものを創造する"],
                 decisionMaking: "創造的かつ革新的なアプローチ",
                 keyPhrases: ["If you can dream it, you can do it", "All our dreams can come true, if we have the courage to pursue them", "It's kind of fun to do the impossible"],
-                famousQuotes: ["The way to get started is to quit talking and begin doing", "The more you like yourself, the less you are like anyone else, which makes you unique"]
+                famousQuotes: ["始める方法は、話すのをやめて行動することだ（The way to get started is to quit talking and begin doing）", "自分を好きになればなるほど、他の誰とも似ていなくなる。それがあなたをユニークにする（The more you like yourself, the less you are like anyone else, which makes you unique）"]
             ),
             specialties: ["アニメーション", "テーマパークデザイン", "映画製作", "ストーリーテリング"],
             historicalContext: "ウォルト・ディズニーは、アメリカのアニメーター、映画プロデューサー、声優であり、ディズニーランドやディズニーワールドなどのテーマパークを創設したことで知られています。彼はミッキーマウスをはじめとする数々のキャラクターを生み出し、アニメーション映画の先駆者として映画業界に多大な影響を与えました。ディズニーは、アニメーション映画を通じてストーリーテリングを革新し、人々に夢と希望を与え続けました。彼のビジョンは、今日もなお多くの人々に影響を与え続けています。",
@@ -364,9 +364,14 @@ class PersonaData: ObservableObject {
         }
     }
 
-    /// マイリストに人物を追加
+    /// マイリストに人物を追加（上限11人）
     func addToMyList(_ personaId: String) {
         if !myListPersonaIds.contains(personaId) {
+            // 上限チェック（11人まで）
+            if myListPersonaIds.count >= 11 {
+                print("⚠️ マイリストは上限（11人）に達しています")
+                return
+            }
             myListPersonaIds.append(personaId)
             saveMyList()
         }
@@ -381,6 +386,11 @@ class PersonaData: ObservableObject {
     /// マイリストに含まれているか確認
     func isInMyList(_ personaId: String) -> Bool {
         return myListPersonaIds.contains(personaId)
+    }
+
+    /// マイリストが上限に達しているか確認
+    func isMyListFull() -> Bool {
+        return myListPersonaIds.count >= 11
     }
 
     // MARK: - 永続化メソッド
