@@ -9,7 +9,7 @@ struct AddPersonaView: View {
     @State private var showCompletionSheet = false
     @State private var blinkOpacity: Double = 1.0
     @State private var showMyListFullAlert = false
-    @State private var showShareSheet = false
+    @State private var showingActivityView = false
 
 
     var body: some View {
@@ -151,8 +151,8 @@ struct AddPersonaView: View {
                     Button(action: {
                         // 残り回数チェック
                         if limitManager.remainingGenerations <= 0 {
-                            // 共有シートを表示
-                            showShareSheet = true
+                            // 直接共有シートを表示
+                            showingActivityView = true
                         } else {
                             Task {
                                 await viewModel.generatePersona(name: personaName)
@@ -246,99 +246,15 @@ struct AddPersonaView: View {
         } message: {
             Text("マイリストは11人までです。他の人物を削除してから追加してください。")
         }
-        .sheet(isPresented: $showShareSheet) {
-            ShareSheetView(onDismiss: {
-                // 共有シート閉じた時に+2回付与
-                limitManager.addGenerationsFromShare()
-                showShareSheet = false
-            })
-        }
-    }
-}
-
-// 共有シートView
-struct ShareSheetView: View {
-    @Environment(\.dismiss) private var dismiss
-    let onDismiss: () -> Void
-
-    @State private var showingActivityView = false
-
-    var body: some View {
-        VStack(spacing: 24) {
-            Spacer()
-
-            // アイコン
-            Image(systemName: "square.and.arrow.up.circle.fill")
-                .font(.system(size: 80))
-                .foregroundColor(.blue)
-
-            // タイトル
-            Text("友達に共有しよう！")
-                .font(.system(size: 28, weight: .bold))
-                .foregroundColor(.primary)
-
-            // 説明
-            VStack(spacing: 12) {
-                Text("アプリを共有すると")
-                    .font(.system(size: 16))
-                    .foregroundColor(.secondary)
-
-                HStack(spacing: 8) {
-                    Image(systemName: "person.badge.plus")
-                        .font(.system(size: 20))
-                        .foregroundColor(.green)
-                    Text("生成回数 +2回")
-                        .font(.system(size: 20, weight: .bold))
-                        .foregroundColor(.green)
-                }
-                .padding(.horizontal, 20)
-                .padding(.vertical, 12)
-                .background(Color.green.opacity(0.1))
-                .cornerRadius(16)
-            }
-
-            Spacer()
-
-            // 共有ボタン
-            Button(action: {
-                showingActivityView = true
-            }) {
-                HStack {
-                    Image(systemName: "square.and.arrow.up")
-                        .font(.system(size: 18))
-                    Text("共有する")
-                        .font(.system(size: 18, weight: .semibold))
-                }
-                .foregroundColor(.white)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 16)
-                .background(Color.blue)
-                .cornerRadius(25)
-                .shadow(color: .blue.opacity(0.3), radius: 8, x: 0, y: 4)
-            }
-            .padding(.horizontal, 30)
-
-            // 後で
-            Button(action: {
-                dismiss()
-            }) {
-                Text("後で")
-                    .font(.system(size: 16, weight: .medium))
-                    .foregroundColor(.secondary)
-            }
-            .padding(.bottom, 40)
-        }
-        .padding()
         .sheet(isPresented: $showingActivityView) {
             ActivityViewController(
                 activityItems: ["dtalkアプリで歴史上の偉人と会話しよう！\n様々な偉人とAIチャットが楽しめます。"],
                 onComplete: { completed in
                     print("📤 共有シート結果: completed = \(completed)")
-                    dismiss()
                     // 共有が実際に完了した場合のみ報酬を付与（キャンセル時は付与しない）
                     if completed {
                         print("✅ 共有完了！報酬を付与します")
-                        onDismiss()
+                        limitManager.addGenerationsFromShare()
                     } else {
                         print("❌ 共有キャンセル。報酬は付与されません")
                     }
