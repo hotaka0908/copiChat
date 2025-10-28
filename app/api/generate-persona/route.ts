@@ -17,28 +17,36 @@ function getOpenAIClient(): OpenAI {
 // Wikipedia APIから人物情報を取得
 async function fetchWikipediaInfo(name: string): Promise<{
   exists: boolean;
+  isPersonOrCharacter: boolean;
+  isNotable: boolean;
   summary?: string;
   imageUrl?: string;
   categories?: string[];
+  reason?: string;
 }> {
   try {
     console.log(`🔍 Searching Wikipedia for: ${name}`);
 
-    // Wikipedia検索API（日本語版と英語版を両方試す）
+    // Wikipedia検索API（日本語版）
     const searchUrl = `https://ja.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(name)}&format=json&origin=*`;
     const searchResponse = await fetch(searchUrl);
     const searchData = await searchResponse.json();
 
     if (!searchData.query || searchData.query.search.length === 0) {
       console.log(`❌ No Wikipedia page found for: ${name}`);
-      return { exists: false };
+      return {
+        exists: false,
+        isPersonOrCharacter: false,
+        isNotable: false,
+        reason: 'Wikipedia記事が見つかりませんでした'
+      };
     }
 
     const pageTitle = searchData.query.search[0].title;
     console.log(`✅ Found Wikipedia page: ${pageTitle}`);
 
-    // ページの詳細情報を取得
-    const pageUrl = `https://ja.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(pageTitle)}&prop=extracts|pageimages|categories&exintro=true&explaintext=true&piprop=thumbnail&pithumbsize=256&format=json&origin=*`;
+    // ページの詳細情報を取得（カテゴリ数を増やす）
+    const pageUrl = `https://ja.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(pageTitle)}&prop=extracts|pageimages|categories&exintro=true&explaintext=true&piprop=thumbnail&pithumbsize=256&cllimit=500&format=json&origin=*`;
     const pageResponse = await fetch(pageUrl);
     const pageData = await pageResponse.json();
 
@@ -46,28 +54,181 @@ async function fetchWikipediaInfo(name: string): Promise<{
     const pageId = Object.keys(pages)[0];
     const page = pages[pageId];
 
-    // 画像URLの取得（Wikimedia Commons形式に変換）
+    // 画像URLの取得
     let imageUrl = '';
     if (page.thumbnail && page.thumbnail.source) {
       imageUrl = page.thumbnail.source;
       console.log(`📷 Found image: ${imageUrl}`);
     }
 
-    // カテゴリ情報から人物の分野を推測
+    // カテゴリ情報を取得
     const categories: string[] = [];
     if (page.categories) {
       categories.push(...page.categories.map((cat: any) => cat.title));
     }
 
+    const summary = page.extract || '';
+
+    // === 人物・キャラクター判定ロジック ===
+
+    // 1. 除外対象チェック（建物、動物、地名、組織など）
+    const excludedCategories = [
+      '建築物',
+      'タワー',
+      '塔',
+      '寺',
+      '神社',
+      '城',
+      '施設',
+      '動物',
+      '植物',
+      '地形',
+      '山',
+      '川',
+      '湖',
+      '海',
+      '島',
+      '都市',
+      '国',
+      '企業',
+      '組織',
+      '団体',
+      '学校',
+      '大学',
+      '概念',
+      '用語'
+    ];
+
+    const isExcluded = categories.some(cat =>
+      excludedCategories.some(keyword => cat.includes(keyword))
+    );
+
+    if (isExcluded) {
+      console.log(`❌ Excluded category detected: ${name}`);
+      return {
+        exists: true,
+        isPersonOrCharacter: false,
+        isNotable: false,
+        summary,
+        imageUrl,
+        categories,
+        reason: '人物やキャラクターではないため追加できません'
+      };
+    }
+
+    // 2. 人物・キャラクターの肯定的判定
+    const personIndicators = {
+      // 実在人物の指標
+      birthYear: categories.some(cat => /Category:\d+年生/.test(cat)),
+      deathYear: categories.some(cat => /Category:\d+年没/.test(cat)),
+      livingPerson: categories.some(cat => cat.includes('Category:存命人物')),
+      centuryPerson: categories.some(cat => /Category:\d+世紀の人物/.test(cat)),
+
+      // 架空のキャラクター指標
+      character: categories.some(cat =>
+        cat.includes('登場人物') ||
+        cat.includes('キャラクター') ||
+        cat.includes('架空の人物')
+      ),
+
+      // 神話・伝説の指標
+      mythological: categories.some(cat =>
+        cat.includes('神話') ||
+        cat.includes('伝説') ||
+        cat.includes('神') && cat.includes('人物')
+      ),
+
+      // 職業カテゴリ（実在人物）
+      occupation: categories.some(cat =>
+        cat.includes('政治家') ||
+        cat.includes('学者') ||
+        cat.includes('研究者') ||
+        cat.includes('芸術家') ||
+        cat.includes('音楽家') ||
+        cat.includes('作家') ||
+        cat.includes('詩人') ||
+        cat.includes('スポーツ選手') ||
+        cat.includes('実業家') ||
+        cat.includes('起業家') ||
+        cat.includes('俳優') ||
+        cat.includes('女優') ||
+        cat.includes('歌手') ||
+        cat.includes('哲学者') ||
+        cat.includes('科学者') ||
+        cat.includes('発明家') ||
+        cat.includes('軍人') ||
+        cat.includes('宗教家')
+      ),
+
+      // 国籍・地域の人物
+      nationalityPerson: categories.some(cat =>
+        /Category:.*の人物/.test(cat) && !cat.includes('架空')
+      )
+    };
+
+    // 人物・キャラクター判定: いずれかの条件を満たせばOK
+    const isPersonOrCharacter =
+      personIndicators.birthYear ||
+      personIndicators.deathYear ||
+      personIndicators.livingPerson ||
+      personIndicators.centuryPerson ||
+      personIndicators.character ||
+      personIndicators.mythological ||
+      personIndicators.occupation ||
+      (personIndicators.nationalityPerson && categories.length >= 5);
+
+    console.log(`👤 Person/Character indicators:`, personIndicators);
+    console.log(`👤 Is person or character: ${isPersonOrCharacter}`);
+
+    if (!isPersonOrCharacter) {
+      return {
+        exists: true,
+        isPersonOrCharacter: false,
+        isNotable: false,
+        summary,
+        imageUrl,
+        categories,
+        reason: '人物やキャラクターとして認識できませんでした'
+      };
+    }
+
+    // 3. 特筆性チェック（記事の質）
+    const summaryLength = summary.length;
+    const hasMultipleCategories = categories.length >= 3;
+
+    // 最低限の情報量チェック（150文字以上、複数カテゴリ）
+    const isNotable = summaryLength >= 150 && hasMultipleCategories;
+
+    console.log(`📊 Notability check: summary=${summaryLength} chars, categories=${categories.length}`);
+
+    if (!isNotable) {
+      return {
+        exists: true,
+        isPersonOrCharacter: true,
+        isNotable: false,
+        summary,
+        imageUrl,
+        categories,
+        reason: '情報が不足しているため、十分な知名度がある人物として認識できませんでした'
+      };
+    }
+
     return {
       exists: true,
-      summary: page.extract || '',
+      isPersonOrCharacter: true,
+      isNotable: true,
+      summary,
       imageUrl,
       categories
     };
   } catch (error) {
     console.error('Wikipedia API Error:', error);
-    return { exists: false };
+    return {
+      exists: false,
+      isPersonOrCharacter: false,
+      isNotable: false,
+      reason: 'Wikipedia情報の取得に失敗しました'
+    };
   }
 }
 
@@ -148,13 +309,38 @@ export async function POST(request: NextRequest) {
     console.log(`🔍 Step 1: Checking Wikipedia for ${trimmedName}...`);
     const wikiInfo = await fetchWikipediaInfo(trimmedName);
 
+    // Wikipedia記事が存在しない
     if (!wikiInfo.exists) {
       return createSecureResponse(
         {
-          error: `「${trimmedName}」に関する情報が見つかりませんでした。\n実在する有名人の名前を入力してください。`,
-          suggestion: 'Wikipedia に記事がある人物名を入力してください'
+          error: `「${trimmedName}」に関する情報が見つかりませんでした。\nWikipediaに記事がある人物名を入力してください。`,
+          suggestion: wikiInfo.reason || 'Wikipedia に記事がある人物名を入力してください'
         },
         404,
+        origin
+      );
+    }
+
+    // 人物・キャラクターではない（建物、動物、地名など）
+    if (!wikiInfo.isPersonOrCharacter) {
+      return createSecureResponse(
+        {
+          error: wikiInfo.reason || `「${trimmedName}」は人物やキャラクターではありません。`,
+          suggestion: '実在する人物や、漫画・アニメのキャラクター、神話・伝説の人物を入力してください'
+        },
+        400,
+        origin
+      );
+    }
+
+    // 特筆性が不足している（情報が少なすぎる）
+    if (!wikiInfo.isNotable) {
+      return createSecureResponse(
+        {
+          error: wikiInfo.reason || `「${trimmedName}」は情報が不足しており、十分な知名度がある人物として認識できませんでした。`,
+          suggestion: 'より詳細な情報があるWikipedia記事を持つ人物を入力してください'
+        },
+        400,
         origin
       );
     }
