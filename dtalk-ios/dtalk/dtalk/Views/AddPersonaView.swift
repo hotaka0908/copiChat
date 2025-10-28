@@ -261,6 +261,8 @@ struct ShareSheetView: View {
     @Environment(\.dismiss) private var dismiss
     let onDismiss: () -> Void
 
+    @State private var showingActivityView = false
+
     var body: some View {
         VStack(spacing: 24) {
             Spacer()
@@ -298,7 +300,9 @@ struct ShareSheetView: View {
             Spacer()
 
             // 共有ボタン
-            ShareLink(item: "dtalkアプリで歴史上の偉人と会話しよう！\n様々な偉人とAIチャットが楽しめます。", subject: Text("dtalkアプリ"), message: Text("歴史上の偉人とAIチャットができるアプリです！")) {
+            Button(action: {
+                showingActivityView = true
+            }) {
                 HStack {
                     Image(systemName: "square.and.arrow.up")
                         .font(.system(size: 18))
@@ -312,13 +316,6 @@ struct ShareSheetView: View {
                 .cornerRadius(25)
                 .shadow(color: .blue.opacity(0.3), radius: 8, x: 0, y: 4)
             }
-            .simultaneousGesture(TapGesture().onEnded {
-                // 共有シートが開かれた瞬間に権限付与の準備
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    dismiss()
-                    onDismiss()
-                }
-            })
             .padding(.horizontal, 30)
 
             // 後で
@@ -332,6 +329,39 @@ struct ShareSheetView: View {
             .padding(.bottom, 40)
         }
         .padding()
+        .sheet(isPresented: $showingActivityView) {
+            ActivityViewController(
+                activityItems: ["dtalkアプリで歴史上の偉人と会話しよう！\n様々な偉人とAIチャットが楽しめます。"],
+                onComplete: { completed in
+                    // 共有が完了したら（キャンセルでも）報酬を付与
+                    dismiss()
+                    onDismiss()
+                }
+            )
+        }
+    }
+}
+
+// UIActivityViewControllerのSwiftUIラッパー
+struct ActivityViewController: UIViewControllerRepresentable {
+    let activityItems: [Any]
+    let onComplete: (Bool) -> Void
+
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        let controller = UIActivityViewController(
+            activityItems: activityItems,
+            applicationActivities: nil
+        )
+
+        controller.completionWithItemsHandler = { _, completed, _, _ in
+            onComplete(completed)
+        }
+
+        return controller
+    }
+
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {
+        // 更新不要
     }
 }
 
