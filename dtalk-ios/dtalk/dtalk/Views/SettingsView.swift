@@ -61,7 +61,7 @@ struct SettingsView: View {
                     }
                 }
 
-                Link(destination: URL(string: "https://dtalk.app/terms")!) {
+                Link(destination: URL(string: "https://dtalk-dusky.vercel.app/terms")!) {
                     HStack {
                         Image(systemName: "doc.text.fill")
                             .foregroundColor(.blue)
@@ -73,7 +73,7 @@ struct SettingsView: View {
                     }
                 }
 
-                Link(destination: URL(string: "https://dtalk.app/privacy")!) {
+                Link(destination: URL(string: "https://dtalk-dusky.vercel.app/privacy")!) {
                     HStack {
                         Image(systemName: "shield.fill")
                             .foregroundColor(.blue)
