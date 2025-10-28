@@ -3,7 +3,7 @@ import SwiftUI
 struct AddPersonaView: View {
     @Environment(\.dismiss) private var dismiss
     @StateObject private var viewModel = AddPersonaViewModel()
-    @StateObject private var limitManager = PersonaGenerationLimitManager.shared
+    @ObservedObject private var limitManager = PersonaGenerationLimitManager.shared
     @State private var personaName: String = ""
     @FocusState private var isInputFocused: Bool
     @State private var showCompletionSheet = false
@@ -333,9 +333,15 @@ struct ShareSheetView: View {
             ActivityViewController(
                 activityItems: ["dtalkアプリで歴史上の偉人と会話しよう！\n様々な偉人とAIチャットが楽しめます。"],
                 onComplete: { completed in
-                    // 共有が完了したら（キャンセルでも）報酬を付与
+                    print("📤 共有シート結果: completed = \(completed)")
                     dismiss()
-                    onDismiss()
+                    // 共有が実際に完了した場合のみ報酬を付与（キャンセル時は付与しない）
+                    if completed {
+                        print("✅ 共有完了！報酬を付与します")
+                        onDismiss()
+                    } else {
+                        print("❌ 共有キャンセル。報酬は付与されません")
+                    }
                 }
             )
         }

@@ -9,6 +9,7 @@ class PersonaGenerationLimitManager: ObservableObject {
     @Published var remainingGenerations: Int {
         didSet {
             userDefaults.set(remainingGenerations, forKey: remainingGenerationsKey)
+            print("🔄 残り生成回数が更新されました: \(remainingGenerations)回")
         }
     }
 

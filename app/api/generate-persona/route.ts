@@ -69,6 +69,10 @@ async function fetchWikipediaInfo(name: string): Promise<{
 
     const summary = page.extract || '';
 
+    // デバッグログ：取得したカテゴリを出力
+    console.log(`📊 取得したカテゴリ数: ${categories.length}`);
+    console.log(`📋 カテゴリ一覧（最初の10件）:`, categories.slice(0, 10));
+
     // === 人物・キャラクター判定ロジック ===
 
     // 1. 除外対象チェック（建物、動物、地名、組織など）
@@ -118,11 +122,21 @@ async function fetchWikipediaInfo(name: string): Promise<{
 
     // 2. 人物・キャラクターの肯定的判定
     const personIndicators = {
-      // 実在人物の指標
-      birthYear: categories.some(cat => /Category:\d+年生/.test(cat)),
-      deathYear: categories.some(cat => /Category:\d+年没/.test(cat)),
-      livingPerson: categories.some(cat => cat.includes('Category:存命人物')),
-      centuryPerson: categories.some(cat => /Category:\d+世紀の人物/.test(cat)),
+      // 実在人物の指標（より柔軟な年号判定）
+      birthYear: categories.some(cat =>
+        /\d+年生/.test(cat) ||
+        /\d+年生まれ/.test(cat) ||
+        /紀元前\d+年生/.test(cat)
+      ),
+      deathYear: categories.some(cat =>
+        /\d+年没/.test(cat) ||
+        /紀元前\d+年没/.test(cat)
+      ),
+      livingPerson: categories.some(cat => cat.includes('存命人物')),
+      centuryPerson: categories.some(cat =>
+        /\d+世紀の人物/.test(cat) ||
+        /\d+世紀.*の統治者/.test(cat)
+      ),
 
       // 架空のキャラクター指標
       character: categories.some(cat =>
@@ -157,7 +171,15 @@ async function fetchWikipediaInfo(name: string): Promise<{
         cat.includes('科学者') ||
         cat.includes('発明家') ||
         cat.includes('軍人') ||
-        cat.includes('宗教家')
+        cat.includes('宗教家') ||
+        cat.includes('大名') ||
+        cat.includes('武将') ||
+        cat.includes('将軍') ||
+        cat.includes('天皇') ||
+        cat.includes('統治者') ||
+        cat.includes('君主') ||
+        cat.includes('皇帝') ||
+        cat.includes('王')
       ),
 
       // 国籍・地域の人物
@@ -165,6 +187,10 @@ async function fetchWikipediaInfo(name: string): Promise<{
         /Category:.*の人物/.test(cat) && !cat.includes('架空')
       )
     };
+
+    // 緩和判定: 有名人物は情報量で自動承認
+    const summaryLength = summary.length;
+    const isFamousPerson = summaryLength >= 500 && categories.length >= 10;
 
     // 人物・キャラクター判定: いずれかの条件を満たせばOK
     const isPersonOrCharacter =
@@ -175,9 +201,11 @@ async function fetchWikipediaInfo(name: string): Promise<{
       personIndicators.character ||
       personIndicators.mythological ||
       personIndicators.occupation ||
-      (personIndicators.nationalityPerson && categories.length >= 5);
+      (personIndicators.nationalityPerson && categories.length >= 5) ||
+      isFamousPerson; // 情報量が豊富な場合は自動承認
 
     console.log(`👤 Person/Character indicators:`, personIndicators);
+    console.log(`👤 Famous person check: summary=${summaryLength} chars, categories=${categories.length}, isFamous=${isFamousPerson}`);
     console.log(`👤 Is person or character: ${isPersonOrCharacter}`);
 
     if (!isPersonOrCharacter) {
@@ -193,7 +221,6 @@ async function fetchWikipediaInfo(name: string): Promise<{
     }
 
     // 3. 特筆性チェック（記事の質）
-    const summaryLength = summary.length;
     const hasMultipleCategories = categories.length >= 3;
 
     // 最低限の情報量チェック（150文字以上、複数カテゴリ）
