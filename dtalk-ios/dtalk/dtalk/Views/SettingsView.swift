@@ -9,38 +9,64 @@ struct SettingsView: View {
 
     var body: some View {
         Form {
-            // プロフィール設定
-            Section(header: Text("プロフィール")) {
-                HStack {
-                    Spacer()
+            // プロフィール画像
+            Section {
+                VStack(spacing: 16) {
+                    // プロフィール画像とカメラボタン
+                    ZStack(alignment: .bottomTrailing) {
+                        Button(action: {
+                            showImagePicker = true
+                        }) {
+                            if let profileImage = appSettings.userProfileImage {
+                                Image(uiImage: profileImage)
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 120, height: 120)
+                                    .clipShape(Circle())
+                            } else {
+                                ZStack {
+                                    Circle()
+                                        .fill(Color.gray.opacity(0.3))
+                                        .frame(width: 120, height: 120)
 
-                    Button(action: {
-                        showImagePicker = true
-                    }) {
-                        if let profileImage = appSettings.userProfileImage {
-                            Image(uiImage: profileImage)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 80, height: 80)
-                                .clipShape(Circle())
-                                .overlay(Circle().stroke(Color.gray.opacity(0.3), lineWidth: 1))
-                        } else {
-                            ZStack {
-                                Circle()
-                                    .fill(Color.gray.opacity(0.2))
-                                    .frame(width: 80, height: 80)
-
-                                Image(systemName: "person.fill")
-                                    .font(.system(size: 40))
-                                    .foregroundColor(.gray)
+                                    Image(systemName: "person.fill")
+                                        .font(.system(size: 50))
+                                        .foregroundColor(.gray)
+                                }
                             }
                         }
+                        .buttonStyle(.plain)
+
+                        // カメラボタン
+                        Button(action: {
+                            showImagePicker = true
+                        }) {
+                            ZStack {
+                                Circle()
+                                    .fill(Color.gray.opacity(0.9))
+                                    .frame(width: 44, height: 44)
+
+                                Image(systemName: "camera.fill")
+                                    .font(.system(size: 18))
+                                    .foregroundColor(.white)
+                            }
+                        }
+                        .offset(x: -4, y: -4)
                     }
 
-                    Spacer()
+                    // 名前（表示のみ）
+                    Text(appSettings.userName.isEmpty ? "名前を設定" : appSettings.userName)
+                        .font(.system(size: 24, weight: .medium))
+                        .foregroundColor(.primary)
                 }
-                .padding(.vertical, 8)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 20)
+            }
+            .listRowBackground(Color.clear)
+            .listRowInsets(EdgeInsets())
 
+            // 名前編集
+            Section {
                 NavigationLink(destination: ProfileNameEditView()) {
                     HStack {
                         Text("名前")
