@@ -176,11 +176,7 @@ struct BookshelfView: View {
 
             // AddPersonaViewへのNavigationLink（非表示）
             NavigationLink(
-                destination: AddPersonaView(onPersonaGenerated: { persona in
-                    // 生成された人物を選択してチャット画面に遷移
-                    selectedPersona = persona
-                    navigateToChat = true
-                }),
+                destination: AddPersonaView(),
                 isActive: $navigateToAddPersona
             ) {
                 EmptyView()

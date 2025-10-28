@@ -42,6 +42,12 @@ class AddPersonaViewModel: ObservableObject {
             return
         }
 
+        // 生成回数チェック
+        guard PersonaGenerationLimitManager.shared.canGenerate() else {
+            errorMessage = "生成回数の上限に達しました"
+            return
+        }
+
         // 進捗表示を開始
         startProgress()
 
@@ -54,6 +60,9 @@ class AddPersonaViewModel: ObservableObject {
 
             // PersonaDataに追加
             PersonaData.shared.addPersona(persona)
+
+            // 生成回数を消費
+            PersonaGenerationLimitManager.shared.consumeGeneration()
 
             // 即座に完了状態に
             completeProgress()

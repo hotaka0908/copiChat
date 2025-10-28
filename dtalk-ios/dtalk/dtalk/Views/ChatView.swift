@@ -50,6 +50,8 @@ struct ChatView: View {
                 isLoading: viewModel.isLoading,
                 persona: persona,
                 isFocused: $isInputFocused,
+                hasReachedLimit: viewModel.hasReachedMessageLimit,
+                isInMyList: viewModel.isInMyList,
                 onSend: {
                     // キーボードを閉じる
                     isInputFocused = false
@@ -199,10 +201,42 @@ struct InputArea: View {
     let isLoading: Bool
     let persona: Persona
     var isFocused: FocusState<Bool>.Binding
+    let hasReachedLimit: Bool
+    let isInMyList: Bool
     let onSend: () -> Void
+    @ObservedObject private var personaData = PersonaData.shared
 
     var body: some View {
         VStack(spacing: 8) {
+            // 制限メッセージ
+            if hasReachedLimit {
+                HStack(spacing: 8) {
+                    Image(systemName: "exclamationmark.circle.fill")
+                        .foregroundColor(.orange)
+                    Text("無料メッセージは3回までです。マイリストに追加すると無制限に会話できます。")
+                        .font(.system(size: 13))
+                        .foregroundColor(.secondary)
+
+                    Button(action: {
+                        if !personaData.isMyListFull() {
+                            personaData.addToMyList(persona.id)
+                        }
+                    }) {
+                        Text("追加")
+                            .font(.system(size: 13, weight: .semibold))
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 6)
+                            .background(personaData.isMyListFull() ? Color.gray : Color.blue)
+                            .cornerRadius(12)
+                    }
+                    .disabled(personaData.isMyListFull())
+                }
+                .padding(.horizontal)
+                .padding(.top, 8)
+                .padding(.bottom, 4)
+            }
+
             HStack(alignment: .bottom, spacing: 12) {
                 // テキスト入力
                 TextField("", text: $text, axis: .vertical)
@@ -212,9 +246,9 @@ struct InputArea: View {
                     .cornerRadius(20)
                     .lineLimit(1...5)
                     .focused(isFocused)
-                    .disabled(isLoading)
+                    .disabled(isLoading || hasReachedLimit)
                     .onSubmit {
-                        if !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                        if !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !hasReachedLimit {
                             onSend()
                         }
                     }
@@ -223,9 +257,9 @@ struct InputArea: View {
                 Button(action: onSend) {
                     Image(systemName: "arrow.up.circle.fill")
                         .font(.system(size: 32))
-                        .foregroundColor(text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || isLoading ? .gray : .blue)
+                        .foregroundColor(text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || isLoading || hasReachedLimit ? .gray : .blue)
                 }
-                .disabled(text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || isLoading)
+                .disabled(text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || isLoading || hasReachedLimit)
             }
             .padding(.horizontal)
             .padding(.vertical, 8)

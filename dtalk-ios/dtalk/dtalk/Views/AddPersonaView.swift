@@ -3,13 +3,14 @@ import SwiftUI
 struct AddPersonaView: View {
     @Environment(\.dismiss) private var dismiss
     @StateObject private var viewModel = AddPersonaViewModel()
+    @StateObject private var limitManager = PersonaGenerationLimitManager.shared
     @State private var personaName: String = ""
     @FocusState private var isInputFocused: Bool
     @State private var showCompletionSheet = false
     @State private var blinkOpacity: Double = 1.0
+    @State private var showMyListFullAlert = false
+    @State private var showShareSheet = false
 
-    // 人物生成完了時のコールバック
-    var onPersonaGenerated: ((Persona) -> Void)?
 
     var body: some View {
         ZStack {
@@ -111,11 +112,24 @@ struct AddPersonaView: View {
                         Text("話したい人物の名前を入力してください")
                             .font(.system(size: 16))
                             .foregroundColor(.white.opacity(0.8))
+
+                        // 残り生成回数
+                        HStack(spacing: 6) {
+                            Image(systemName: "person.badge.plus")
+                                .font(.system(size: 14))
+                            Text("残り\(limitManager.remainingGenerations)回")
+                                .font(.system(size: 14, weight: .medium))
+                        }
+                        .foregroundColor(limitManager.remainingGenerations > 0 ? .green : .orange)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 6)
+                        .background(Color.white.opacity(0.1))
+                        .cornerRadius(12)
                     }
 
                     // 入力フィールド
                     VStack(spacing: 15) {
-                        TextField("人物名を入力（例：夏目漱石）", text: $personaName)
+                        TextField("例：ウォルト・ディズニー", text: $personaName)
                             .font(.system(size: 18))
                             .padding()
                             .background(Color.white.opacity(0.1))
@@ -135,11 +149,17 @@ struct AddPersonaView: View {
 
                     // 生成ボタン
                     Button(action: {
-                        Task {
-                            await viewModel.generatePersona(name: personaName)
-                            if viewModel.generatedPersona != nil {
-                                // 生成完了画面を表示
-                                showCompletionSheet = true
+                        // 残り回数チェック
+                        if limitManager.remainingGenerations <= 0 {
+                            // 共有シートを表示
+                            showShareSheet = true
+                        } else {
+                            Task {
+                                await viewModel.generatePersona(name: personaName)
+                                if viewModel.generatedPersona != nil {
+                                    // 生成完了画面を表示
+                                    showCompletionSheet = true
+                                }
                             }
                         }
                     }) {
@@ -149,18 +169,22 @@ struct AddPersonaView: View {
                                     .progressViewStyle(CircularProgressViewStyle(tint: .black))
                                     .scaleEffect(0.8)
                             }
-                            Text(viewModel.isLoading ? "生成中..." : "人物を生成")
+                            if limitManager.remainingGenerations <= 0 {
+                                Image(systemName: "square.and.arrow.up")
+                                    .font(.system(size: 16))
+                            }
+                            Text(limitManager.remainingGenerations <= 0 ? "友達に共有して生成回数を増やす" : (viewModel.isLoading ? "生成中..." : "人物を生成"))
                                 .font(.system(size: 18, weight: .semibold))
                         }
                         .foregroundColor(.black)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 16)
-                        .background(personaName.isEmpty || viewModel.isLoading ? Color.gray : Color.white)
+                        .background(limitManager.remainingGenerations <= 0 ? Color.orange : (personaName.isEmpty || viewModel.isLoading ? Color.gray : Color.white))
                         .cornerRadius(25)
                         .shadow(color: .black.opacity(0.3), radius: 8, x: 0, y: 4)
                     }
                     .padding(.horizontal, 30)
-                    .disabled(personaName.isEmpty || viewModel.isLoading)
+                    .disabled(limitManager.remainingGenerations > 0 && (personaName.isEmpty || viewModel.isLoading))
 
                     Spacer()
                 }
@@ -192,12 +216,19 @@ struct AddPersonaView: View {
             if let generatedPersona = viewModel.generatedPersona {
                 PersonaCompletionView(
                     persona: generatedPersona,
-                    onStartChat: {
-                        // 完了画面を閉じてから会話画面へ
-                        showCompletionSheet = false
-                        dismiss()
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                            onPersonaGenerated?(generatedPersona)
+                    onAddToMyList: {
+                        // 上限チェック
+                        if PersonaData.shared.isMyListFull() {
+                            // 上限に達している場合はアラートを表示
+                            showCompletionSheet = false
+                            showMyListFullAlert = true
+                        } else {
+                            // マイリストに追加
+                            PersonaData.shared.addToMyList(generatedPersona.id)
+                            // 完了画面を閉じる
+                            showCompletionSheet = false
+                            // AddPersonaViewを閉じてBookshelfに戻る
+                            dismiss()
                         }
                     },
                     onClose: {
@@ -208,6 +239,99 @@ struct AddPersonaView: View {
                 )
             }
         }
+        .alert("マイリストがいっぱいです", isPresented: $showMyListFullAlert) {
+            Button("OK") {
+                dismiss()
+            }
+        } message: {
+            Text("マイリストは11人までです。他の人物を削除してから追加してください。")
+        }
+        .sheet(isPresented: $showShareSheet) {
+            ShareSheetView(onDismiss: {
+                // 共有シート閉じた時に+2回付与
+                limitManager.addGenerationsFromShare()
+                showShareSheet = false
+            })
+        }
+    }
+}
+
+// 共有シートView
+struct ShareSheetView: View {
+    @Environment(\.dismiss) private var dismiss
+    let onDismiss: () -> Void
+
+    var body: some View {
+        VStack(spacing: 24) {
+            Spacer()
+
+            // アイコン
+            Image(systemName: "square.and.arrow.up.circle.fill")
+                .font(.system(size: 80))
+                .foregroundColor(.blue)
+
+            // タイトル
+            Text("友達に共有しよう！")
+                .font(.system(size: 28, weight: .bold))
+                .foregroundColor(.primary)
+
+            // 説明
+            VStack(spacing: 12) {
+                Text("アプリを共有すると")
+                    .font(.system(size: 16))
+                    .foregroundColor(.secondary)
+
+                HStack(spacing: 8) {
+                    Image(systemName: "person.badge.plus")
+                        .font(.system(size: 20))
+                        .foregroundColor(.green)
+                    Text("生成回数 +2回")
+                        .font(.system(size: 20, weight: .bold))
+                        .foregroundColor(.green)
+                }
+                .padding(.horizontal, 20)
+                .padding(.vertical, 12)
+                .background(Color.green.opacity(0.1))
+                .cornerRadius(16)
+            }
+
+            Spacer()
+
+            // 共有ボタン
+            ShareLink(item: "dtalkアプリで歴史上の偉人と会話しよう！\n様々な偉人とAIチャットが楽しめます。", subject: Text("dtalkアプリ"), message: Text("歴史上の偉人とAIチャットができるアプリです！")) {
+                HStack {
+                    Image(systemName: "square.and.arrow.up")
+                        .font(.system(size: 18))
+                    Text("共有する")
+                        .font(.system(size: 18, weight: .semibold))
+                }
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 16)
+                .background(Color.blue)
+                .cornerRadius(25)
+                .shadow(color: .blue.opacity(0.3), radius: 8, x: 0, y: 4)
+            }
+            .simultaneousGesture(TapGesture().onEnded {
+                // 共有シートが開かれた瞬間に権限付与の準備
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    dismiss()
+                    onDismiss()
+                }
+            })
+            .padding(.horizontal, 30)
+
+            // 後で
+            Button(action: {
+                dismiss()
+            }) {
+                Text("後で")
+                    .font(.system(size: 16, weight: .medium))
+                    .foregroundColor(.secondary)
+            }
+            .padding(.bottom, 40)
+        }
+        .padding()
     }
 }
 

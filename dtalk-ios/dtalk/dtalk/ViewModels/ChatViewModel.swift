@@ -11,6 +11,21 @@ class ChatViewModel: ObservableObject {
     let persona: Persona
     private let apiClient: APIClient
 
+    // マイリストチェック
+    var isInMyList: Bool {
+        PersonaData.shared.isInMyList(persona.id)
+    }
+
+    // ユーザーメッセージ数をカウント
+    var userMessageCount: Int {
+        messages.filter { $0.role == .user }.count
+    }
+
+    // メッセージ制限に達しているか
+    var hasReachedMessageLimit: Bool {
+        !isInMyList && userMessageCount >= 3
+    }
+
     init(persona: Persona, apiClient: APIClient = .shared) {
         self.persona = persona
         self.apiClient = apiClient
@@ -21,6 +36,11 @@ class ChatViewModel: ObservableObject {
 
     func sendMessage() async {
         guard !currentInput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            return
+        }
+
+        // メッセージ制限チェック
+        guard !hasReachedMessageLimit else {
             return
         }
 

@@ -2,7 +2,7 @@ import SwiftUI
 
 struct PersonaCompletionView: View {
     let persona: Persona
-    let onStartChat: () -> Void
+    let onAddToMyList: () -> Void
     let onClose: () -> Void
 
     var body: some View {
@@ -109,12 +109,12 @@ struct PersonaCompletionView: View {
 
                 // ボタン
                 VStack(spacing: 15) {
-                    // 会話を始めるボタン
-                    Button(action: onStartChat) {
+                    // マイリストに追加するボタン
+                    Button(action: onAddToMyList) {
                         HStack {
-                            Image(systemName: "message.fill")
+                            Image(systemName: "star.fill")
                                 .font(.system(size: 16))
-                            Text("会話を始める")
+                            Text("マイリストに追加する")
                                 .font(.system(size: 18, weight: .semibold))
                         }
                         .foregroundColor(.black)
@@ -162,7 +162,7 @@ struct PersonaCompletionView: View {
             historicalContext: "",
             category: .science
         ),
-        onStartChat: {},
+        onAddToMyList: {},
         onClose: {}
     )
 }

@@ -12,6 +12,7 @@ struct PersonaCarouselView: View {
     @State private var navigateToPersonaList = false
     @State private var navigateToBookshelf = false
     @State private var navigateToSettings = false
+    @State private var carouselRefreshKey = UUID()
 
     private let radius: CGFloat = 180
     private var personas: [Persona] {
@@ -135,6 +136,7 @@ struct PersonaCarouselView: View {
                         )
                     }
                 }
+                .id(carouselRefreshKey)
                 .frame(width: fullGeometry.size.width, height: 350)
                 .position(x: fullGeometry.size.width / 2, y: fullGeometry.size.height / 2)
                 .gesture(
@@ -192,6 +194,15 @@ struct PersonaCarouselView: View {
                 EmptyView()
             }
             .hidden()
+            .onChange(of: navigateToBookshelf) { oldValue, newValue in
+                // Bookshelfから戻ってきたときに画像を再読み込み
+                if !newValue && oldValue {
+                    // 少し遅延させて確実に再生成
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        carouselRefreshKey = UUID()
+                    }
+                }
+            }
 
             // SettingsViewへのNavigationLink（非表示）
             NavigationLink(
@@ -386,9 +397,9 @@ struct PersonaDetailView: View {
                             }
                         }
                     }) {
-                        Image(systemName: isInMyList ? "checkmark.circle.fill" : "plus.circle.fill")
+                        Image(systemName: isInMyList ? "heart.fill" : "heart")
                             .font(.system(size: 28))
-                            .foregroundColor(isInMyList ? .green : .gray)
+                            .foregroundColor(isInMyList ? .red : .gray)
                     }
                     .padding(.trailing, 8)
 
