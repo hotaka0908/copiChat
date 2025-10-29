@@ -140,7 +140,6 @@ export default function ExplorePage() {
       'aristotle': 0xdaa520,
       'leonardo-da-vinci': 0x8b4513,
       'albert-einstein': 0x9370db,
-      'hotaka-funabashi': 0x00ff00,
       'avicii': 0xff1493
     };
 

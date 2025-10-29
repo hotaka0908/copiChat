@@ -12,7 +12,6 @@ const getAvatarUrl = (personaId: string): string => {
     'aristotle': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Aristotle_Altemps_Inv8575.jpg/256px-Aristotle_Altemps_Inv8575.jpg',
     'leonardo-da-vinci': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Francesco_Melzi_-_Portrait_of_Leonardo.png/256px-Francesco_Melzi_-_Portrait_of_Leonardo.png',
     'albert-einstein': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Einstein_1921_by_F_Schmutzer_-_restoration.jpg/256px-Einstein_1921_by_F_Schmutzer_-_restoration.jpg',
-    'hotaka-funabashi': '/images/hotaka1996.png',
     'avicii': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Avicii_Veld_Music_Festival_Toronto_2011.jpg/256px-Avicii_Veld_Music_Festival_Toronto_2011.jpg',
     'mother-teresa': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Mother_Teresa_1.jpg/256px-Mother_Teresa_1.jpg',
     'john-lennon': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/John_Lennon_1969_%28cropped%29.jpg/256px-John_Lennon_1969_%28cropped%29.jpg',
@@ -180,7 +179,7 @@ export default function HomePage() {
             <p>
               スティーブ・ジョブズのイノベーション哲学、アリストテレスの論理学、
               レオナルド・ダ・ヴィンチの創造性、アインシュタインの科学的思考、
-              船橋穂天の現代起業家精神、Aviciiの音楽革新を学習できます。
+              Aviciiの音楽革新を学習できます。
             </p>
           </div>
         </motion.div>

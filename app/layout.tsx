@@ -6,8 +6,8 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://copichat.vercel.app'),
-  title: 'CopiChat - 偉人・アーティストと会話するAIチャットボット | ジョブズ、アリストテレス、ダ・ヴィンチ、アインシュタイン、船橋穂天、Avicii',
-  description: 'CopiChatは歴史上の偉人や現代のイノベーターとリアルな対話ができるAI搭載チャットボットです。スティーブ・ジョブズ、アリストテレス、レオナルド・ダ・ヴィンチ、アルベルト・アインシュタイン、船橋穂天、Aviciiと知的な会話を楽しめます。OpenAI GPT-4を使用した教育的体験をお試しください。',
+  title: 'CopiChat - 偉人・アーティストと会話するAIチャットボット | ジョブズ、アリストテレス、ダ・ヴィンチ、アインシュタイン、Avicii',
+  description: 'CopiChatは歴史上の偉人や現代のイノベーターとリアルな対話ができるAI搭載チャットボットです。スティーブ・ジョブズ、アリストテレス、レオナルド・ダ・ヴィンチ、アルベルト・アインシュタイン、Aviciiと知的な会話を楽しめます。OpenAI GPT-4を使用した教育的体験をお試しください。',
   keywords: [
     'CopiChat', 'コピチャット', 'copichat app', 'copichat ai',
     'AI チャットボット', '歴史的人物', '対話AI', 'OpenAI GPT-4',
@@ -15,7 +15,6 @@ export const metadata: Metadata = {
     'アリストテレス', 'Aristotle', '古代ギリシャ哲学者',
     'レオナルド・ダ・ヴィンチ', 'Leonardo da Vinci', 'ルネサンス',
     'アルベルト・アインシュタイン', 'Albert Einstein', '相対性理論',
-    '船橋穂天', 'Hotaka Funabashi', 'Universal Pine', '起業家',
     'Avicii', 'アヴィーチー', 'Tim Bergling', 'Wake Me Up', 'Levels',
     'EDM', 'DJ', '音楽プロデューサー', 'Folktronica',
     'スタートアップ', 'AI・機械学習', 'ウェアラブルデバイス', '音楽制作',
@@ -42,7 +41,7 @@ export const metadata: Metadata = {
     url: 'https://copichat.vercel.app',
     siteName: 'CopiChat',
     title: 'CopiChat - 偉人・アーティストと対話するAIチャットボット',
-    description: 'ジョブズ、アリストテレス、ダ・ヴィンチ、アインシュタイン、船橋穂天、AviciiとAIで会話。OpenAI GPT-4搭載の教育的チャットボット体験。',
+    description: 'ジョブズ、アリストテレス、ダ・ヴィンチ、アインシュタイン、AviciiとAIで会話。OpenAI GPT-4搭載の教育的チャットボット体験。',
     images: [
       {
         url: '/og-image.jpg',
@@ -55,7 +54,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'CopiChat - 偉人・アーティストと対話するAI',
-    description: 'ジョブズ、アリストテレス、ダ・ヴィンチ、アインシュタイン、船橋穂天、AviciiとAIで対話。教育的チャットボット体験。',
+    description: 'ジョブズ、アリストテレス、ダ・ヴィンチ、アインシュタイン、AviciiとAIで対話。教育的チャットボット体験。',
     images: ['/og-image.jpg'],
     creator: '@copichat_ai',
   },
@@ -98,7 +97,7 @@ export default function RootLayout({
               "@type": "WebApplication",
               "name": "CopiChat",
               "alternateName": ["コピチャット", "copichat app"],
-              "description": "歴史上の偉人や現代のイノベーターと対話できるAI搭載チャットボット。スティーブ・ジョブズ、アリストテレス、レオナルド・ダ・ヴィンチ、アルベルト・アインシュタイン、船橋穂天、Aviciiとの知的な会話が楽しめます。",
+              "description": "歴史上の偉人や現代のイノベーターと対話できるAI搭載チャットボット。スティーブ・ジョブズ、アリストテレス、レオナルド・ダ・ヴィンチ、アルベルト・アインシュタイン、Aviciiとの知的な会話が楽しめます。",
               "url": "https://copichat.vercel.app",
               "applicationCategory": "EducationalApplication",
               "operatingSystem": "Any",
@@ -111,7 +110,7 @@ export default function RootLayout({
                 "@type": "Organization",
                 "name": "CopiChat Team"
               },
-              "keywords": "CopiChat, AI チャットボット, 歴史的人物, スティーブ・ジョブズ, アリストテレス, ダ・ヴィンチ, アインシュタイン, 船橋穂天, Avicii, 起業家, DJ, 音楽プロデューサー, 教育アプリ, スタートアップ, EDM"
+              "keywords": "CopiChat, AI チャットボット, 歴史的人物, スティーブ・ジョブズ, アリストテレス, ダ・ヴィンチ, アインシュタイン, Avicii, 起業家, DJ, 音楽プロデューサー, 教育アプリ, スタートアップ, EDM"
             })
           }}
         />
