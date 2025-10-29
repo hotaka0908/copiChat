@@ -141,18 +141,6 @@ struct MessageRow: View {
                 .foregroundColor(.secondary)
             }
             .frame(maxWidth: .infinity, alignment: message.role == .user ? .trailing : .leading)
-
-            if message.role == .user {
-                // ユーザーのアバター
-                ZStack {
-                    Circle()
-                        .fill(Color.blue)
-                    Image(systemName: "person.fill")
-                        .font(.system(size: 20))
-                        .foregroundColor(.white)
-                }
-                .frame(width: 40, height: 40)
-            }
         }
     }
 }
