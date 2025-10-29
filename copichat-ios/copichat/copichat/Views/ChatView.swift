@@ -14,28 +14,30 @@ struct ChatView: View {
     var body: some View {
         VStack(spacing: 0) {
             // メッセージリスト
-            ScrollViewReader { proxy in
-                ScrollView {
-                    LazyVStack(spacing: 16) {
-                        ForEach(viewModel.messages) { message in
-                            MessageRow(message: message, persona: persona)
-                                .id(message.id)
-                        }
+            GeometryReader { geometry in
+                ScrollViewReader { proxy in
+                    ScrollView {
+                        LazyVStack(spacing: 16) {
+                            ForEach(viewModel.messages) { message in
+                                MessageRow(message: message, persona: persona, availableWidth: geometry.size.width)
+                                    .id(message.id)
+                            }
 
-                        if viewModel.isLoading {
-                            LoadingIndicator(persona: persona)
+                            if viewModel.isLoading {
+                                LoadingIndicator(persona: persona, availableWidth: geometry.size.width)
+                            }
                         }
+                        .padding()
                     }
-                    .padding()
-                }
-                .onTapGesture {
-                    // メッセージリストをタップしたらキーボードを閉じる
-                    isInputFocused = false
-                }
-                .onChange(of: viewModel.messages.count) {
-                    if let lastMessage = viewModel.messages.last {
-                        withAnimation {
-                            proxy.scrollTo(lastMessage.id, anchor: .bottom)
+                    .onTapGesture {
+                        // メッセージリストをタップしたらキーボードを閉じる
+                        isInputFocused = false
+                    }
+                    .onChange(of: viewModel.messages.count) {
+                        if let lastMessage = viewModel.messages.last {
+                            withAnimation {
+                                proxy.scrollTo(lastMessage.id, anchor: .bottom)
+                            }
                         }
                     }
                 }
@@ -96,6 +98,18 @@ struct ChatView: View {
 struct MessageRow: View {
     let message: Message
     let persona: Persona
+    let availableWidth: CGFloat
+
+    // メッセージの最大幅を計算
+    private var maxMessageWidth: CGFloat {
+        if message.role == .assistant {
+            // AIメッセージは画面を広く使う（長文対応）
+            return min(availableWidth * 0.92, 600)
+        } else {
+            // ユーザーメッセージは75%
+            return min(availableWidth * 0.75, 600)
+        }
+    }
 
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
@@ -122,11 +136,11 @@ struct MessageRow: View {
             VStack(alignment: message.role == .user ? .trailing : .leading, spacing: 4) {
                 Text(message.content)
                     .font(.system(size: 16))
-                    .foregroundColor(message.role == .user ? .white : .primary)
+                    .foregroundColor(.primary)
                     .padding(12)
                     .background(
                         message.role == .user
-                            ? Color.blue
+                            ? Color(.systemGray5)
                             : Color(.systemBackground)
                     )
                     .cornerRadius(16)
@@ -140,13 +154,19 @@ struct MessageRow: View {
                 }
                 .foregroundColor(.secondary)
             }
-            .frame(maxWidth: .infinity, alignment: message.role == .user ? .trailing : .leading)
+            .frame(maxWidth: maxMessageWidth, alignment: message.role == .user ? .trailing : .leading)
         }
     }
 }
 
 struct LoadingIndicator: View {
     let persona: Persona
+    let availableWidth: CGFloat
+
+    // メッセージの最大幅を計算（AIメッセージなので広く）
+    private var maxMessageWidth: CGFloat {
+        min(availableWidth * 0.92, 600)
+    }
 
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
@@ -178,9 +198,8 @@ struct LoadingIndicator: View {
             .background(Color(.systemBackground))
             .cornerRadius(16)
             .shadow(color: Color.black.opacity(0.05), radius: 2, x: 0, y: 1)
-
-            Spacer()
         }
+        .frame(maxWidth: maxMessageWidth, alignment: .leading)
     }
 }
 
