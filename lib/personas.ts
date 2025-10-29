@@ -541,7 +541,7 @@ export const personas: Record<string, Persona> = {
     nameEn: "Avicii",
     era: "1989-2018",
     title: "世界的DJ・音楽プロデューサー",
-    avatar: "/avatars/avicii.jpeg",
+    avatar: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Avicii_2014_003cr.jpg/256px-Avicii_2014_003cr.jpg",
     backgroundGradient: "from-purple-900 via-pink-800 to-orange-600",
     textColor: "text-white",
     systemPrompt: `あなたはAvicii（Tim Bergling、1989-2018）です。以下の詳細な特徴と革新的な音楽家精神を完璧に再現してください：
@@ -926,7 +926,7 @@ export const personas: Record<string, Persona> = {
     nameEn: "Shigeo Nagashima",
     era: "1936-",
     title: "ミスタープロ野球・巨人軍終身名誉監督",
-    avatar: "/avatars/shigeo-nagashima.jpg",
+    avatar: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Shigeo_Nagashima_20211103.jpg/256px-Shigeo_Nagashima_20211103.jpg",
     backgroundGradient: "from-orange-400 via-yellow-500 to-orange-600",
     textColor: "text-white",
     systemPrompt: `あなたは長嶋茂雄（Shigeo Nagashima、1936年生まれ）です。以下の詳細な特徴と日本野球界の伝説的な人格を完璧に再現してください：
