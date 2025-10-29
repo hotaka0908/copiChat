@@ -26,7 +26,7 @@ struct BookshelfView: View {
         // 1番上に「マイリスト」カテゴリーを追加（ユーザーがカスタマイズ可能）
         let myListPersonas = personaData.getMyListPersonas()
         if !myListPersonas.isEmpty {
-            categoryGroups.append(PersonaCategoryGroup(title: "マイリスト", personas: myListPersonas))
+            categoryGroups.append(PersonaCategoryGroup(title: String(localized: "my_list"), personas: myListPersonas))
         }
 
         // 各カテゴリーごとに人物をグループ化
@@ -41,7 +41,7 @@ struct BookshelfView: View {
         }
 
         // 最後に「すべての偉人」カテゴリーを追加
-        categoryGroups.append(PersonaCategoryGroup(title: "すべての偉人", personas: personas))
+        categoryGroups.append(PersonaCategoryGroup(title: String(localized: "all_figures"), personas: personas))
 
         return categoryGroups
     }
@@ -117,7 +117,7 @@ struct BookshelfView: View {
                             .foregroundColor(.gray.opacity(0.6))
                             .font(.system(size: 16))
 
-                        TextField("偉人を検索", text: $searchText)
+                        TextField(String(localized: "search_figures"), text: $searchText)
                             .textFieldStyle(PlainTextFieldStyle())
                             .font(.system(size: 15))
                             .foregroundColor(.white)

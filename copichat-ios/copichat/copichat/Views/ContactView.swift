@@ -13,10 +13,10 @@ struct ContactView: View {
                         .font(.system(size: 60))
                         .foregroundColor(.blue)
 
-                    Text("お問い合わせ")
+                    Text("contact_us")
                         .font(.system(size: 28, weight: .bold))
 
-                    Text("ご質問やご要望がございましたら\nお気軽にお問い合わせください")
+                    Text("contact_description")
                         .font(.system(size: 16))
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.center)
@@ -27,7 +27,7 @@ struct ContactView: View {
                 VStack(spacing: 16) {
                     ContactMethodCard(
                         icon: "envelope.fill",
-                        title: "メールでのお問い合わせ",
+                        title: String(localized: "contact_by_email"),
                         description: "ho@universalpine.com",
                         action: {
                             openMail()
@@ -39,7 +39,7 @@ struct ContactView: View {
                 Spacer()
             }
         }
-        .navigationTitle("お問い合わせ")
+        .navigationTitle("contact_us")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {
@@ -52,10 +52,10 @@ struct ContactView: View {
                 }
             }
         }
-        .alert("メールアプリを開けません", isPresented: $showMailError) {
-            Button("OK", role: .cancel) { }
+        .alert("cannot_open_mail", isPresented: $showMailError) {
+            Button("ok", role: .cancel) { }
         } message: {
-            Text("メールアプリが設定されていないか、利用できません。")
+            Text("mail_unavailable")
         }
     }
 

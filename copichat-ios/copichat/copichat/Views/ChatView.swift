@@ -81,7 +81,7 @@ struct ChatView: View {
                     Button(role: .destructive, action: {
                         viewModel.clearMessages()
                     }) {
-                        Label("会話をクリア", systemImage: "trash")
+                        Label("clear_conversation", systemImage: "trash")
                     }
                 } label: {
                     Image(systemName: "ellipsis.circle")
@@ -182,7 +182,7 @@ struct LoadingIndicator: View {
             HStack(spacing: 8) {
                 ProgressView()
                     .scaleEffect(0.8)
-                Text("考えています...")
+                Text("thinking")
                     .font(.system(size: 14))
                     .foregroundColor(.secondary)
             }
@@ -213,7 +213,7 @@ struct InputArea: View {
                 HStack(spacing: 8) {
                     Image(systemName: "exclamationmark.circle.fill")
                         .foregroundColor(.orange)
-                    Text("無料メッセージは3回までです。マイリストに追加すると無制限に会話できます。")
+                    Text("free_message_limit")
                         .font(.system(size: 13))
                         .foregroundColor(.secondary)
 
@@ -222,7 +222,7 @@ struct InputArea: View {
                             personaData.addToMyList(persona.id)
                         }
                     }) {
-                        Text("追加")
+                        Text("add")
                             .font(.system(size: 13, weight: .semibold))
                             .foregroundColor(.white)
                             .padding(.horizontal, 12)

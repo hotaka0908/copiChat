@@ -10,11 +10,11 @@ struct ProfileNameEditView: View {
         VStack(spacing: 0) {
             // メインコンテンツ
             VStack(alignment: .leading, spacing: 16) {
-                Text("名前")
+                Text("name")
                     .font(.system(size: 14, weight: .medium))
                     .foregroundColor(.secondary)
 
-                TextField("名前を入力", text: $editedUserName)
+                TextField(String(localized: "enter_name"), text: $editedUserName)
                     .textFieldStyle(.roundedBorder)
                     .font(.system(size: 16))
                     .focused($isTextFieldFocused)
@@ -27,7 +27,7 @@ struct ProfileNameEditView: View {
 
             Spacer()
         }
-        .navigationTitle("名前の編集")
+        .navigationTitle("edit_name")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {
@@ -41,7 +41,7 @@ struct ProfileNameEditView: View {
             }
 
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button("保存") {
+                Button("save") {
                     saveName()
                 }
                 .disabled(editedUserName.trimmingCharacters(in: .whitespaces).isEmpty || editedUserName == appSettings.userName)

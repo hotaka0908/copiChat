@@ -85,11 +85,11 @@ struct PersonaCarouselView: View {
 
                     // ヘッダー
                     VStack(spacing: 6) {
-                        Text("話したい人を選んでください")
+                        Text("select_person_prompt")
                             .font(.system(size: 24, weight: .semibold))
                             .foregroundColor(.white)
 
-                        Text("左右にスワイプして選択")
+                        Text("swipe_to_select")
                             .font(.system(size: 14))
                             .foregroundColor(.white.opacity(0.9))
                     }
@@ -100,7 +100,7 @@ struct PersonaCarouselView: View {
                     // 選択ボタン
                     VStack(spacing: 15) {
                         Button(action: selectCurrentPerson) {
-                            Text("この人と話す")
+                            Text("talk_with_person")
                                 .font(.system(size: 16, weight: .semibold))
                                 .foregroundColor(.black)
                                 .frame(maxWidth: .infinity)
@@ -470,7 +470,7 @@ struct PersonaDetailView: View {
 
                 // 専門分野
                 VStack(alignment: .leading, spacing: 12) {
-                    Text("専門分野")
+                    Text("specialties")
                         .font(.system(size: 16, weight: .semibold))
                         .foregroundColor(.secondary)
 
@@ -491,7 +491,7 @@ struct PersonaDetailView: View {
 
                 // 歴史的背景
                 VStack(alignment: .leading, spacing: 12) {
-                    Text("プロフィール")
+                    Text("profile")
                         .font(.system(size: 16, weight: .semibold))
                         .foregroundColor(.secondary)
 
@@ -505,7 +505,7 @@ struct PersonaDetailView: View {
                 // 哲学・信念
                 if !persona.traits.philosophy.isEmpty {
                     VStack(alignment: .leading, spacing: 12) {
-                        Text("哲学・信念")
+                        Text("philosophy_beliefs")
                             .font(.system(size: 16, weight: .semibold))
                             .foregroundColor(.secondary)
 
@@ -530,7 +530,7 @@ struct PersonaDetailView: View {
                 // 名言
                 if !persona.traits.famousQuotes.isEmpty {
                     VStack(alignment: .leading, spacing: 12) {
-                        Text("名言")
+                        Text("famous_quotes")
                             .font(.system(size: 16, weight: .semibold))
                             .foregroundColor(.secondary)
 
@@ -562,7 +562,7 @@ struct PersonaDetailView: View {
                 // キーフレーズ
                 if !persona.traits.keyPhrases.isEmpty {
                     VStack(alignment: .leading, spacing: 12) {
-                        Text("キーフレーズ")
+                        Text("key_phrases")
                             .font(.system(size: 16, weight: .semibold))
                             .foregroundColor(.secondary)
 
@@ -585,7 +585,7 @@ struct PersonaDetailView: View {
                 Button(action: {
                     onStartChat()
                 }) {
-                    Text("この人と話す")
+                    Text("talk_with_person")
                         .font(.system(size: 18, weight: .semibold))
                         .foregroundColor(.primary)
                         .padding(.horizontal, 40)
@@ -598,10 +598,10 @@ struct PersonaDetailView: View {
                 .padding(.bottom, 30)
             }
         }
-        .alert("マイリストがいっぱいです", isPresented: $showMyListFullAlert) {
-            Button("OK", role: .cancel) { }
+        .alert("my_list_full_title", isPresented: $showMyListFullAlert) {
+            Button("ok", role: .cancel) { }
         } message: {
-            Text("マイリストは11人までです。他の人物を削除してから追加してください。")
+            Text("my_list_full_message")
         }
     }
 }

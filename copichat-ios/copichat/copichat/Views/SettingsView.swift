@@ -55,7 +55,7 @@ struct SettingsView: View {
                     }
 
                     // 名前（表示のみ）
-                    Text(appSettings.userName.isEmpty ? "名前を設定" : appSettings.userName)
+                    Text(appSettings.userName.isEmpty ? String(localized: "set_name") : appSettings.userName)
                         .font(.system(size: 24, weight: .medium))
                         .foregroundColor(.primary)
                 }
@@ -69,21 +69,21 @@ struct SettingsView: View {
             Section {
                 NavigationLink(destination: ProfileNameEditView()) {
                     HStack {
-                        Text("名前")
+                        Text("name")
                         Spacer()
-                        Text(appSettings.userName.isEmpty ? "未設定" : appSettings.userName)
+                        Text(appSettings.userName.isEmpty ? String(localized: "not_set") : appSettings.userName)
                             .foregroundColor(.secondary)
                     }
                 }
             }
 
             // サポート
-            Section(header: Text("サポート")) {
+            Section(header: Text("support")) {
                 NavigationLink(destination: ContactView()) {
                     HStack {
                         Image(systemName: "envelope.fill")
                             .foregroundColor(.blue)
-                        Text("お問い合わせ")
+                        Text("contact_us")
                     }
                 }
 
@@ -91,7 +91,7 @@ struct SettingsView: View {
                     HStack {
                         Image(systemName: "doc.text.fill")
                             .foregroundColor(.blue)
-                        Text("利用規約")
+                        Text("terms_of_service")
                         Spacer()
                         Image(systemName: "arrow.up.right")
                             .font(.system(size: 12))
@@ -103,7 +103,7 @@ struct SettingsView: View {
                     HStack {
                         Image(systemName: "shield.fill")
                             .foregroundColor(.blue)
-                        Text("プライバシーポリシー")
+                        Text("privacy_policy")
                         Spacer()
                         Image(systemName: "arrow.up.right")
                             .font(.system(size: 12))
@@ -113,16 +113,16 @@ struct SettingsView: View {
             }
 
             // アプリ情報
-            Section(header: Text("アプリ情報")) {
+            Section(header: Text("app_info")) {
                 HStack {
-                    Text("バージョン")
+                    Text("version")
                     Spacer()
                     Text("1.0.0")
                         .foregroundColor(.secondary)
                 }
             }
         }
-        .navigationTitle("設定")
+        .navigationTitle("settings")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {

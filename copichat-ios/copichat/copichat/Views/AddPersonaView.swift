@@ -31,9 +31,9 @@ struct AddPersonaView: View {
                             .foregroundColor(.white)
                             .multilineTextAlignment(.center)
                             .padding(.horizontal, 40)
-                            .opacity(viewModel.currentStepMessage == "最終調整中" ? blinkOpacity : 1.0)
+                            .opacity(viewModel.currentStepMessage == String(localized: "final_adjustments") ? blinkOpacity : 1.0)
                             .onChange(of: viewModel.currentStepMessage) { oldValue, newValue in
-                                if newValue == "最終調整中" {
+                                if newValue == String(localized: "final_adjustments") {
                                     // 点滅アニメーション開始
                                     withAnimation(.easeInOut(duration: 1.0).repeatForever(autoreverses: true)) {
                                         blinkOpacity = 0.3
@@ -105,11 +105,11 @@ struct AddPersonaView: View {
 
                     // タイトル
                     VStack(spacing: 10) {
-                        Text("新しい人物を追加")
+                        Text("add_new_person")
                             .font(.system(size: 28, weight: .bold))
                             .foregroundColor(.white)
 
-                        Text("話したい人物の名前を入力してください")
+                        Text("enter_person_name")
                             .font(.system(size: 16))
                             .foregroundColor(.white.opacity(0.8))
 
@@ -117,7 +117,7 @@ struct AddPersonaView: View {
                         HStack(spacing: 6) {
                             Image(systemName: "person.badge.plus")
                                 .font(.system(size: 14))
-                            Text("残り\(limitManager.remainingGenerations)回")
+                            Text(String(format: NSLocalizedString("generations_remaining", comment: ""), limitManager.remainingGenerations))
                                 .font(.system(size: 14, weight: .medium))
                         }
                         .foregroundColor(limitManager.remainingGenerations > 0 ? .green : .orange)
@@ -129,7 +129,7 @@ struct AddPersonaView: View {
 
                     // 入力フィールド
                     VStack(spacing: 15) {
-                        TextField("例：ウォルト・ディズニー", text: $personaName)
+                        TextField(String(localized: "example_name"), text: $personaName)
                             .font(.system(size: 18))
                             .padding()
                             .background(Color.white.opacity(0.1))
@@ -173,7 +173,7 @@ struct AddPersonaView: View {
                                 Image(systemName: "square.and.arrow.up")
                                     .font(.system(size: 16))
                             }
-                            Text(limitManager.remainingGenerations <= 0 ? "友達に共有して生成回数を増やす" : (viewModel.isLoading ? "生成中..." : "人物を生成"))
+                            Text(limitManager.remainingGenerations <= 0 ? String(localized: "share_to_increase") : (viewModel.isLoading ? String(localized: "generating") : String(localized: "generate_person")))
                                 .font(.system(size: 18, weight: .semibold))
                         }
                         .foregroundColor(.black)
@@ -239,16 +239,16 @@ struct AddPersonaView: View {
                 )
             }
         }
-        .alert("マイリストがいっぱいです", isPresented: $showMyListFullAlert) {
-            Button("OK") {
+        .alert("my_list_full_title", isPresented: $showMyListFullAlert) {
+            Button("ok") {
                 dismiss()
             }
         } message: {
-            Text("マイリストは11人までです。他の人物を削除してから追加してください。")
+            Text("my_list_full_message")
         }
         .sheet(isPresented: $showingActivityView) {
             ActivityViewController(
-                activityItems: ["CopiChatアプリで歴史上の偉人と会話しよう！\n様々な偉人とAIチャットが楽しめます。"],
+                activityItems: [String(localized: "share_message")],
                 onComplete: { completed in
                     print("📤 共有シート結果: completed = \(completed)")
                     // 共有が実際に完了した場合のみ報酬を付与（キャンセル時は付与しない）

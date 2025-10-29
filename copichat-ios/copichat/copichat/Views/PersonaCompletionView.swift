@@ -28,7 +28,7 @@ struct PersonaCompletionView: View {
                 .animation(.spring(response: 0.5, dampingFraction: 0.6), value: persona.id)
 
                 // 完了メッセージ
-                Text("人物誕生！")
+                Text("person_created")
                     .font(.system(size: 28, weight: .bold))
                     .foregroundColor(.white)
 
@@ -114,7 +114,7 @@ struct PersonaCompletionView: View {
                         HStack {
                             Image(systemName: "star.fill")
                                 .font(.system(size: 16))
-                            Text("マイリストに追加する")
+                            Text("add_to_my_list")
                                 .font(.system(size: 18, weight: .semibold))
                         }
                         .foregroundColor(.black)
@@ -127,7 +127,7 @@ struct PersonaCompletionView: View {
 
                     // 戻るボタン
                     Button(action: onClose) {
-                        Text("戻る")
+                        Text("back")
                             .font(.system(size: 16, weight: .medium))
                             .foregroundColor(.white.opacity(0.7))
                     }

@@ -31,10 +31,10 @@ struct PersonaListView: View {
                     Image(systemName: "message.slash")
                         .font(.system(size: 64))
                         .foregroundColor(.gray.opacity(0.5))
-                    Text("会話履歴がありません")
+                    Text("no_chat_history")
                         .font(.system(size: 18, weight: .medium))
                         .foregroundColor(.secondary)
-                    Text("偉人を選んで会話を始めましょう")
+                    Text("select_to_start_chat")
                         .font(.system(size: 14))
                         .foregroundColor(.secondary)
                 }
@@ -57,7 +57,7 @@ struct PersonaListView: View {
                 .listStyle(.plain)
             }
         }
-        .navigationTitle("トーク")
+        .navigationTitle("chats")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {
@@ -113,7 +113,7 @@ struct PersonaCard: View {
                         .foregroundColor(.secondary)
                         .lineLimit(1)
                 } else {
-                    Text("メッセージはまだありません")
+                    Text("no_messages_yet")
                         .font(.system(size: 14))
                         .foregroundColor(.secondary)
                         .italic()
@@ -147,7 +147,7 @@ struct PersonaCard: View {
             return formatter.string(from: date)
         } else if calendar.isDateInYesterday(date) {
             // 昨日なら「昨日」
-            return "昨日"
+            return String(localized: "yesterday")
         } else if calendar.isDate(date, equalTo: now, toGranularity: .weekOfYear) {
             // 今週なら曜日
             let formatter = DateFormatter()
