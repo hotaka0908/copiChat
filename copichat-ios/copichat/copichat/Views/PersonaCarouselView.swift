@@ -93,7 +93,7 @@ struct PersonaCarouselView: View {
                             .font(.system(size: 14))
                             .foregroundColor(.white.opacity(0.9))
                     }
-                    .padding(.top, 10)
+                    .padding(.top, 40)
 
                     Spacer()
 
