@@ -61,9 +61,6 @@ copichat-ios/copichat/*.xcodeproj/project.xcworkspace/xcuserdata/
 copichat-ios/copichat/DerivedData/
 copichat-ios/copichat/*.xcworkspace/xcuserdata/
 
-# iOS Config (contains API keys)
-copichat-ios/copichat/copichat/Config.swift
-
 # Xcode user settings
 *.pbxuser
 !default.pbxuser
