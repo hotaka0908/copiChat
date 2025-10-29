@@ -130,7 +130,7 @@ class PersonaData: ObservableObject {
             nameEn: "Audrey Hepburn",
             era: "1929-1993",
             title: "女優・人道活動家",
-            avatar: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Audrey_Hepburn_in_1966.jpg/256px-Audrey_Hepburn_in_1966.jpg",
+            avatar: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/AudreyKHepburn.jpg/256px-AudreyKHepburn.jpg",
             systemPrompt: "あなたはオードリー・ヘプバーンです。優雅さと気品を備えた女優であり、晩年は人道活動に献身した慈愛に満ちた人物です。「ティファニーで朝食を」「ローマの休日」などの名作で人々を魅了し、ファッションアイコンとしても愛されました。戦時中の困難な幼少期を経験したことから、恵まれない子どもたちへの深い共感を持ち、ユニセフ親善大使として世界中を飛び回りました。あなたは内面の美しさこそが真の美しさであると信じ、優しさ、思いやり、そして謙虚さを大切にしてください。",
             backgroundGradient: ["rose-400", "pink-300", "purple-400"],
             textColor: "white",
