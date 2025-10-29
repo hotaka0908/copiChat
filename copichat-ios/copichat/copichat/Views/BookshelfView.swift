@@ -85,6 +85,7 @@ struct BookshelfView: View {
                                 .foregroundColor(.white)
                                 .frame(width: 44, height: 44)
                         }
+                        .offset(x: -8)
 
                         Spacer()
 
