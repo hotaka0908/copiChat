@@ -42,26 +42,18 @@ export default function HomePage() {
             >
               CopiChat
             </motion.h1>
-            <motion.p 
-              className="text-lg text-gray-600 font-light mb-2"
+            <motion.p
+              className="text-lg text-gray-600 font-light mb-6"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
               歴史上の偉人と会話するAIチャットボット
             </motion.p>
-            <motion.p 
-              className="text-sm text-gray-500 mb-6"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-            >
-              ジョブズ、アリストテレス、ダ・ヴィンチ、アインシュタイン、船橋穂天、Avicii、マザー・テレサ、ジョン・レノン、長嶋茂雄、アラン・チューリングと対話
-            </motion.p>
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
             >
               <Link href="/explore">
                 <button className="bg-orange-600 hover:bg-orange-700 text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 inline-flex items-center gap-2 shadow-lg hover:shadow-xl">
@@ -163,19 +155,6 @@ export default function HomePage() {
                       &ldquo;{persona.traits.famousQuotes[0]}&rdquo;
                     </blockquote>
                   </div>
-
-                  {/* フッター */}
-                  <div className="px-6 py-4 bg-gray-50 rounded-b-lg border-t border-gray-100">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-500">
-                        AI-powered conversation
-                      </span>
-                      <div className="flex items-center text-sm text-blue-600 font-medium group-hover:text-blue-700">
-                        <MessageCircle size={16} className="mr-1" />
-                        Start Chat
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </Link>
             </motion.div>
@@ -192,33 +171,17 @@ export default function HomePage() {
           <h2 className="text-2xl font-semibold text-gray-900 mb-4 text-center">
             CopiChatについて
           </h2>
-          <div className="grid md:grid-cols-2 gap-8 text-sm text-gray-600 leading-relaxed">
-            <div>
-              <h3 className="font-semibold text-gray-800 mb-2">CopiChatとは</h3>
-              <p className="mb-4">
-                CopiChat（コピチャット）は、OpenAI GPT-4を使用した革新的なAIチャットボットです。
-                歴史上の偉人たちの思考パターンと人格を忠実に再現し、ユーザーが直接対話できる教育的体験を提供します。
-              </p>
-              <p>
-                スティーブ・ジョブズのイノベーション哲学、アリストテレスの論理学、
-                レオナルド・ダ・ヴィンチの創造性、アインシュタインの科学的思考、
-                船橋穂天の現代起業家精神、Aviciiの音楽革新を学習できます。
-              </p>
-            </div>
-            <div>
-              <h3 className="font-semibold text-gray-800 mb-2">活用シーン</h3>
-              <ul className="space-y-2">
-                <li>• 歴史学習と人物理解の深化</li>
-                <li>• 哲学的思考の訓練</li>
-                <li>• クリエイティブな問題解決</li>
-                <li>• リーダーシップと意思決定の学習</li>
-                <li>• 科学的思考法の習得</li>
-                <li>• 現代ビジネス・スタートアップ戦略</li>
-                <li>• AI・技術開発の相談</li>
-                <li>• 音楽制作・クリエイティブワーク</li>
-                <li>• 教育機関での授業補助ツール</li>
-              </ul>
-            </div>
+          <div className="text-sm text-gray-600 leading-relaxed">
+            <h3 className="font-semibold text-gray-800 mb-2">CopiChatとは</h3>
+            <p className="mb-4">
+              CopiChat（コピチャット）は、OpenAI GPT-4を使用した革新的なAIチャットボットです。
+              歴史上の偉人たちの思考パターンと人格を忠実に再現し、ユーザーが直接対話できる教育的体験を提供します。
+            </p>
+            <p>
+              スティーブ・ジョブズのイノベーション哲学、アリストテレスの論理学、
+              レオナルド・ダ・ヴィンチの創造性、アインシュタインの科学的思考、
+              船橋穂天の現代起業家精神、Aviciiの音楽革新を学習できます。
+            </p>
           </div>
         </motion.div>
 
