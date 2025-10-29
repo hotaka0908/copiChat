@@ -223,7 +223,7 @@ export default function HomePage() {
         </motion.div>
 
         {/* フッター */}
-        <motion.div 
+        <motion.div
           className="text-center mt-16 py-8 border-t border-gray-200"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -235,7 +235,7 @@ export default function HomePage() {
           <p className="text-gray-400 text-xs mb-4">
             These conversations are AI simulations for educational purposes
           </p>
-          <div className="flex justify-center space-x-4 text-xs text-gray-400">
+          <div className="flex justify-center space-x-4 text-xs text-gray-400 mb-4">
             <span>CopiChat</span>
             <span>•</span>
             <span>コピチャット</span>
@@ -243,6 +243,15 @@ export default function HomePage() {
             <span>AI チャットボット</span>
             <span>•</span>
             <span>偉人・アーティストとの対話</span>
+          </div>
+          <div className="flex justify-center space-x-4 text-xs">
+            <Link href="/terms" className="text-gray-500 hover:text-gray-700 underline">
+              利用規約
+            </Link>
+            <span className="text-gray-400">•</span>
+            <Link href="/privacy" className="text-gray-500 hover:text-gray-700 underline">
+              プライバシーポリシー
+            </Link>
           </div>
         </motion.div>
       </main>
