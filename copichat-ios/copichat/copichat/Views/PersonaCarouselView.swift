@@ -162,58 +162,37 @@ struct PersonaCarouselView: View {
                 )
             }
 
-            // NavigationLink（非表示）
-            NavigationLink(
-                destination: selectedPersona.map { ChatView(persona: $0).id($0.id) },
-                isActive: $navigateToChat
-            ) {
-                EmptyView()
-            }
-            .hidden()
-            .onChange(of: navigateToChat) { oldValue, newValue in
-                if !newValue {
-                    // ナビゲーションから戻った時に選択状態をクリア
-                    selectedPersona = nil
-                }
-            }
-
-            // PersonaListViewへのNavigationLink（非表示）
-            NavigationLink(
-                destination: PersonaListView(),
-                isActive: $navigateToPersonaList
-            ) {
-                EmptyView()
-            }
-            .hidden()
-
-            // BookshelfViewへのNavigationLink（非表示）
-            NavigationLink(
-                destination: BookshelfView(),
-                isActive: $navigateToBookshelf
-            ) {
-                EmptyView()
-            }
-            .hidden()
-            .onChange(of: navigateToBookshelf) { oldValue, newValue in
-                // Bookshelfから戻ってきたときに画像を再読み込み
-                if !newValue && oldValue {
-                    // 少し遅延させて確実に再生成
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        carouselRefreshKey = UUID()
-                    }
-                }
-            }
-
-            // SettingsViewへのNavigationLink（非表示）
-            NavigationLink(
-                destination: SettingsView(),
-                isActive: $navigateToSettings
-            ) {
-                EmptyView()
-            }
-            .hidden()
         }
         .navigationBarTitleDisplayMode(.inline)
+        .navigationDestination(isPresented: $navigateToChat) {
+            if let persona = selectedPersona {
+                ChatView(persona: persona).id(persona.id)
+            }
+        }
+        .navigationDestination(isPresented: $navigateToPersonaList) {
+            PersonaListView()
+        }
+        .navigationDestination(isPresented: $navigateToBookshelf) {
+            BookshelfView()
+        }
+        .navigationDestination(isPresented: $navigateToSettings) {
+            SettingsView()
+        }
+        .onChange(of: navigateToChat) {
+            if !navigateToChat {
+                // ナビゲーションから戻った時に選択状態をクリア
+                selectedPersona = nil
+            }
+        }
+        .onChange(of: navigateToBookshelf) {
+            // Bookshelfから戻ってきたときに画像を再読み込み
+            if !navigateToBookshelf {
+                // 少し遅延させて確実に再生成
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    carouselRefreshKey = UUID()
+                }
+            }
+        }
         .sheet(isPresented: $showingPersonaDetail) {
             if let persona = selectedPersona {
                 PersonaDetailView(persona: persona, onStartChat: {
@@ -222,7 +201,7 @@ struct PersonaCarouselView: View {
                 })
             }
         }
-        .onChange(of: personaData.myListPersonaIds) { oldValue, newValue in
+        .onChange(of: personaData.myListPersonaIds) {
             // マイリストが変更されたらカルーセルの位置をリセット
             withAnimation(.spring(response: 0.4, dampingFraction: 0.75)) {
                 currentRotation = 0

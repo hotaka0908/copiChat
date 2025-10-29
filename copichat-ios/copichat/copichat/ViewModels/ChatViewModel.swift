@@ -51,7 +51,6 @@ class ChatViewModel: ObservableObject {
         )
 
         messages.append(userMessage)
-        let inputToSend = currentInput
         currentInput = ""
         isLoading = true
         errorMessage = nil

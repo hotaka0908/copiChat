@@ -168,31 +168,22 @@ struct BookshelfView: View {
                 }
             }
 
-            // NavigationLink（非表示）
-            NavigationLink(
-                destination: selectedPersona.map { ChatView(persona: $0).id($0.id) },
-                isActive: $navigateToChat
-            ) {
-                EmptyView()
-            }
-            .hidden()
-            .onChange(of: navigateToChat) { oldValue, newValue in
-                if !newValue {
-                    // ナビゲーションから戻った時に選択状態をクリア
-                    selectedPersona = nil
-                }
-            }
-
-            // AddPersonaViewへのNavigationLink（非表示）
-            NavigationLink(
-                destination: AddPersonaView(),
-                isActive: $navigateToAddPersona
-            ) {
-                EmptyView()
-            }
-            .hidden()
         }
         .navigationBarHidden(true)
+        .navigationDestination(isPresented: $navigateToChat) {
+            if let persona = selectedPersona {
+                ChatView(persona: persona).id(persona.id)
+            }
+        }
+        .navigationDestination(isPresented: $navigateToAddPersona) {
+            AddPersonaView()
+        }
+        .onChange(of: navigateToChat) {
+            if !navigateToChat {
+                // ナビゲーションから戻った時に選択状態をクリア
+                selectedPersona = nil
+            }
+        }
         .sheet(isPresented: $showingPersonaDetail) {
             if let persona = selectedPersona {
                 PersonaDetailView(persona: persona, onStartChat: {

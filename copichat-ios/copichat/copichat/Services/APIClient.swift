@@ -92,7 +92,6 @@ class APIClient {
         ]
 
         do {
-            let encoder = JSONEncoder()
             request.httpBody = try JSONSerialization.data(withJSONObject: requestBody)
         } catch {
             throw APIError.decodingError(error)
