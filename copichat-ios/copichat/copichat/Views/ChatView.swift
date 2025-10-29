@@ -113,6 +113,11 @@ struct MessageRow: View {
 
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
+            // ユーザーメッセージの場合は左にスペースを追加して右寄せ
+            if message.role == .user {
+                Spacer(minLength: 0)
+            }
+
             if message.role == .assistant {
                 // アシスタントのアバター
                 AsyncImage(url: persona.avatarURL) { image in
