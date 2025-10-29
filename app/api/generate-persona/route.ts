@@ -14,6 +14,89 @@ function getOpenAIClient(): OpenAI {
   return openai;
 }
 
+// 画像ファイル名からWikipediaサムネイルURLを生成
+async function getImageThumbnailUrl(imageFileName: string, size: number = 256): Promise<string> {
+  try {
+    // ファイル名をデコード（スペースなどを正しく処理）
+    const cleanFileName = imageFileName.replace(/^File:|^ファイル:/, '').trim();
+
+    // Wikipedia APIで画像情報を取得
+    const imageInfoUrl = `https://ja.wikipedia.org/w/api.php?action=query&titles=File:${encodeURIComponent(cleanFileName)}&prop=imageinfo&iiprop=url&iiurlwidth=${size}&format=json&origin=*`;
+    const response = await fetch(imageInfoUrl);
+    const data = await response.json();
+
+    const pages = data.query.pages;
+    const pageId = Object.keys(pages)[0];
+    const page = pages[pageId];
+
+    if (page.imageinfo && page.imageinfo[0] && page.imageinfo[0].thumburl) {
+      return page.imageinfo[0].thumburl;
+    }
+
+    return '';
+  } catch (error) {
+    console.error('Error getting image thumbnail URL:', error);
+    return '';
+  }
+}
+
+// Infoboxテンプレートからメイン画像を抽出
+async function extractInfoboxImage(pageTitle: string): Promise<string> {
+  try {
+    console.log(`🖼️  Extracting infobox image from: ${pageTitle}`);
+
+    // ページのwikitextを取得（リダイレクトを自動で辿る）
+    const contentUrl = `https://ja.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(pageTitle)}&prop=revisions&rvprop=content&rvsection=0&rvslots=main&redirects=1&format=json&origin=*`;
+    const response = await fetch(contentUrl);
+    const data = await response.json();
+
+    const pages = data.query.pages;
+    const pageId = Object.keys(pages)[0];
+    const page = pages[pageId];
+
+    if (!page.revisions || !page.revisions[0]) {
+      console.log('⚠️  No page content found');
+      return '';
+    }
+
+    const wikitext = page.revisions[0].slots.main['*'];
+
+    // Infoboxテンプレートを検索（複数のパターンに対応）
+    // 改行とスペースを考慮した柔軟なパターン
+    const infoboxPatterns = [
+      /\|[\s\n]*image[\s\n]*=[\s\n]*([^\|\n]+)/i,
+      /\|[\s\n]*画像[\s\n]*=[\s\n]*([^\|\n]+)/i,
+    ];
+
+    for (const pattern of infoboxPatterns) {
+      const match = wikitext.match(pattern);
+      if (match && match[1]) {
+        const imageFileName = match[1].trim();
+
+        // 空の値やスペースのみの場合はスキップ
+        if (!imageFileName || imageFileName === '') {
+          continue;
+        }
+
+        console.log(`✅ Found infobox image: ${imageFileName}`);
+
+        // 画像のサムネイルURLを取得
+        const thumbnailUrl = await getImageThumbnailUrl(imageFileName, 256);
+        if (thumbnailUrl) {
+          console.log(`📷 Infobox thumbnail URL: ${thumbnailUrl}`);
+          return thumbnailUrl;
+        }
+      }
+    }
+
+    console.log('⚠️  No infobox image found in wikitext');
+    return '';
+  } catch (error) {
+    console.error('Error extracting infobox image:', error);
+    return '';
+  }
+}
+
 // Wikipedia APIから人物情報を取得
 async function fetchWikipediaInfo(name: string): Promise<{
   exists: boolean;
@@ -54,11 +137,22 @@ async function fetchWikipediaInfo(name: string): Promise<{
     const pageId = Object.keys(pages)[0];
     const page = pages[pageId];
 
-    // 画像URLの取得
+    // 画像URLの取得（優先順位: Infobox画像 > pageimages API）
     let imageUrl = '';
-    if (page.thumbnail && page.thumbnail.source) {
+
+    // 1. まずInfoboxから画像を取得（最も信頼性が高い）
+    imageUrl = await extractInfoboxImage(pageTitle);
+
+    // 2. Infoboxに画像がない場合は、pageimages APIの結果をフォールバックとして使用
+    if (!imageUrl && page.thumbnail && page.thumbnail.source) {
       imageUrl = page.thumbnail.source;
-      console.log(`📷 Found image: ${imageUrl}`);
+      console.log(`📷 Using pageimages API fallback: ${imageUrl}`);
+    }
+
+    if (imageUrl) {
+      console.log(`✅ Final image URL: ${imageUrl}`);
+    } else {
+      console.log(`⚠️  No image found for ${pageTitle}`);
     }
 
     // カテゴリ情報を取得
