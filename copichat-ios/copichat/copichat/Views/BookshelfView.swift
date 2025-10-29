@@ -81,6 +81,13 @@ struct BookshelfView: View {
 
                     Spacer()
 
+                    // タイトル
+                    Text("persona_list")
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundColor(.white)
+
+                    Spacer()
+
                     // ＋アイコン
                     Button(action: {
                         navigateToAddPersona = true

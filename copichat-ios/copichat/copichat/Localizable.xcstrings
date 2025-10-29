@@ -578,6 +578,23 @@
         }
       }
     },
+    "persona_list" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Person List"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "人物一覧"
+          }
+        }
+      }
+    },
     "philosophy_beliefs" : {
       "extractionState" : "manual",
       "localizations" : {
