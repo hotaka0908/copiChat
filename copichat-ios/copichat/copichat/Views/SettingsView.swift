@@ -82,7 +82,7 @@ struct SettingsView: View {
                 NavigationLink(destination: ContactView()) {
                     HStack {
                         Image(systemName: "envelope.fill")
-                            .foregroundColor(.blue)
+                            .foregroundColor(.black)
                         Text("contact_us")
                     }
                 }
@@ -90,7 +90,7 @@ struct SettingsView: View {
                 Link(destination: URL(string: "https://copichat.vercel.app/terms")!) {
                     HStack {
                         Image(systemName: "doc.text.fill")
-                            .foregroundColor(.blue)
+                            .foregroundColor(.black)
                         Text("terms_of_service")
                         Spacer()
                         Image(systemName: "arrow.up.right")
@@ -102,7 +102,7 @@ struct SettingsView: View {
                 Link(destination: URL(string: "https://copichat.vercel.app/privacy")!) {
                     HStack {
                         Image(systemName: "shield.fill")
-                            .foregroundColor(.blue)
+                            .foregroundColor(.black)
                         Text("privacy_policy")
                         Spacer()
                         Image(systemName: "arrow.up.right")
