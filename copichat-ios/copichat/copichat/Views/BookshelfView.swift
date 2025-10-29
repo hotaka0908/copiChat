@@ -69,48 +69,49 @@ struct BookshelfView: View {
 
             VStack(spacing: 0) {
                 // ヘッダー
-                HStack {
-                    Button(action: {
-                        dismiss()
-                    }) {
-                        Image(systemName: "chevron.left")
-                            .font(.system(size: 18, weight: .semibold))
-                            .foregroundColor(.white)
-                            .frame(width: 44, height: 44)
-                    }
-
-                    Spacer()
-
-                    // タイトル
+                ZStack {
+                    // タイトル（中央）
                     Text("persona_list")
                         .font(.system(size: 18, weight: .semibold))
                         .foregroundColor(.white)
 
-                    Spacer()
-
-                    // ＋アイコン
-                    Button(action: {
-                        navigateToAddPersona = true
-                    }) {
-                        Image(systemName: "plus.circle.fill")
-                            .font(.system(size: 20, weight: .medium))
-                            .foregroundColor(.white)
-                            .frame(width: 44, height: 44)
-                    }
-
-                    // 検索アイコン
-                    Button(action: {
-                        withAnimation {
-                            showSearchBar.toggle()
-                            if !showSearchBar {
-                                searchText = ""
-                            }
+                    // ボタン類（左右）
+                    HStack {
+                        Button(action: {
+                            dismiss()
+                        }) {
+                            Image(systemName: "chevron.left")
+                                .font(.system(size: 18, weight: .semibold))
+                                .foregroundColor(.white)
+                                .frame(width: 44, height: 44)
                         }
-                    }) {
-                        Image(systemName: showSearchBar ? "xmark" : "magnifyingglass")
-                            .font(.system(size: 20, weight: .medium))
-                            .foregroundColor(.white)
-                            .frame(width: 44, height: 44)
+
+                        Spacer()
+
+                        // ＋アイコン
+                        Button(action: {
+                            navigateToAddPersona = true
+                        }) {
+                            Image(systemName: "plus.circle.fill")
+                                .font(.system(size: 20, weight: .medium))
+                                .foregroundColor(.white)
+                                .frame(width: 44, height: 44)
+                        }
+
+                        // 検索アイコン
+                        Button(action: {
+                            withAnimation {
+                                showSearchBar.toggle()
+                                if !showSearchBar {
+                                    searchText = ""
+                                }
+                            }
+                        }) {
+                            Image(systemName: showSearchBar ? "xmark" : "magnifyingglass")
+                                .font(.system(size: 20, weight: .medium))
+                                .foregroundColor(.white)
+                                .frame(width: 44, height: 44)
+                        }
                     }
                 }
                 .frame(height: 44)
