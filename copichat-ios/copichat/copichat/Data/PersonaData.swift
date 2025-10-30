@@ -493,7 +493,36 @@ class PersonaData: ObservableObject {
         do {
             let data = try Data(contentsOf: myListFileURL)
             let decoder = JSONDecoder()
-            myListPersonaIds = try decoder.decode([String].self, from: data)
+            let loadedIds = try decoder.decode([String].self, from: data)
+
+            // 削除された人物のIDをフィルタリング
+            let validIds = loadedIds.filter { id in
+                allPersonas.contains { $0.id == id }
+            }
+
+            let removedCount = loadedIds.count - validIds.count
+            if removedCount > 0 {
+                print("ℹ️ マイリストから削除された人物を除外: \(removedCount)人")
+            }
+
+            // 人物が足りない場合は新しい人物で補充
+            if validIds.count < 11 {
+                let missingCount = 11 - validIds.count
+                let newIds = defaultPersonas
+                    .map { $0.id }
+                    .filter { !validIds.contains($0) }
+                    .prefix(missingCount)
+                myListPersonaIds = validIds + Array(newIds)
+                saveMyList() // クリーンアップした内容を保存
+                print("ℹ️ マイリストに新しい人物を追加: \(newIds.count)人")
+            } else {
+                myListPersonaIds = validIds
+                // 削除された人物があった場合のみ保存
+                if removedCount > 0 {
+                    saveMyList()
+                }
+            }
+
             print("✅ マイリストを読み込みました: \(myListPersonaIds.count)人")
         } catch {
             print("❌ マイリストの読み込みに失敗: \(error.localizedDescription)")
