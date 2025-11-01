@@ -109,7 +109,6 @@ platform :ios do
       submit_for_review: true,  # 自動的に審査提出
       automatic_release: false,
       force: true,  # 既存のビルドを上書き
-      skip_waiting_for_build_processing: false,  # ビルド処理完了まで待機
       run_precheck_before_submit: false,  # API Keyでは In-app purchases チェック未対応
       submission_information: {
         add_id_info_uses_idfa: false
