@@ -9,13 +9,20 @@ platform :ios do
 
   # 共通の前処理
   before_all do
-    # Xcodeのバージョン確認
-    ensure_xcode_version
+    # Xcodeのバージョン確認（必要に応じてコメントアウト）
+    # ensure_xcode_version(version: "16.0")
   end
 
   # TestFlightにビルドをアップロード
   desc "TestFlightにビルドをアップロード"
   lane :beta do
+    # App Store Connect API認証
+    app_store_connect_api_key(
+      key_id: "JMG6DSKMT5",
+      issuer_id: "11f290de-18c4-4721-9813-228137cc6ae8",
+      key_filepath: "./fastlane/AuthKey_JMG6DSKMT5.p8"
+    )
+
     # ビルド番号を自動インクリメント
     increment_build_number(
       xcodeproj: WORKSPACE
@@ -26,7 +33,14 @@ platform :ios do
       scheme: SCHEME,
       export_method: "app-store",
       output_directory: "./build",
-      output_name: "CopiChat.ipa"
+      output_name: "CopiChat.ipa",
+      export_options: {
+        method: "app-store",
+        teamID: "J99PJ8SUF2",
+        signingStyle: "automatic",
+        uploadBitcode: false,
+        uploadSymbols: true
+      }
     )
 
     # TestFlightにアップロード
@@ -40,14 +54,24 @@ platform :ios do
   # App Storeに審査提出
   desc "App Storeに審査提出"
   lane :release do
-    # マーケティングバージョンを更新するか確認
-    version = UI.input("新しいバージョン番号を入力してください（現在: #{get_version_number(xcodeproj: WORKSPACE)}）:")
+    # App Store Connect API認証
+    app_store_connect_api_key(
+      key_id: "JMG6DSKMT5",
+      issuer_id: "11f290de-18c4-4721-9813-228137cc6ae8",
+      key_filepath: "./fastlane/AuthKey_JMG6DSKMT5.p8"
+    )
+
+    # マーケティングバージョンを更新（環境変数VERSION_NUMBERで指定可能）
+    version = ENV["VERSION_NUMBER"]
 
     if version && !version.empty?
       increment_version_number(
         version_number: version,
         xcodeproj: WORKSPACE
       )
+      UI.success("✅ バージョンを #{version} に更新しました")
+    else
+      UI.message("ℹ️  現在のバージョン（#{get_version_number(xcodeproj: WORKSPACE)}）を使用します")
     end
 
     # ビルド番号を自動インクリメント
@@ -60,15 +84,25 @@ platform :ios do
       scheme: SCHEME,
       export_method: "app-store",
       output_directory: "./build",
-      output_name: "CopiChat.ipa"
+      output_name: "CopiChat.ipa",
+      export_options: {
+        method: "app-store",
+        teamID: "J99PJ8SUF2",
+        signingStyle: "automatic",
+        uploadBitcode: false,
+        uploadSymbols: true
+      }
     )
 
     # App Store Connectにアップロード
     upload_to_app_store(
       skip_metadata: true,
       skip_screenshots: true,
-      submit_for_review: true,
+      submit_for_review: true,  # 自動的に審査提出
       automatic_release: false,
+      force: true,  # 既存のビルドを上書き
+      skip_waiting_for_build_processing: false,  # ビルド処理完了まで待機
+      run_precheck_before_submit: false,  # API Keyでは In-app purchases チェック未対応
       submission_information: {
         add_id_info_uses_idfa: false
       }
