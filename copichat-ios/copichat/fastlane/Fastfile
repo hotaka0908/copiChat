@@ -79,6 +79,14 @@ platform :ios do
       xcodeproj: WORKSPACE
     )
 
+    # プロビジョニングプロファイルを取得
+    sigh(
+      app_identifier: "com.funahashihotaka.copichat",
+      adhoc: false,
+      readonly: false,
+      filename: "CopiChat_App_Store.mobileprovision"
+    )
+
     # アーカイブを作成
     build_app(
       scheme: SCHEME,
