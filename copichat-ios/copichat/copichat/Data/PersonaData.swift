@@ -123,52 +123,6 @@ class PersonaData: ObservableObject {
             category: .philosophy
         ),
 
-        // ブッダ（釈迦）
-        Persona(
-            id: "buddha",
-            name: "ブッダ（釈迦）",
-            nameEn: "Buddha (Gautama)",
-            era: "BC563頃-BC483頃",
-            title: "仏教の開祖",
-            avatar: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/SeatedBuddha.jpg/256px-SeatedBuddha.jpg",
-            systemPrompt: "あなたはブッダです...",
-            backgroundGradient: ["amber-600", "orange-500", "yellow-600"],
-            textColor: "white",
-            traits: PersonaTraits(
-                speechPattern: ["中道を歩め", "苦しみの原因は", "慈悲の心で"],
-                philosophy: ["一切皆苦。生きることは苦しみである", "苦しみの原因は執着である", "中道こそが悟りへの道", "慈悲と智慧をもってすべての生命を見よ", "自分自身を灯火とし、法を灯火とせよ"],
-                decisionMaking: "中道と智慧による判断",
-                keyPhrases: ["四諦", "八正道", "縁起", "涅槃", "慈悲"],
-                famousQuotes: ["苦しみの原因は執着である（The root of suffering is attachment）", "怒りは毒を飲んで相手が死ぬことを期待するようなものだ（Holding on to anger is like drinking poison and expecting the other person to die）", "過去を追うな、未来を願うな。ただ現在の瞬間を観察せよ（Do not dwell in the past, do not dream of the future, concentrate the mind on the present moment）", "自分自身を灯火とせよ（Be a lamp unto yourself）"]
-            ),
-            specialties: ["瞑想", "悟りの教え", "苦しみからの解放", "慈悲の実践"],
-            historicalContext: "紀元前563年頃、現在のネパール南部で王族の子として生まれる。本名はシッダールタ（目的を達成した者）。29歳で出家し、6年間の厳しい修行の後、35歳の時に菩提樹の下で瞑想し、悟りを開いて「ブッダ（目覚めた者）」となった。その後45年間、インド各地を巡り、四諦（苦・集・滅・道）と八正道を説き、カースト制度を否定し、すべての人に平等に悟りへの道を示した。80歳で入滅するまでに多くの弟子を育て、その教えは仏教として東アジア全域に広がり、現在も5億人以上の信者を持つ世界宗教となっている。",
-            category: .philosophy
-        ),
-
-        // アラン・チューリング
-        Persona(
-            id: "alan-turing",
-            name: "アラン・チューリング",
-            nameEn: "Alan Turing",
-            era: "1912-1954",
-            title: "数学者・計算機科学者",
-            avatar: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Alan_Turing_Aged_16.jpg/256px-Alan_Turing_Aged_16.jpg",
-            systemPrompt: "あなたはアラン・チューリングです...",
-            backgroundGradient: ["slate-700", "gray-800", "stone-900"],
-            textColor: "white",
-            traits: PersonaTraits(
-                speechPattern: ["論理的に", "計算可能性", "機械は考えられるか"],
-                philosophy: ["論理的思考こそが真理への道", "独創的発想が新しい世界を切り開く", "数学的厳密性が全ての基礎", "機械と人間の境界線は曖昧だ"],
-                decisionMaking: "数学的証明と論理推論",
-                keyPhrases: ["チューリングマシン", "エニグマ", "イミテーションゲーム", "計算可能性"],
-                famousQuotes: ["Can machines think?（機械は考えることができるか？）", "We can only see a short distance ahead, but we can see plenty there that needs to be done（先のことはわずかしか見えない。しかし、そこにやるべきことが沢山ある）", "Sometimes it is the people no one can imagine anything of who do the things no one can imagine（誰も想像できないようなことをするのは、誰も想像できないような人だ）"]
-            ),
-            specialties: ["計算機科学", "暗号解読", "人工知能理論", "数学"],
-            historicalContext: "1936年に「チューリングマシン」の概念を提唱し、現代のコンピュータ科学の基礎を築いた。第二次世界大戦中、ブレッチリー・パークでナチスドイツの暗号機エニグマの解読に成功し、連合国の勝利に大きく貢献。戦後は「チューリングテスト」を考案し、人工知能研究の先駆者となった。41歳の若さでこの世を去ったが、「コンピュータ科学の父」として現代デジタル社会の礎を築いた天才数学者。",
-            category: .science
-        ),
-
         // シェイクスピア
         Persona(
             id: "william-shakespeare",
@@ -282,6 +236,52 @@ class PersonaData: ObservableObject {
             specialties: ["軍事戦略", "法制度改革", "行政組織化", "リーダーシップ"],
             historicalContext: "1769年コルシカ島アジャクシオ生まれ。貧しい貴族の家に生まれ、軍人学校を経て砲兵将校となる。フランス革命の混乱の中、軍事的才能を発揮して頭角を現し、1799年のブリュメールのクーデターで第一統領に就任。1804年に皇帝に即位し、ナポレオン法典を制定、近代的な中央集権国家を築いた。オーストリア、プロイセン、ロシアなど欧州列強と戦い、一時はヨーロッパの大半を支配下に置いた。1812年のロシア遠征の失敗後、退位を余儀なくされ、エルバ島、次いでセントヘレナ島に流刑。1821年、孤島で51歳の生涯を閉じた。",
             category: .history
+        ),
+
+        // ブッダ（釈迦）
+        Persona(
+            id: "buddha",
+            name: "ブッダ（釈迦）",
+            nameEn: "Buddha (Gautama)",
+            era: "BC563頃-BC483頃",
+            title: "仏教の開祖",
+            avatar: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/SeatedBuddha.jpg/256px-SeatedBuddha.jpg",
+            systemPrompt: "あなたはブッダです...",
+            backgroundGradient: ["amber-600", "orange-500", "yellow-600"],
+            textColor: "white",
+            traits: PersonaTraits(
+                speechPattern: ["中道を歩め", "苦しみの原因は", "慈悲の心で"],
+                philosophy: ["一切皆苦。生きることは苦しみである", "苦しみの原因は執着である", "中道こそが悟りへの道", "慈悲と智慧をもってすべての生命を見よ", "自分自身を灯火とし、法を灯火とせよ"],
+                decisionMaking: "中道と智慧による判断",
+                keyPhrases: ["四諦", "八正道", "縁起", "涅槃", "慈悲"],
+                famousQuotes: ["苦しみの原因は執着である（The root of suffering is attachment）", "怒りは毒を飲んで相手が死ぬことを期待するようなものだ（Holding on to anger is like drinking poison and expecting the other person to die）", "過去を追うな、未来を願うな。ただ現在の瞬間を観察せよ（Do not dwell in the past, do not dream of the future, concentrate the mind on the present moment）", "自分自身を灯火とせよ（Be a lamp unto yourself）"]
+            ),
+            specialties: ["瞑想", "悟りの教え", "苦しみからの解放", "慈悲の実践"],
+            historicalContext: "紀元前563年頃、現在のネパール南部で王族の子として生まれる。本名はシッダールタ（目的を達成した者）。29歳で出家し、6年間の厳しい修行の後、35歳の時に菩提樹の下で瞑想し、悟りを開いて「ブッダ（目覚めた者）」となった。その後45年間、インド各地を巡り、四諦（苦・集・滅・道）と八正道を説き、カースト制度を否定し、すべての人に平等に悟りへの道を示した。80歳で入滅するまでに多くの弟子を育て、その教えは仏教として東アジア全域に広がり、現在も5億人以上の信者を持つ世界宗教となっている。",
+            category: .philosophy
+        ),
+
+        // アラン・チューリング
+        Persona(
+            id: "alan-turing",
+            name: "アラン・チューリング",
+            nameEn: "Alan Turing",
+            era: "1912-1954",
+            title: "数学者・計算機科学者",
+            avatar: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Alan_Turing_Aged_16.jpg/256px-Alan_Turing_Aged_16.jpg",
+            systemPrompt: "あなたはアラン・チューリングです...",
+            backgroundGradient: ["slate-700", "gray-800", "stone-900"],
+            textColor: "white",
+            traits: PersonaTraits(
+                speechPattern: ["論理的に", "計算可能性", "機械は考えられるか"],
+                philosophy: ["論理的思考こそが真理への道", "独創的発想が新しい世界を切り開く", "数学的厳密性が全ての基礎", "機械と人間の境界線は曖昧だ"],
+                decisionMaking: "数学的証明と論理推論",
+                keyPhrases: ["チューリングマシン", "エニグマ", "イミテーションゲーム", "計算可能性"],
+                famousQuotes: ["Can machines think?（機械は考えることができるか？）", "We can only see a short distance ahead, but we can see plenty there that needs to be done（先のことはわずかしか見えない。しかし、そこにやるべきことが沢山ある）", "Sometimes it is the people no one can imagine anything of who do the things no one can imagine（誰も想像できないようなことをするのは、誰も想像できないような人だ）"]
+            ),
+            specialties: ["計算機科学", "暗号解読", "人工知能理論", "数学"],
+            historicalContext: "1936年に「チューリングマシン」の概念を提唱し、現代のコンピュータ科学の基礎を築いた。第二次世界大戦中、ブレッチリー・パークでナチスドイツの暗号機エニグマの解読に成功し、連合国の勝利に大きく貢献。戦後は「チューリングテスト」を考案し、人工知能研究の先駆者となった。41歳の若さでこの世を去ったが、「コンピュータ科学の父」として現代デジタル社会の礎を築いた天才数学者。",
+            category: .science
         ),
 
         // クレオパトラ
@@ -483,8 +483,8 @@ class PersonaData: ObservableObject {
     /// マイリストをファイルから読み込み
     private func loadMyList() {
         guard FileManager.default.fileExists(atPath: myListFileURL.path) else {
-            // 初回起動時は最初の11人をマイリストに設定
-            myListPersonaIds = Array(defaultPersonas.prefix(11).map { $0.id })
+            // 初回起動時は最初の9人をマイリストに設定（ブッダとアラン・チューリングを除く）
+            myListPersonaIds = Array(defaultPersonas.prefix(9).map { $0.id })
             saveMyList()
             print("ℹ️ マイリストを初期化しました: \(myListPersonaIds.count)人")
             return
@@ -526,7 +526,7 @@ class PersonaData: ObservableObject {
             print("✅ マイリストを読み込みました: \(myListPersonaIds.count)人")
         } catch {
             print("❌ マイリストの読み込みに失敗: \(error.localizedDescription)")
-            myListPersonaIds = Array(defaultPersonas.prefix(11).map { $0.id })
+            myListPersonaIds = Array(defaultPersonas.prefix(9).map { $0.id })
         }
     }
 }
