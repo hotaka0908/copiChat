@@ -17,4 +17,7 @@ struct Config {
         //       コミットしないように注意してください
         return ""
     }()
+
+    // App Store URL
+    static let appStoreURL = "https://apps.apple.com/jp/app/copichat/id6754622028"
 }

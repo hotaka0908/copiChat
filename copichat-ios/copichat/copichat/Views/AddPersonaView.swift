@@ -248,7 +248,10 @@ struct AddPersonaView: View {
         }
         .sheet(isPresented: $showingActivityView) {
             ActivityViewController(
-                activityItems: [String(localized: "share_message")],
+                activityItems: [
+                    String(localized: "share_message"),
+                    URL(string: Config.appStoreURL)!
+                ],
                 onComplete: { completed in
                     print("📤 共有シート結果: completed = \(completed)")
                     // 共有が実際に完了した場合のみ報酬を付与（キャンセル時は付与しない）
