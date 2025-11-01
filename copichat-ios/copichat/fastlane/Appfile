@@ -1,0 +1,14 @@
+# Appfile for CopiChat
+
+# App Identifier
+app_identifier("com.universalpine.copichat")
+
+# Apple ID (App Store Connect用)
+# 環境変数 FASTLANE_USER または手動で設定
+# apple_id("your-apple-id@example.com")
+
+# Team ID
+team_id("J99PJ8SUF2")
+
+# iTunes Connect Team ID (複数チームに所属している場合)
+itc_team_id("J99PJ8SUF2")

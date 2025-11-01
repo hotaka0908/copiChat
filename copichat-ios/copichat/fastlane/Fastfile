@@ -1,0 +1,107 @@
+# Fastfile for CopiChat
+
+default_platform(:ios)
+
+platform :ios do
+  # 変数定義
+  SCHEME = "copichat"
+  WORKSPACE = "copichat.xcodeproj"
+
+  # 共通の前処理
+  before_all do
+    # Xcodeのバージョン確認
+    ensure_xcode_version
+  end
+
+  # TestFlightにビルドをアップロード
+  desc "TestFlightにビルドをアップロード"
+  lane :beta do
+    # ビルド番号を自動インクリメント
+    increment_build_number(
+      xcodeproj: WORKSPACE
+    )
+
+    # アーカイブを作成
+    build_app(
+      scheme: SCHEME,
+      export_method: "app-store",
+      output_directory: "./build",
+      output_name: "CopiChat.ipa"
+    )
+
+    # TestFlightにアップロード
+    upload_to_testflight(
+      skip_waiting_for_build_processing: true
+    )
+
+    UI.success("✅ TestFlightへのアップロードが完了しました！")
+  end
+
+  # App Storeに審査提出
+  desc "App Storeに審査提出"
+  lane :release do
+    # マーケティングバージョンを更新するか確認
+    version = UI.input("新しいバージョン番号を入力してください（現在: #{get_version_number(xcodeproj: WORKSPACE)}）:")
+
+    if version && !version.empty?
+      increment_version_number(
+        version_number: version,
+        xcodeproj: WORKSPACE
+      )
+    end
+
+    # ビルド番号を自動インクリメント
+    increment_build_number(
+      xcodeproj: WORKSPACE
+    )
+
+    # アーカイブを作成
+    build_app(
+      scheme: SCHEME,
+      export_method: "app-store",
+      output_directory: "./build",
+      output_name: "CopiChat.ipa"
+    )
+
+    # App Store Connectにアップロード
+    upload_to_app_store(
+      skip_metadata: true,
+      skip_screenshots: true,
+      submit_for_review: true,
+      automatic_release: false,
+      submission_information: {
+        add_id_info_uses_idfa: false
+      }
+    )
+
+    UI.success("🚀 App Storeへの審査提出が完了しました！")
+  end
+
+  # バージョン番号をインクリメント（マイナーバージョン）
+  desc "バージョン番号をインクリメント"
+  lane :bump_version do
+    version = increment_version_number(
+      bump_type: "patch", # major, minor, patch
+      xcodeproj: WORKSPACE
+    )
+
+    increment_build_number(
+      xcodeproj: WORKSPACE
+    )
+
+    UI.success("✅ バージョンを #{version} に更新しました")
+  end
+
+  # クリーンビルド
+  desc "プロジェクトをクリーン"
+  lane :clean do
+    clean_build_artifacts
+    clear_derived_data
+    UI.success("🧹 クリーン完了")
+  end
+
+  # エラー時の処理
+  error do |lane, exception|
+    UI.error("❌ エラーが発生しました: #{exception.message}")
+  end
+end
