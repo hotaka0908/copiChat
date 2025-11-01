@@ -81,7 +81,7 @@ platform :ios do
 
     # プロビジョニングプロファイルを取得
     sigh(
-      app_identifier: "com.funahashihotaka.copichat",
+      app_identifier: "com.universalpine.copichat",
       adhoc: false,
       readonly: false,
       filename: "CopiChat_App_Store.mobileprovision"
