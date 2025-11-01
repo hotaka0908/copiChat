@@ -106,16 +106,13 @@ platform :ios do
     upload_to_app_store(
       skip_metadata: true,
       skip_screenshots: true,
-      submit_for_review: true,  # 自動的に審査提出
+      submit_for_review: false,  # アップロードのみ。App Store Connectから手動で審査提出
       automatic_release: false,
-      force: true,  # 既存のビルドを上書き
-      run_precheck_before_submit: false,  # API Keyでは In-app purchases チェック未対応
-      submission_information: {
-        add_id_info_uses_idfa: false
-      }
+      force: true  # 既存のビルドを上書き
     )
 
-    UI.success("🚀 App Storeへの審査提出が完了しました！")
+    UI.success("✅ App Store Connectへのアップロードが完了しました！")
+    UI.success("📱 App Store Connect (https://appstoreconnect.apple.com) から審査に提出してください")
   end
 
   # バージョン番号をインクリメント（マイナーバージョン）
