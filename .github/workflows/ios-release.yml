@@ -58,8 +58,6 @@ jobs:
           security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
 
       - name: Build and Release to App Store
-        env:
-          VERSION_NUMBER: ${{ github.event.head_commit.message }}
         run: |
           cd copichat-ios/copichat
           fastlane release
