@@ -15,13 +15,23 @@ class PersonaData: ObservableObject {
         return documentsDirectory.appendingPathComponent("myList.json")
     }
 
+    // 削除済みデフォルト人物を保存するファイルパス
+    private var deletedDefaultPersonasFileURL: URL {
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        return documentsDirectory.appendingPathComponent("deletedDefaultPersonas.json")
+    }
+
     private init() {
+        loadDeletedDefaultPersonas()
         loadCustomPersonas()
         loadMyList()
     }
 
     // カスタム追加された人物（永続化される）
     @Published private var customPersonas: [Persona] = []
+
+    // 削除済みデフォルト人物のIDリスト（永続化される）
+    @Published private var deletedDefaultPersonaIds: [String] = []
 
     // すべてのPersonaデータ（既定 + カスタム）
     @Published var allPersonas: [Persona] = []
@@ -372,8 +382,20 @@ class PersonaData: ObservableObject {
     }
 
     func removePersona(by id: String) {
-        // カスタム人物からのみ削除（既定の人物は削除不可）
+        // カスタム人物から削除
         customPersonas.removeAll { $0.id == id }
+
+        // デフォルト人物の場合は削除済みリストに追加
+        if defaultPersonas.contains(where: { $0.id == id }) {
+            if !deletedDefaultPersonaIds.contains(id) {
+                deletedDefaultPersonaIds.append(id)
+                saveDeletedDefaultPersonas()
+            }
+        }
+
+        // マイリストからも削除
+        removeFromMyList(id)
+
         updateAllPersonas()
         saveCustomPersonas()
     }
@@ -454,8 +476,11 @@ class PersonaData: ObservableObject {
 
     /// allPersonasを既定 + カスタムで更新
     private func updateAllPersonas() {
+        // 削除済みでないデフォルト人物のみを取得
+        let activeDefaultPersonas = defaultPersonas.filter { !deletedDefaultPersonaIds.contains($0.id) }
+
         // 既定の人物と名前が重複するカスタム人物を除外
-        let defaultPersonaNames = Set(defaultPersonas.map { $0.name })
+        let defaultPersonaNames = Set(activeDefaultPersonas.map { $0.name })
         let filteredCustomPersonas = customPersonas.filter { !defaultPersonaNames.contains($0.name) }
 
         // 重複を除外した場合はログ出力
@@ -464,7 +489,7 @@ class PersonaData: ObservableObject {
             print("ℹ️ 既定の人物と重複するカスタム人物を除外しました: \(duplicateCount)人")
         }
 
-        allPersonas = defaultPersonas + filteredCustomPersonas
+        allPersonas = activeDefaultPersonas + filteredCustomPersonas
     }
 
     /// マイリストをファイルに保存
@@ -527,6 +552,37 @@ class PersonaData: ObservableObject {
         } catch {
             print("❌ マイリストの読み込みに失敗: \(error.localizedDescription)")
             myListPersonaIds = Array(defaultPersonas.prefix(9).map { $0.id })
+        }
+    }
+
+    /// 削除済みデフォルト人物をファイルに保存
+    private func saveDeletedDefaultPersonas() {
+        do {
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = .prettyPrinted
+            let data = try encoder.encode(deletedDefaultPersonaIds)
+            try data.write(to: deletedDefaultPersonasFileURL, options: .atomic)
+            print("✅ 削除済みデフォルト人物を保存しました: \(deletedDefaultPersonaIds.count)人")
+        } catch {
+            print("❌ 削除済みデフォルト人物の保存に失敗: \(error.localizedDescription)")
+        }
+    }
+
+    /// 削除済みデフォルト人物をファイルから読み込み
+    private func loadDeletedDefaultPersonas() {
+        guard FileManager.default.fileExists(atPath: deletedDefaultPersonasFileURL.path) else {
+            print("ℹ️ 削除済みデフォルト人物ファイルが存在しません（初回起動）")
+            return
+        }
+
+        do {
+            let data = try Data(contentsOf: deletedDefaultPersonasFileURL)
+            let decoder = JSONDecoder()
+            deletedDefaultPersonaIds = try decoder.decode([String].self, from: data)
+            print("✅ 削除済みデフォルト人物を読み込みました: \(deletedDefaultPersonaIds.count)人")
+        } catch {
+            print("❌ 削除済みデフォルト人物の読み込みに失敗: \(error.localizedDescription)")
+            deletedDefaultPersonaIds = []
         }
     }
 }

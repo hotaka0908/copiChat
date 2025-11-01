@@ -1,7 +1,10 @@
 import SwiftUI
 
 struct PersonaListView: View {
+    @ObservedObject var personaData = PersonaData.shared
     @State private var selectedPersona: Persona?
+    @State private var personaToDelete: Persona?
+    @State private var showDeleteAlert = false
     @Environment(\.dismiss) private var dismiss
 
     // 会話履歴がある人物のみを取得（最新の会話順）
@@ -52,6 +55,14 @@ struct PersonaListView: View {
                         }
                         .listRowInsets(EdgeInsets())
                         .listRowSeparator(.visible)
+                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                            Button(role: .destructive) {
+                                personaToDelete = persona
+                                showDeleteAlert = true
+                            } label: {
+                                Label("履歴削除", systemImage: "trash")
+                            }
+                        }
                     }
                 }
                 .listStyle(.plain)
@@ -71,6 +82,23 @@ struct PersonaListView: View {
                 }
             }
         }
+        .alert("チャット履歴を削除", isPresented: $showDeleteAlert) {
+            Button("キャンセル", role: .cancel) { }
+            Button("削除", role: .destructive) {
+                if let persona = personaToDelete {
+                    clearChatHistory(persona)
+                }
+            }
+        } message: {
+            if let persona = personaToDelete {
+                Text("\(persona.name)とのチャット履歴を削除しますか？")
+            }
+        }
+    }
+
+    private func clearChatHistory(_ persona: Persona) {
+        // チャット履歴のみを削除（人物は削除しない）
+        ChatHistoryManager.shared.clearMessages(for: persona.id)
     }
 }
 

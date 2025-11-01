@@ -349,6 +349,7 @@ struct PersonaDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @ObservedObject private var personaData = PersonaData.shared
     @State private var showMyListFullAlert = false
+    @State private var showDeleteAlert = false
 
     var isInMyList: Bool {
         personaData.isInMyList(persona.id)
@@ -359,6 +360,15 @@ struct PersonaDetailView: View {
             VStack(spacing: 24) {
                 // ヘッダー
                 HStack {
+                    // ×ボタン（左上）
+                    Button(action: {
+                        dismiss()
+                    }) {
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.system(size: 28))
+                            .foregroundColor(.gray)
+                    }
+
                     Spacer()
 
                     // マイリスト追加/削除ボタン
@@ -382,10 +392,15 @@ struct PersonaDetailView: View {
                     }
                     .padding(.trailing, 8)
 
-                    Button(action: {
-                        dismiss()
-                    }) {
-                        Image(systemName: "xmark.circle.fill")
+                    // 3点リーダーメニュー
+                    Menu {
+                        Button(role: .destructive) {
+                            showDeleteAlert = true
+                        } label: {
+                            Label("この人物を削除", systemImage: "trash")
+                        }
+                    } label: {
+                        Image(systemName: "ellipsis.circle.fill")
                             .font(.system(size: 28))
                             .foregroundColor(.gray)
                     }
@@ -582,6 +597,25 @@ struct PersonaDetailView: View {
         } message: {
             Text("my_list_full_message")
         }
+        .alert("人物を削除", isPresented: $showDeleteAlert) {
+            Button("キャンセル", role: .cancel) { }
+            Button("削除", role: .destructive) {
+                deletePersona()
+            }
+        } message: {
+            Text("\(persona.name)を削除しますか？\nチャット履歴も削除されます。")
+        }
+    }
+
+    private func deletePersona() {
+        // チャット履歴を削除
+        ChatHistoryManager.shared.clearMessages(for: persona.id)
+
+        // 人物を削除
+        PersonaData.shared.removePersona(by: persona.id)
+
+        // 画面を閉じる
+        dismiss()
     }
 }
 
