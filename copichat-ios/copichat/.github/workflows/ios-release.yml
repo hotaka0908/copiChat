@@ -5,9 +5,8 @@ on:
     branches:
       - main
     paths:
-      - 'copichat/**'
-      - 'fastlane/**'
-      - '.github/workflows/ios-release.yml'
+      - 'copichat-ios/copichat/**'
+      - 'copichat-ios/copichat/.github/workflows/ios-release.yml'
 
 jobs:
   release:
@@ -32,8 +31,8 @@ jobs:
         env:
           APP_STORE_CONNECT_API_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY }}
         run: |
-          mkdir -p ./fastlane
-          echo "$APP_STORE_CONNECT_API_KEY" > ./fastlane/AuthKey_JMG6DSKMT5.p8
+          mkdir -p ./copichat-ios/copichat/fastlane
+          echo "$APP_STORE_CONNECT_API_KEY" > ./copichat-ios/copichat/fastlane/AuthKey_JMG6DSKMT5.p8
 
       - name: Import Code Signing Certificates
         env:
@@ -58,15 +57,11 @@ jobs:
           # キーチェーンのパーティションリストを設定（codesignがアクセスできるように）
           security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
 
-      - name: Set up Xcode version
-        run: |
-          sudo xcode-select -s /Applications/Xcode_15.0.app/Contents/Developer
-
       - name: Build and Release to App Store
         env:
           VERSION_NUMBER: ${{ github.event.head_commit.message }}
         run: |
-          cd copichat
+          cd copichat-ios/copichat
           fastlane release
 
       - name: Clean up keychain
@@ -74,4 +69,4 @@ jobs:
         run: |
           KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
           security delete-keychain $KEYCHAIN_PATH || true
-          rm -f ./fastlane/AuthKey_JMG6DSKMT5.p8
+          rm -f ./copichat-ios/copichat/fastlane/AuthKey_JMG6DSKMT5.p8
