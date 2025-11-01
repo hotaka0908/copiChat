@@ -108,7 +108,8 @@ platform :ios do
       skip_screenshots: true,
       submit_for_review: false,  # アップロードのみ。App Store Connectから手動で審査提出
       automatic_release: false,
-      force: true  # 既存のビルドを上書き
+      force: true,  # 既存のビルドを上書き
+      run_precheck_before_submit: false  # App Store Connect API Keyではprecheckが動作しないため無効化
     )
 
     UI.success("✅ App Store Connectへのアップロードが完了しました！")
