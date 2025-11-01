@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - 'copichat-ios/copichat/**'
-      - 'copichat-ios/copichat/.github/workflows/ios-release.yml'
+      - '.github/workflows/ios-release.yml'
 
 jobs:
   release:
